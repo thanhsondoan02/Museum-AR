@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "560035501278",
+    "project_id": "museum-ar-32277",
+    "storage_bucket": "museum-ar-32277.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:560035501278:android:79771a0afeaacec764de4f",
+        "android_client_info": {
+          "package_name": "com.tiger.ar.museum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "560035501278-4s7t8vmjlbqff8lqla167si1gigkop4v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnh0p5VfA2KbVZ_32OKX6php--f0pGsQk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "560035501278-4s7t8vmjlbqff8lqla167si1gigkop4v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
