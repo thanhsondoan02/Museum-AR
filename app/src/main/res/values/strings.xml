@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Museum AR</string>
+    <string name="no_network">Vui lòng kiểm tra lại kết nối và thử lại</string>
+    <string name="server_time_out">Server không phản hồi</string>
+    <string name="convert_response_error">Lỗi convert response từ server</string>
+    <string name="response_error">Lỗi response</string>
+    <string name="loading">Đang tải…!</string>
 </resources>
