@@ -17,7 +17,7 @@
         android:theme="@style/Theme.MuseumAR"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.RealMainActivity"
+            android:name=".presentation.ar.ArActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
