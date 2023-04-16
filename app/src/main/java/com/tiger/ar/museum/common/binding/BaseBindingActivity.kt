@@ -9,10 +9,8 @@ import androidx.core.view.updatePadding
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.tiger.ar.museum.common.view.BaseActivity
-import com.tiger.ar.museum.common.view.BaseView
 
-abstract class BaseBindingActivity<DB : ViewDataBinding> (layoutId: Int) : BaseActivity(layoutId),
-    BaseView {
+abstract class BaseBindingActivity<DB : ViewDataBinding> (layoutId: Int) : BaseActivity(layoutId) {
 
     protected val binding
         get() = _binding!!

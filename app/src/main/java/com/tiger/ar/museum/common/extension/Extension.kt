@@ -86,6 +86,15 @@ fun View.onSafeClick(listener: View.OnClickListener?) {
     }
 }
 
+fun View.setOnSafeClick(
+    delayBetweenClicks: Long = DEFAULT_DEBOUNCE_INTERVAL,
+    click: (view: View) -> Unit
+) {
+    setOnClickListener(object : DebouncedOnClickListener(delayBetweenClicks) {
+        override fun onDebouncedClick(v: View) = click(v)
+    })
+}
+
 fun View.onDebouncedClick(
     delayBetweenClicks: Long = DEFAULT_DEBOUNCE_INTERVAL,
     click: (view: View) -> Unit

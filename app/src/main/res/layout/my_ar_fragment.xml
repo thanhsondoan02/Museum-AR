@@ -6,15 +6,15 @@
         android:layout_height="match_parent">
 
         <fragment
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:id="@+id/arFragment"
-            android:name="com.google.ar.sceneform.ux.ArFragment" />
+            android:name="com.google.ar.sceneform.ux.ArFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <Button
+            android:id="@+id/downloadBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/downloadBtn"
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="24dp"
             android:text="Download" />
