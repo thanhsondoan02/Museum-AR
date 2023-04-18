@@ -31,6 +31,6 @@ fun <RESPONSE : IApiResponse, RETURN_VALUE> Call<RESPONSE>.invokeApi(
     }
 }
 
-fun <T : IApiService> BaseRepo.invokeFqaService(service: Class<T>): T {
-    return RetrofitFactory.createFqaService(service)
+fun <T : IApiService> BaseRepo.invokeMockService(service: Class<T>): T {
+    return RetrofitFactory.createMockService(service)
 }

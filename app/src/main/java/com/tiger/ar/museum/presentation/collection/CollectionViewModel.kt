@@ -24,7 +24,9 @@ class CollectionViewModel : BaseViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             GetListCollectionUseCase().invoke(BaseUseCase.VoidRequest())
                 .onStart { _get3dModelState.loading() }
-                .onException { _get3dModelState.failure(it) }
+                .onException {
+                    _get3dModelState.failure(it)
+                }
                 .collect {
                     _get3dModelState.success(it)
                 }
