@@ -4,12 +4,10 @@ import com.tiger.ar.museum.IParcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class MCollection(
+data class ModelMain(
 
-    var id: Int? = null,
+    var description: String? = null,
 
-    var name: String? = null,
-
-    var thumbnail: String? = null,
+    var modelsList: List<Model3d>? = null
 
 ) : IParcelable
