@@ -20,7 +20,6 @@ class CollectionFragment : BaseBindingFragment<CollectionFragmentBinding>(R.layo
             setAdapter(this@CollectionFragment.adapter)
             setLayoutManager(COLLECTION_MODE.VERTICAL)
             setMaxItemHorizontal(2)
-            setLoadMoreListener { viewModel.getListCollection() }
             setCloseRefreshListener { binding.srlCollection.hideRefresh() }
         }
         binding.srlCollection.setOnRefreshListener { viewModel.getListCollection() }

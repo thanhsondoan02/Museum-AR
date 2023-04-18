@@ -15,7 +15,7 @@
                 android:id="@+id/cvCollection"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipToPadding="true"
+                android:clipToPadding="false"
                 android:padding="@dimen/dimen_8" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

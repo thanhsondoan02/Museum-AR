@@ -10,11 +10,14 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cvCollection"
+            style="?attr/materialCardViewElevatedStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="@dimen/dimen_8"
-            app:cardCornerRadius="@dimen/dimen_corner_8">
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/dimen_corner_8"
+            app:cardElevation="@dimen/dimen_4">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
