@@ -7,13 +7,16 @@
         android:background="@color/white">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/srlCollection"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <com.tiger.ar.museum.presentation.widget.CollectionView
                 android:id="@+id/cvCollection"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:clipToPadding="true"
+                android:padding="@dimen/dimen_8" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

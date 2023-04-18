@@ -1,4 +1,4 @@
-package com.tiger.ar.museum.presentation
+package com.tiger.ar.museum.presentation.collection
 
 import androidx.databinding.ViewDataBinding
 import com.tiger.ar.museum.R
@@ -16,7 +16,6 @@ class CollectionAdapter: BaseGridAdapter() {
     }
 
     override fun getItemCountInRow(viewType: Int) = 2
-
 
     inner class CollectionVH(private val binding: CollectionItemBinding) : BaseVH<MCollection>(binding) {
 
