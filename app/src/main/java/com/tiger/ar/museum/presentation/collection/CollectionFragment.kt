@@ -7,6 +7,7 @@ import com.tiger.ar.museum.common.binding.BaseBindingFragment
 import com.tiger.ar.museum.common.extension.coroutinesLaunch
 import com.tiger.ar.museum.common.extension.handleUiState
 import com.tiger.ar.museum.common.extension.hideRefresh
+import com.tiger.ar.museum.common.extension.toast
 import com.tiger.ar.museum.databinding.CollectionFragmentBinding
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
@@ -35,6 +36,7 @@ class CollectionFragment : BaseBindingFragment<CollectionFragmentBinding>(R.layo
                 }
 
                 override fun onFailure() {
+                    toast("Error: " + it.throwable?.message)
                 }
 
                 override fun onSuccess() {
