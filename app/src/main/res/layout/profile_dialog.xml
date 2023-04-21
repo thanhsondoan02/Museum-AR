@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginHorizontal="@dimen/dimen_46"
+            android:layout_marginHorizontal="@dimen/dimen_30"
             android:background="@drawable/shape_rectangle_white_bg_corner_8"
             android:gravity="center"
             android:orientation="vertical">
@@ -24,43 +24,127 @@
 
                 <ImageView
                     android:id="@+id/ivProfileClose"
-                    android:layout_width="@dimen/dimen_46"
-                    android:layout_height="@dimen/dimen_46"
+                    android:layout_width="@dimen/dimen_56"
+                    android:layout_height="@dimen/dimen_56"
+                    android:layout_marginStart="@dimen/dimen_2"
                     android:background="?android:attr/actionBarItemBackground"
-                    android:padding="@dimen/dimen_12"
+                    android:padding="@dimen/dimen_16"
                     android:src="@drawable/ic_close"
                     app:layout_constraintDimensionRatio="H, 1:1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <TextView
+                    android:id="@+id/tvProfileTiger"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/tiger"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/dimen_text_size_24"
+                    app:layout_constraintBottom_toBottomOf="@id/ivProfileClose"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/ivProfileClose" />
+
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/ivRealMainProfile"
-                    android:layout_width="@dimen/dimen_46"
-                    android:layout_height="@dimen/dimen_46"
-                    android:layout_marginStart="@dimen/dimen_16"
+                    android:id="@+id/ivProfileAvatar"
+                    android:layout_width="@dimen/dimen_48"
+                    android:layout_height="@dimen/dimen_48"
+                    android:layout_marginStart="@dimen/dimen_14"
+                    android:layout_marginTop="@dimen/dimen_6"
                     android:background="?android:attr/actionBarItemBackground"
+                    android:padding="@dimen/dimen_2"
                     android:src="@color/main_black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ivProfileClose"
                     app:shapeAppearanceOverlay="@style/CircleImageView" />
+
+                <TextView
+                    android:id="@+id/tvProfileFullName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_14"
+                    android:layout_marginEnd="@dimen/dimen_4"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/roboto_medium"
+                    android:maxLines="1"
+                    android:text="@string/full_name_example"
+                    android:textColor="@color/main_black"
+                    android:textSize="@dimen/dimen_text_size_16"
+                    app:layout_constraintBottom_toTopOf="@id/tvProfileEmail"
+                    app:layout_constraintEnd_toStartOf="@id/flProfileDown"
+                    app:layout_constraintStart_toEndOf="@id/ivProfileAvatar"
+                    app:layout_constraintTop_toTopOf="@id/ivProfileAvatar" />
+
+                <TextView
+                    android:id="@+id/tvProfileEmail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/roboto_regular"
+                    android:maxLines="1"
+                    android:text="@string/email_example"
+                    android:textColor="@color/main_black"
+                    android:textSize="@dimen/dimen_text_size_14"
+                    app:layout_constraintBottom_toBottomOf="@id/ivProfileAvatar"
+                    app:layout_constraintEnd_toEndOf="@id/tvProfileFullName"
+                    app:layout_constraintStart_toStartOf="@id/tvProfileFullName"
+                    app:layout_constraintTop_toBottomOf="@id/tvProfileFullName" />
+
+                <FrameLayout
+                    android:id="@+id/flProfileDown"
+                    android:layout_width="@dimen/dimen_48"
+                    android:layout_height="@dimen/dimen_48"
+                    android:layout_marginEnd="@dimen/dimen_4"
+                    android:background="?android:attr/actionBarItemBackground"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="@id/ivProfileAvatar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/ivProfileAvatar">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_24"
+                        android:layout_height="@dimen/dimen_24"
+                        android:layout_gravity="center"
+                        android:background="@drawable/shape_circle_transparent_bg_stroke_1"
+                        android:src="@drawable/ic_down" />
+
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:background="@drawable/shape_rectangle_gray_stroke_1_corner_30"
+                    android:fontFamily="@font/roboto_medium"
+                    android:paddingHorizontal="@dimen/dimen_16"
+                    android:paddingVertical="@dimen/dimen_6"
+                    android:text="@string/manage_your_tiger_account"
+                    android:textColor="@color/main_black"
+                    android:textSize="@dimen/dimen_text_size_16"
+                    app:layout_constraintEnd_toEndOf="@id/tvProfileFullName"
+                    app:layout_constraintStart_toStartOf="@id/tvProfileFullName"
+                    app:layout_constraintTop_toBottomOf="@id/ivProfileAvatar" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#80808080" />
+                android:layout_marginTop="@dimen/dimen_20"
+                android:background="@color/gray_light" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_46"
+                android:layout_height="@dimen/dimen_56"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="@dimen/dimen_24"
                     android:layout_height="@dimen/dimen_24"
-                    android:layout_marginHorizontal="@dimen/dimen_20"
+                    android:layout_marginHorizontal="@dimen/dimen_30"
                     android:src="@drawable/ic_achievement" />
 
                 <TextView
@@ -69,20 +153,20 @@
                     android:fontFamily="@font/roboto_medium"
                     android:text="@string/achievement"
                     android:textColor="@color/main_black"
-                    android:textSize="@dimen/dimen_text_size_14" />
+                    android:textSize="@dimen/dimen_text_size_16" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_46"
+                android:layout_height="@dimen/dimen_56"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="@dimen/dimen_24"
                     android:layout_height="@dimen/dimen_24"
-                    android:layout_marginHorizontal="@dimen/dimen_20"
+                    android:layout_marginHorizontal="@dimen/dimen_30"
                     android:src="@drawable/ic_collection" />
 
                 <TextView
@@ -91,20 +175,20 @@
                     android:fontFamily="@font/roboto_medium"
                     android:text="@string/collections"
                     android:textColor="@color/main_black"
-                    android:textSize="@dimen/dimen_text_size_14" />
+                    android:textSize="@dimen/dimen_text_size_16" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_46"
+                android:layout_height="@dimen/dimen_56"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="@dimen/dimen_24"
                     android:layout_height="@dimen/dimen_24"
-                    android:layout_marginHorizontal="@dimen/dimen_20"
+                    android:layout_marginHorizontal="@dimen/dimen_30"
                     android:src="@drawable/ic_near_by" />
 
                 <TextView
@@ -113,20 +197,20 @@
                     android:fontFamily="@font/roboto_medium"
                     android:text="@string/nearby"
                     android:textColor="@color/main_black"
-                    android:textSize="@dimen/dimen_text_size_14" />
+                    android:textSize="@dimen/dimen_text_size_16" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_46"
+                android:layout_height="@dimen/dimen_56"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="@dimen/dimen_24"
                     android:layout_height="@dimen/dimen_24"
-                    android:layout_marginHorizontal="@dimen/dimen_20"
+                    android:layout_marginHorizontal="@dimen/dimen_30"
                     android:src="@drawable/ic_experiment" />
 
                 <TextView
@@ -135,25 +219,25 @@
                     android:fontFamily="@font/roboto_medium"
                     android:text="@string/experiments"
                     android:textColor="@color/main_black"
-                    android:textSize="@dimen/dimen_text_size_14" />
+                    android:textSize="@dimen/dimen_text_size_16" />
 
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#80808080" />
+                android:background="@color/gray_light" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_46"
+                android:layout_height="@dimen/dimen_56"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="@dimen/dimen_24"
                     android:layout_height="@dimen/dimen_24"
-                    android:layout_marginHorizontal="@dimen/dimen_20"
+                    android:layout_marginHorizontal="@dimen/dimen_30"
                     android:src="@drawable/ic_data" />
 
                 <TextView
@@ -162,43 +246,43 @@
                     android:fontFamily="@font/roboto_medium"
                     android:text="@string/your_data_in_app"
                     android:textColor="@color/main_black"
-                    android:textSize="@dimen/dimen_text_size_14" />
+                    android:textSize="@dimen/dimen_text_size_16" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_46"
+                android:layout_height="@dimen/dimen_56"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="@dimen/dimen_24"
                     android:layout_height="@dimen/dimen_24"
-                    android:layout_marginHorizontal="@dimen/dimen_20"
+                    android:layout_marginHorizontal="@dimen/dimen_30"
                     android:src="@drawable/ic_setting" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:fontFamily="@font/roboto_medium"
                     android:text="@string/settings"
                     android:textColor="@color/main_black"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="@dimen/dimen_text_size_14" />
+                    android:textSize="@dimen/dimen_text_size_16" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_46"
+                android:layout_height="@dimen/dimen_56"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="@dimen/dimen_24"
                     android:layout_height="@dimen/dimen_24"
-                    android:layout_marginHorizontal="@dimen/dimen_20"
+                    android:layout_marginHorizontal="@dimen/dimen_30"
                     android:src="@drawable/ic_feedback" />
 
                 <TextView
@@ -207,7 +291,46 @@
                     android:fontFamily="@font/roboto_medium"
                     android:text="@string/feedback"
                     android:textColor="@color/main_black"
-                    android:textSize="@dimen/dimen_text_size_14" />
+                    android:textSize="@dimen/dimen_text_size_16" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_light" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_56"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_20"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="@string/privacy_policy"
+                    android:textColor="@color/main_black"
+                    android:textSize="@dimen/dimen_text_size_12" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="@string/dot"
+                    android:textColor="@color/main_black"
+                    android:textSize="@dimen/dimen_text_size_12" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_20"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="@string/terms_of_service"
+                    android:textColor="@color/main_black"
+                    android:textSize="@dimen/dimen_text_size_12" />
 
             </LinearLayout>
 

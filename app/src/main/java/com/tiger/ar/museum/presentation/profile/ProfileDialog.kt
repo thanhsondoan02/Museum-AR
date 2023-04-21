@@ -1,7 +1,10 @@
 package com.tiger.ar.museum.presentation.profile
 
+import android.text.style.ForegroundColorSpan
 import com.tiger.ar.museum.R
+import com.tiger.ar.museum.common.SpannableBuilder
 import com.tiger.ar.museum.common.binding.MuseumDialog
+import com.tiger.ar.museum.common.extension.getAppColor
 import com.tiger.ar.museum.common.extension.setOnSafeClick
 import com.tiger.ar.museum.common.view.DialogScreen
 import com.tiger.ar.museum.databinding.ProfileDialogBinding
@@ -19,10 +22,26 @@ class ProfileDialog : MuseumDialog<ProfileDialogBinding>(R.layout.profile_dialog
 
     override fun onInitView() {
         initOnClick()
+        setTitleColor()
     }
 
     private fun initOnClick() {
         binding.ivProfileClose.setOnSafeClick { dismiss() }
         binding.llProfileContent.setOnSafeClick { }
+        binding.flProfileDown.setOnSafeClick { }
+    }
+
+    private fun setTitleColor() {
+        binding.tvProfileTiger.text = SpannableBuilder("T")
+            .withSpan(ForegroundColorSpan(getAppColor(R.color.blue)))
+            .appendText("i")
+            .withSpan(ForegroundColorSpan(getAppColor(R.color.yellow)))
+            .appendText("g")
+            .withSpan(ForegroundColorSpan(getAppColor(R.color.green)))
+            .appendText("e")
+            .withSpan(ForegroundColorSpan(getAppColor(R.color.red)))
+            .appendText("r")
+            .withSpan(ForegroundColorSpan(getAppColor(R.color.purple)))
+            .spannedText
     }
 }
