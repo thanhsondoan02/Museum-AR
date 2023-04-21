@@ -7,4 +7,14 @@
     <string name="loading">Đang tải…!</string>
     <string name="explore_button">Khám phá bảo tàng</string>
     <string name="hello">Xin chào</string>
+    <string name="manage_your_museum_ar_account">Quản lý tài khoản Museum AR của bạn</string>
+    <string name="achievement">Thành tích</string>
+    <string name="collections">Bộ sưu tập</string>
+    <string name="nearby">Gần đây</string>
+    <string name="experiments">Thí nghiệm</string>
+    <string name="your_data_in_app">Dữ liệu của bạn trong Museum AR</string>
+    <string name="settings">Cài đặt</string>
+    <string name="feedback">Phản hồi</string>
+    <string name="privacy_policy">Chính sách bảo mật</string>
+    <string name="terms_of_service">Điều khoản dịch vụ</string>
 </resources>

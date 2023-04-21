@@ -1,5 +1,5 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.MuseumAR" parent="Theme.Material3.Light.NoActionBar">
+    <style name="Theme.MuseumAR" parent="Theme.MaterialComponents.Light.NoActionBar">
     </style>
 </resources>

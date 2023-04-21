@@ -2,40 +2,60 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <FrameLayout
-        android:id="@+id/flRealMainContainer"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/flMainActivityContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="@dimen/dimen_56"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivRealMainSearch"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="?android:attr/actionBarItemBackground"
+                android:padding="@dimen/dimen_14"
+                android:src="@drawable/baseline_search_24"
+                app:layout_constraintDimensionRatio="H, 1:1"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/tvMainActivityHelloWorld"
+                style="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/hello"
-                android:textSize="@dimen/dimen_text_size_30"
+                android:text="@string/app_name"
+                android:textColor="@color/main_black"
+                android:textSize="@dimen/dimen_text_size_22"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ivRealMainCast"
+                app:layout_constraintStart_toEndOf="@id/ivRealMainSearch"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/btnRealMainExplore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:text="@string/explore_button"
+            <ImageView
+                android:id="@+id/ivRealMainCast"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="?android:attr/actionBarItemBackground"
+                android:padding="@dimen/dimen_14"
+                android:src="@drawable/baseline_cast_24"
+                app:layout_constraintDimensionRatio="H, 1:1"
+                app:layout_constraintEnd_toStartOf="@id/ivRealMainProfile" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivRealMainProfile"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="?android:attr/actionBarItemBackground"
+                android:padding="@dimen/dimen_14"
+                android:src="@color/main_black"
+                app:layout_constraintDimensionRatio="H, 1:1"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvMainActivityHelloWorld" />
+                app:shapeAppearanceOverlay="@style/CircleImageView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
