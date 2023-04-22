@@ -65,21 +65,17 @@
             android:id="@+id/babRealMainFooter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom">
+            android:layout_gravity="bottom"
+            app:contentInsetEnd="0dp"
+            app:contentInsetStart="0dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:layout_width="match_parent"
-                android:background="@color/black"
-                android:layout_height="wrap_content">
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="30dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_rectange_transparent_bg"
+                app:itemIconTint="@color/bottom_nav_selector"
+                app:labelVisibilityMode="unlabeled"
+                app:menu="@menu/bottom_nav_menu" />
 
         </com.google.android.material.bottomappbar.BottomAppBar>
 
@@ -87,12 +83,15 @@
             android:id="@+id/fabRealMainCamera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_circle_camera_bg"
-            android:src="@drawable/ic_camera"
+            android:src="@drawable/shape_google_len_bg"
+            app:backgroundTint="@color/white"
+            app:maxImageSize="56dp"
+            app:backgroundTintMode="src_atop"
             app:layout_anchor="@id/babRealMainFooter"
             app:layout_constraintBottom_toTopOf="@id/babRealMainFooter"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:tint="@color/gray_icon_bottom_nav" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

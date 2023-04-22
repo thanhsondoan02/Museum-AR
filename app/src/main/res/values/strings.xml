@@ -22,4 +22,8 @@
     <string name="tiger">Tiger</string>
     <string name="email_example">ghetnhungthangdattenvovan@gmail.com</string>
     <string name="full_name_example">Đoàn Thanh Sơn</string>
+    <string name="home">Trang chủ</string>
+    <string name="explore">Khám phá</string>
+    <string name="favorite">Yêu thích</string>
+    <string name="game">Trò chơi</string>
 </resources>

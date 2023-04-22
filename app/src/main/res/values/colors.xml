@@ -9,7 +9,8 @@
     <color name="red">#ff595e</color>
     <color name="yellow">#ffca3a</color>
     <color name="green">#8ac926</color>
-    <color name="blue">#1982c4</color>
+    <color name="blue">#1a73e9</color>
     <color name="purple">#6a4c93</color>
     <color name="transparent">#00000000</color>
+    <color name="gray_icon_bottom_nav">#626364</color>
 </resources>
