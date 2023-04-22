@@ -7,6 +7,6 @@ import com.tiger.ar.museum.domain.model.Model3d
 class GetAllModelUseCase : BaseUseCase<BaseUseCase.VoidRequest, List<Model3d>>() {
     override suspend fun execute(rv: VoidRequest): List<Model3d> {
         val repo = RepositoryFactory.getRemoteRepo()
-        return repo.getModelInCollection(1)
+        return repo.getModelInCollection(-1)
     }
 }

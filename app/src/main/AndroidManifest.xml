@@ -34,7 +34,7 @@
             android:value="required" />
 
         <activity
-            android:name=".presentation.camera.View3dActivity"
+            android:name=".presentation.camera.view3d.View3dActivity"
             android:exported="false" />
 
     </application>

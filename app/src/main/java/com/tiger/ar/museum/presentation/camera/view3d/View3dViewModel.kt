@@ -1,4 +1,4 @@
-package com.tiger.ar.museum.presentation.camera
+package com.tiger.ar.museum.presentation.camera.view3d
 
 import androidx.lifecycle.viewModelScope
 import com.tiger.ar.museum.common.BaseUseCase

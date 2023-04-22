@@ -10,7 +10,7 @@ import com.tiger.ar.museum.common.extension.getAppFont
 import com.tiger.ar.museum.common.extension.getAppString
 import com.tiger.ar.museum.common.extension.setOnSafeClick
 import com.tiger.ar.museum.databinding.RealMainActivityBinding
-import com.tiger.ar.museum.presentation.camera.View3dActivity
+import com.tiger.ar.museum.presentation.camera.view3d.View3dActivity
 import com.tiger.ar.museum.presentation.explore.ExploreFragment
 import com.tiger.ar.museum.presentation.favorite.FavoriteFragment
 import com.tiger.ar.museum.presentation.game.GameFragment
