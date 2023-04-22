@@ -83,15 +83,15 @@
             android:id="@+id/fabRealMainCamera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/shape_google_len_bg"
+            android:src="@drawable/ic_camera_test"
             app:backgroundTint="@color/white"
-            app:maxImageSize="56dp"
             app:backgroundTintMode="src_atop"
             app:layout_anchor="@id/babRealMainFooter"
             app:layout_constraintBottom_toTopOf="@id/babRealMainFooter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:tint="@color/gray_icon_bottom_nav" />
+            app:maxImageSize="62dp"
+            app:tint="@null" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
