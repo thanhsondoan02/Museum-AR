@@ -4,19 +4,20 @@ import androidx.viewpager.widget.ViewPager
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.FontSpan
 import com.tiger.ar.museum.common.SpannableBuilder
-import com.tiger.ar.museum.common.binding.BaseBindingActivity
+import com.tiger.ar.museum.common.binding.MuseumActivity
 import com.tiger.ar.museum.common.binding.MuseumFragment
 import com.tiger.ar.museum.common.extension.getAppFont
 import com.tiger.ar.museum.common.extension.getAppString
 import com.tiger.ar.museum.common.extension.setOnSafeClick
 import com.tiger.ar.museum.databinding.RealMainActivityBinding
+import com.tiger.ar.museum.presentation.camera.View3dActivity
 import com.tiger.ar.museum.presentation.explore.ExploreFragment
 import com.tiger.ar.museum.presentation.favorite.FavoriteFragment
 import com.tiger.ar.museum.presentation.game.GameFragment
 import com.tiger.ar.museum.presentation.home.HomeFragment
 import com.tiger.ar.museum.presentation.profile.ProfileDialog
 
-class RealMainActivity : BaseBindingActivity<RealMainActivityBinding>(R.layout.real_main_activity) {
+class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_main_activity) {
 
 //    override fun getContainerId() = R.id.flRealMainContainer
 
@@ -47,6 +48,10 @@ class RealMainActivity : BaseBindingActivity<RealMainActivityBinding>(R.layout.r
         binding.ivRealMainProfile.setOnSafeClick {
             val profileDialog = ProfileDialog()
             profileDialog.show(supportFragmentManager, profileDialog::class.java.simpleName)
+        }
+
+        binding.fabRealMainCamera.setOnSafeClick {
+            navigateTo(View3dActivity::class.java)
         }
     }
 

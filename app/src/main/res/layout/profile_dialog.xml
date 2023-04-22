@@ -6,7 +6,7 @@
         android:id="@+id/flProfileBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black_overlay">
+        android:background="@color/black_overlay_light">
 
         <LinearLayout
             android:id="@+id/llProfileContent"
