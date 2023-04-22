@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import com.tiger.ar.museum.data.BaseApiResponse
 
 class ModelInCollectionResponse : BaseApiResponse() {
-    @SerializedName("id")
+    @SerializedName("data")
     @Expose
     var data: ModelMainDTO? = null
 }

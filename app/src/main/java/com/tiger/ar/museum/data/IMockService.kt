@@ -10,7 +10,7 @@ interface IMockService : IApiService {
     @GET("collections")
     fun getCollections(): Call<CollectionResponse>
 
-    @GET("collections")
+    @GET("collections/model")
     fun getModelsInCollection(@Query("id") collectionId: Int): Call<ModelInCollectionResponse>
 
 }

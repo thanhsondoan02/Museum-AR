@@ -19,7 +19,7 @@ class CollectionFragment : BaseBindingFragment<CollectionFragmentBinding>(R.layo
         super.onInitView()
         binding.cvCollection.apply {
             setAdapter(this@CollectionFragment.adapter)
-            setLayoutManager(COLLECTION_MODE.VERTICAL)
+            setLayoutManager(COLLECTION_MODE.GRID_VERTICAL)
             setMaxItemHorizontal(2)
             setCloseRefreshListener { binding.srlCollection.hideRefresh() }
         }
