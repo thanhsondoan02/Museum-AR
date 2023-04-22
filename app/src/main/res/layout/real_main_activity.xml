@@ -83,7 +83,7 @@
             android:id="@+id/fabRealMainCamera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_camera_test"
+            android:src="@drawable/ic_camera"
             app:backgroundTint="@color/white"
             app:backgroundTintMode="src_atop"
             app:layout_anchor="@id/babRealMainFooter"
