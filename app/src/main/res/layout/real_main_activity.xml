@@ -57,7 +57,8 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.viewpager.widget.ViewPager
+        <com.tiger.ar.museum.presentation.widget.CustomViewPager
+            android:id="@+id/vpRealMain"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
@@ -70,6 +71,7 @@
             app:contentInsetStart="0dp">
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bnvRealMain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_rectange_transparent_bg"

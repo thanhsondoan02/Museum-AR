@@ -1,23 +1,39 @@
 package com.tiger.ar.museum.presentation
 
+import androidx.viewpager.widget.ViewPager
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.FontSpan
 import com.tiger.ar.museum.common.SpannableBuilder
 import com.tiger.ar.museum.common.binding.BaseBindingActivity
+import com.tiger.ar.museum.common.binding.MuseumFragment
 import com.tiger.ar.museum.common.extension.getAppFont
 import com.tiger.ar.museum.common.extension.getAppString
 import com.tiger.ar.museum.common.extension.setOnSafeClick
 import com.tiger.ar.museum.databinding.RealMainActivityBinding
+import com.tiger.ar.museum.presentation.explore.ExploreFragment
+import com.tiger.ar.museum.presentation.favorite.FavoriteFragment
+import com.tiger.ar.museum.presentation.game.GameFragment
+import com.tiger.ar.museum.presentation.home.HomeFragment
 import com.tiger.ar.museum.presentation.profile.ProfileDialog
 
 class RealMainActivity : BaseBindingActivity<RealMainActivityBinding>(R.layout.real_main_activity) {
 
 //    override fun getContainerId() = R.id.flRealMainContainer
 
+    private lateinit var pagerAdapter: MainViewPagerAdapter
+    private val fragmentList = mutableListOf<MuseumFragment<*>>()
+    private val homeFragment by lazy { HomeFragment() }
+    private val exploreFragment by lazy { ExploreFragment() }
+    private val favoriteFragment by lazy { FavoriteFragment() }
+    private val gameFragment by lazy { GameFragment() }
+
+
     override fun onInitView() {
         super.onInitView()
         initOnClick()
         setSpanTitle()
+        initBottomNav()
+        initViewPager()
     }
 
     private fun initOnClick() {
@@ -40,5 +56,63 @@ class RealMainActivity : BaseBindingActivity<RealMainActivityBinding>(R.layout.r
             .appendText(getAppString(R.string.app_name))
             .withSpan(FontSpan(getAppFont(R.font.roboto_regular)))
             .spannedText
+    }
+
+    private fun initBottomNav() {
+        binding.bnvRealMain.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.iBottomNavHome -> {
+                    binding.vpRealMain.setCurrentItem(0, false)
+                    true
+                }
+                R.id.iBottomNavExplore -> {
+                    binding.vpRealMain.setCurrentItem(1, false)
+                    true
+                }
+                R.id.iBottomNavFavorite -> {
+                    binding.vpRealMain.setCurrentItem(2, false)
+                    true
+                }
+                R.id.iBottomNavGame -> {
+                    binding.vpRealMain.setCurrentItem(3, false)
+                    true
+                }
+                else -> throw IllegalArgumentException("Invalid item id")
+            }
+        }
+    }
+
+    private fun initViewPager() {
+        pagerAdapter = MainViewPagerAdapter(supportFragmentManager)
+
+        fragmentList.add(homeFragment)
+        fragmentList.add(exploreFragment)
+        fragmentList.add(favoriteFragment)
+        fragmentList.add(gameFragment)
+        pagerAdapter.addListFragment(fragmentList)
+
+        binding.vpRealMain.apply {
+            setPagingEnabled(false)
+            adapter = pagerAdapter
+            offscreenPageLimit = pagerAdapter.count
+            currentItem = 0
+        }
+
+        binding.vpRealMain.addOnPageChangeListener(
+            object : ViewPager.OnPageChangeListener {
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
+                }
+
+                override fun onPageSelected(position: Int) {
+                }
+
+                override fun onPageScrollStateChanged(state: Int) {
+                }
+            }
+        )
     }
 }
