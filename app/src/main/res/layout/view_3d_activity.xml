@@ -16,8 +16,11 @@
         <com.tiger.ar.museum.presentation.widget.CollectionView
             android:id="@+id/cvView3d"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_300"
-            android:layout_gravity="bottom" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/black_overlay_light"
+            android:clipToPadding="false"
+            android:padding="@dimen/dimen_8" />
 
     </FrameLayout>
 

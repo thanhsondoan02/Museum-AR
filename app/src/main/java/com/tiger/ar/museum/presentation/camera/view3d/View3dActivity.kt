@@ -29,11 +29,10 @@ class View3dActivity: MuseumActivity<View3dActivityBinding>(R.layout.view_3d_act
                 }
 
                 override fun onFailure() {
-                    toast("Lấy danh sách mô hình thất bại")
+                    toast("Lấy danh sách mô hình thất bại: ${it.throwable?.message}")
                 }
 
                 override fun onSuccess() {
-                    toast("Lấy danh sách mô hình thành công")
                     binding.cvView3d.submitList(it.data)
                 }
             })
