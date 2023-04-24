@@ -38,6 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_12"
             android:layout_marginBottom="@dimen/dimen_12"
+            android:background="?android:selectableItemBackground"
             android:fontFamily="@font/roboto_regular"
             android:text="@string/download"
             android:textColor="@color/white"

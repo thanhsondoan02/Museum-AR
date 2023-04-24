@@ -7,7 +7,7 @@
         android:layout_height="match_parent">
 
         <fragment
-            android:id="@+id/arFragment"
+            android:id="@+id/fView3dArFragment"
             android:name="com.google.ar.sceneform.ux.ArFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -17,6 +17,7 @@
             android:id="@+id/cvView3d"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="@dimen/dimen_200"
             android:layout_gravity="bottom"
             android:background="@color/black_overlay_light"
             android:clipToPadding="false"

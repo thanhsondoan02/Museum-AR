@@ -10,6 +10,8 @@ import com.tiger.ar.museum.databinding.View3dItemBinding
 import com.tiger.ar.museum.domain.model.Model3d
 
 class View3dAdapter: MuseumAdapter() {
+    var listener: IListener? = null
+
     override fun getLayoutResource(viewType: Int) = R.layout.view_3d_item
 
     override fun onCreateViewHolder(viewType: Int, binding: ViewDataBinding): BaseVH<*>? {
@@ -20,6 +22,7 @@ class View3dAdapter: MuseumAdapter() {
         init {
             binding.tvView3dDownload.setOnSafeClick {
                 getItem {
+                    listener?.onDownloadClick(it)
                 }
             }
         }
@@ -28,5 +31,9 @@ class View3dAdapter: MuseumAdapter() {
             binding.ivView3d.loadImage(data.thumbnail)
             binding.tvView3dName.text = data.name
         }
+    }
+
+    interface IListener {
+        fun onDownloadClick(model3d: Model3d)
     }
 }
