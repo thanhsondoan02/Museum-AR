@@ -9,6 +9,10 @@ import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.assets.RenderableSource
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.ArFragment
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.IViewListener
@@ -22,7 +26,7 @@ import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 import java.io.File
 import java.io.IOException
 
-class View3dActivity: MuseumActivity<View3dActivityBinding>(R.layout.view_3d_activity) {
+class View3dActivity : MuseumActivity<View3dActivityBinding>(R.layout.view_3d_activity) {
     private val viewModel by viewModels<View3dViewModel>()
     private val adapter by lazy { View3dAdapter() }
     private var arFragment: ArFragment? = null
@@ -31,7 +35,7 @@ class View3dActivity: MuseumActivity<View3dActivityBinding>(R.layout.view_3d_act
         super.onInitView()
         initRecyclerView()
         initArFragment()
-        viewModel.get3dModelList()
+        get3dModelList()
     }
 
     override fun onObserverViewModel() {
@@ -66,7 +70,7 @@ class View3dActivity: MuseumActivity<View3dActivityBinding>(R.layout.view_3d_act
     }
 
     private fun initArFragment() {
-        arFragment = supportFragmentManager.findFragmentById(R.id.fView3dArFragment) as ArFragment
+        arFragment = supportFragmentManager.findFragmentById(R.id.fView3dArFragment) as? ArFragment
         arFragment?.setOnTapArPlaneListener { hitResult: HitResult, plane: Plane?, motionEvent: MotionEvent? ->
             val anchorNode = AnchorNode(hitResult.createAnchor())
             anchorNode.renderable = viewModel.model3d
@@ -108,5 +112,26 @@ class View3dActivity: MuseumActivity<View3dActivityBinding>(R.layout.view_3d_act
                 if (modelRenderable != null) toast("Tải mô hình thành công")
                 viewModel.model3d = modelRenderable
             }
+    }
+
+    private fun get3dModelList() {
+        val db = FirebaseDatabase.getInstance()
+        val ref = db.getReference("Model3d")
+        ref.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val list = mutableListOf<Model3d>()
+                for (data in snapshot.children) {
+                    val model3d = data.getValue(Model3d::class.java)
+                    if (model3d != null) {
+                        list.add(model3d)
+                    }
+                }
+                binding.cvView3d.submitList(list)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                toast("Lấy danh sách mô hình thất bại: ${error.message}")
+            }
+        })
     }
 }
