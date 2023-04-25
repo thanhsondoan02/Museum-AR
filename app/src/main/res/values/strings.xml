@@ -32,4 +32,16 @@
     <string name="stories">Câu chuyện</string>
     <string name="view_all">Xem tất cả</string>
     <string name="online_exhibit">triển lãm trực tuyến</string>
+    <string name="input_user_name">Nhập tên đăng nhập</string>
+    <string name="login">Đăng nhập</string>
+    <string name="input_password">Nhập mật khẩu</string>
+    <string name="save_account">Lưu tài khoản</string>
+    <string name="login3rd">Hoặc đăng nhập với</string>
+    <string name="error_field_must_not_be_empty">Trường bắt buộc</string>
+    <string name="email">Email</string>
+    <string name="password">Mật khẩu</string>
+    <string name="sign_in">Đăng nhập</string>
+    <string name="sign_up">Đăng ký</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+    <string name="dont_have_account">Chưa có tài khoản?</string>
 </resources>

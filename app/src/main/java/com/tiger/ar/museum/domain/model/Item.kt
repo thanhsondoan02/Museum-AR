@@ -14,6 +14,10 @@ data class Item(
 
     var thumbnail: String? = null,
 
-    var time: String? = null
+    var time: String? = null,
+
+    var streetView: String? = null,
+
+    var model3d: String? = null
 
 ) : IParcelable

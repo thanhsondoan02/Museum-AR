@@ -15,11 +15,10 @@ import com.tiger.ar.museum.presentation.explore.ExploreFragment
 import com.tiger.ar.museum.presentation.favorite.FavoriteMainFragment
 import com.tiger.ar.museum.presentation.game.GameFragment
 import com.tiger.ar.museum.presentation.home.HomeFragment
+import com.tiger.ar.museum.presentation.login.LoginFragment
 import com.tiger.ar.museum.presentation.profile.ProfileDialog
 
 class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_main_activity) {
-
-//    override fun getContainerId() = R.id.flRealMainContainer
 
     private val pagerAdapter by lazy { MainViewPagerAdapter(supportFragmentManager) }
     private val fragmentList = mutableListOf<MuseumFragment<*>>()
@@ -29,6 +28,7 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
     private val gameFragment by lazy { GameFragment() }
 
     override fun onInitView() {
+        replaceFragmentNew(LoginFragment(), containerId = R.id.flRealMain)
         super.onInitView()
         initOnClick()
         setSpanTitle()
