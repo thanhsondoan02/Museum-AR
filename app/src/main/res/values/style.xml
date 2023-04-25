@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="CircleImageView">
         <item name="cornerSize">50%</item>
     </style>
+
+    <style name="allCircleImageView">
+        <item name="cornerSize">@dimen/dimen_corner_8</item>
+    </style>
+
+    <style name="leftCircleImageView">
+        <item name="cornerSizeTopLeft">@dimen/dimen_corner_8</item>
+        <item name="cornerSizeBottomLeft">@dimen/dimen_corner_8</item>
+    </style>
+
+    <style name="rightCircleImageView">
+        <item name="cornerSizeTopRight">@dimen/dimen_corner_8</item>
+        <item name="cornerSizeBottomRight">@dimen/dimen_corner_8</item>
+    </style>
+
+    <style name="topLeftCircleImageView">
+        <item name="cornerSizeTopLeft">@dimen/dimen_corner_8</item>
+    </style>
+
+    <style name="botLeftCircleImageView">
+        <item name="cornerSizeBottomLeft">@dimen/dimen_corner_8</item>
+    </style>
+
 </resources>

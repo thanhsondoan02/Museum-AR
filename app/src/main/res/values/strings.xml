@@ -27,4 +27,9 @@
     <string name="favorite">Yêu thích</string>
     <string name="game">Trò chơi</string>
     <string name="download">Tải xuống</string>
+    <string name="galleries">Phòng trưng bày</string>
+    <string name="items">Mục</string>
+    <string name="stories">Câu chuyện</string>
+    <string name="view_all">Xem tất cả</string>
+    <string name="online_exhibit">triển lãm trực tuyến</string>
 </resources>

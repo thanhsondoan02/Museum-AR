@@ -12,7 +12,7 @@ import com.tiger.ar.museum.common.extension.setOnSafeClick
 import com.tiger.ar.museum.databinding.RealMainActivityBinding
 import com.tiger.ar.museum.presentation.camera.view3d.View3dActivity
 import com.tiger.ar.museum.presentation.explore.ExploreFragment
-import com.tiger.ar.museum.presentation.favorite.FavoriteFragment
+import com.tiger.ar.museum.presentation.favorite.FavoriteMainFragment
 import com.tiger.ar.museum.presentation.game.GameFragment
 import com.tiger.ar.museum.presentation.home.HomeFragment
 import com.tiger.ar.museum.presentation.profile.ProfileDialog
@@ -21,13 +21,12 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
 
 //    override fun getContainerId() = R.id.flRealMainContainer
 
-    private lateinit var pagerAdapter: MainViewPagerAdapter
+    private val pagerAdapter by lazy { MainViewPagerAdapter(supportFragmentManager) }
     private val fragmentList = mutableListOf<MuseumFragment<*>>()
     private val homeFragment by lazy { HomeFragment() }
     private val exploreFragment by lazy { ExploreFragment() }
-    private val favoriteFragment by lazy { FavoriteFragment() }
+    private val favoriteMainFragment by lazy { FavoriteMainFragment() }
     private val gameFragment by lazy { GameFragment() }
-
 
     override fun onInitView() {
         super.onInitView()
@@ -88,11 +87,9 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
     }
 
     private fun initViewPager() {
-        pagerAdapter = MainViewPagerAdapter(supportFragmentManager)
-
         fragmentList.add(homeFragment)
         fragmentList.add(exploreFragment)
-        fragmentList.add(favoriteFragment)
+        fragmentList.add(favoriteMainFragment)
         fragmentList.add(gameFragment)
         pagerAdapter.addListFragment(fragmentList)
 
