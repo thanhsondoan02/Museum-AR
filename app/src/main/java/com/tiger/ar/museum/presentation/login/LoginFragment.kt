@@ -8,19 +8,14 @@ import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumFragment
 import com.tiger.ar.museum.common.extension.setOnSafeClick
 import com.tiger.ar.museum.common.extension.toast
-import com.tiger.ar.museum.common.view.StatusBar
 import com.tiger.ar.museum.databinding.LoginFragment2Binding
 import com.tiger.ar.museum.domain.model.User
 
 class LoginFragment : MuseumFragment<LoginFragment2Binding>(R.layout.login_fragment_2) {
 
-    override fun setupStatusBar() = StatusBar(color = R.color.transparent, isDarkText = false)
-
     override fun onInitView() {
         super.onInitView()
-        museumActivity.setFullScreen()
         initOnClick()
-
     }
 
     private fun initOnClick() {
