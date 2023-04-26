@@ -1,14 +1,13 @@
 package com.tiger.ar.museum.presentation
 
 import androidx.viewpager.widget.ViewPager
+import com.tiger.ar.museum.AppPreferences
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.FontSpan
 import com.tiger.ar.museum.common.SpannableBuilder
 import com.tiger.ar.museum.common.binding.MuseumActivity
 import com.tiger.ar.museum.common.binding.MuseumFragment
-import com.tiger.ar.museum.common.extension.getAppFont
-import com.tiger.ar.museum.common.extension.getAppString
-import com.tiger.ar.museum.common.extension.setOnSafeClick
+import com.tiger.ar.museum.common.extension.*
 import com.tiger.ar.museum.common.view.StatusBar
 import com.tiger.ar.museum.databinding.RealMainActivityBinding
 import com.tiger.ar.museum.presentation.camera.view3d.View3dActivity
@@ -35,6 +34,7 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
         setSpanTitle()
         initBottomNav()
         initViewPager()
+        loadAvatar()
     }
 
     private fun initOnClick() {
@@ -117,5 +117,9 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
                 }
             }
         )
+    }
+
+    private fun loadAvatar() {
+        binding.ivRealMainProfile.loadImage(AppPreferences.getUserInfo().avatar, placeHolder = getAppDrawable(R.drawable.ic_no_picture))
     }
 }

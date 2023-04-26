@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
         android:id="@+id/flProfileBackground"
@@ -13,8 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:layout_marginTop="@dimen/dimen_76"
             android:layout_marginHorizontal="@dimen/dimen_30"
+            android:layout_marginTop="@dimen/dimen_76"
             android:background="@drawable/shape_rectangle_white_bg_corner_8"
             android:gravity="center"
             android:orientation="vertical">
@@ -70,13 +71,13 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/roboto_medium"
                     android:maxLines="1"
-                    android:text="@string/full_name_example"
                     android:textColor="@color/main_black"
                     android:textSize="@dimen/dimen_text_size_16"
                     app:layout_constraintBottom_toTopOf="@id/tvProfileEmail"
                     app:layout_constraintEnd_toStartOf="@id/flProfileDown"
                     app:layout_constraintStart_toEndOf="@id/ivProfileAvatar"
-                    app:layout_constraintTop_toTopOf="@id/ivProfileAvatar" />
+                    app:layout_constraintTop_toTopOf="@id/ivProfileAvatar"
+                    tools:text="@string/full_name_example" />
 
                 <TextView
                     android:id="@+id/tvProfileEmail"
@@ -85,13 +86,13 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/roboto_regular"
                     android:maxLines="1"
-                    android:text="@string/email_example"
                     android:textColor="@color/main_black"
                     android:textSize="@dimen/dimen_text_size_14"
                     app:layout_constraintBottom_toBottomOf="@id/ivProfileAvatar"
                     app:layout_constraintEnd_toEndOf="@id/tvProfileFullName"
                     app:layout_constraintStart_toStartOf="@id/tvProfileFullName"
-                    app:layout_constraintTop_toBottomOf="@id/tvProfileFullName" />
+                    app:layout_constraintTop_toBottomOf="@id/tvProfileFullName"
+                    tools:text="@string/email_example" />
 
                 <FrameLayout
                     android:id="@+id/flProfileDown"

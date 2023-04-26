@@ -82,6 +82,6 @@ class LoginActivity : MuseumActivity<LoginFragment2Binding>(R.layout.login_fragm
     }
 
     private fun setAppPreference(user: User) {
-        AppPreferences.user = user
+        AppPreferences.setUserInfo(user)
     }
 }

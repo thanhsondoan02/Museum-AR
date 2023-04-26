@@ -1,10 +1,13 @@
 package com.tiger.ar.museum.presentation.profile
 
 import android.text.style.ForegroundColorSpan
+import com.tiger.ar.museum.AppPreferences
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.SpannableBuilder
 import com.tiger.ar.museum.common.binding.MuseumDialog
 import com.tiger.ar.museum.common.extension.getAppColor
+import com.tiger.ar.museum.common.extension.getAppDrawable
+import com.tiger.ar.museum.common.extension.loadImage
 import com.tiger.ar.museum.common.extension.setOnSafeClick
 import com.tiger.ar.museum.common.view.DialogScreen
 import com.tiger.ar.museum.databinding.ProfileDialogBinding
@@ -23,6 +26,11 @@ class ProfileDialog : MuseumDialog<ProfileDialogBinding>(R.layout.profile_dialog
     override fun onInitView() {
         initOnClick()
         setTitleColor()
+        AppPreferences.getUserInfo().let {
+            binding.ivProfileAvatar.loadImage(it.avatar, placeHolder = getAppDrawable(R.drawable.ic_no_picture))
+            binding.tvProfileEmail.text = it.email
+            binding.tvProfileFullName.text = it.name
+        }
     }
 
     private fun initOnClick() {
