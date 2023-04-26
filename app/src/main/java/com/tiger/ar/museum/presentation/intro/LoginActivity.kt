@@ -27,7 +27,9 @@ class LoginActivity : MuseumActivity<LoginFragment2Binding>(R.layout.login_fragm
         binding.tvLoginForgotPassword.setOnSafeClick { }
         binding.llLoginFacebook.setOnSafeClick { }
         binding.llLoginGoogle.setOnSafeClick { }
-        binding.tvLoginSignUp.setOnSafeClick { }
+        binding.tvLoginSignUp.setOnSafeClick {
+            navigateTo(SignUpActivity::class.java)
+        }
         binding.btnLogin.setOnSafeClick { login() }
         binding.etvLoginPassword.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {

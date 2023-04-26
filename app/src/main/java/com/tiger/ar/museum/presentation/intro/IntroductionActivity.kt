@@ -24,12 +24,11 @@ class IntroductionActivity : MuseumActivity<IntroductionActivityBinding>(R.layou
 
     private fun initOnClick() {
         binding.mcvIntroductionSignIn.setOnSafeClick {
-//            replaceFragmentNew(LoginFragment(), containerId = R.id.constIntroductionRoot)
             navigateTo(LoginActivity::class.java)
         }
 
         binding.mcvIntroductionSignUp.setOnSafeClick {
-            // TODO
+            navigateTo(SignUpActivity::class.java)
         }
     }
 

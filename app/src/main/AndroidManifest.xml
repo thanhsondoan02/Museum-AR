@@ -46,6 +46,10 @@
             android:name=".presentation.intro.LoginActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".presentation.intro.SignUpActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
