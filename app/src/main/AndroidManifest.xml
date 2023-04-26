@@ -42,6 +42,10 @@
             android:name=".presentation.RealMainActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".presentation.login.LoginActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

@@ -1,8 +1,11 @@
 package com.tiger.ar.museum.presentation.login
 
+import android.graphics.Bitmap
 import android.graphics.Point
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.view.WindowManager
+import androidx.core.graphics.drawable.toDrawable
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumActivity
 import com.tiger.ar.museum.common.extension.getAppDrawable
@@ -10,19 +13,19 @@ import com.tiger.ar.museum.common.extension.setOnSafeClick
 import com.tiger.ar.museum.databinding.IntroductionActivityBinding
 
 class IntroductionActivity : MuseumActivity<IntroductionActivityBinding>(R.layout.introduction_activity) {
+    var introBg: Drawable? = null
 
     override fun onInitView() {
         super.onInitView()
         initOnClick()
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
-        getAppDrawable(R.drawable.intro_bg)?.let {
-            binding.flIntroductionRoot.background = cropDrawable(it, 3/10f)
-        }
+        setIntroBackground()
     }
 
     private fun initOnClick() {
         binding.mcvIntroductionSignIn.setOnSafeClick {
-            replaceFragmentNew(LoginFragment(), containerId = R.id.flIntroductionRoot)
+//            replaceFragmentNew(LoginFragment(), containerId = R.id.constIntroductionRoot)
+            navigateTo(LoginActivity::class.java)
         }
 
         binding.mcvIntroductionSignUp.setOnSafeClick {
@@ -30,11 +33,37 @@ class IntroductionActivity : MuseumActivity<IntroductionActivityBinding>(R.layou
         }
     }
 
+    fun setWhiteBackground() {
+        binding.constIntroductionRoot.background = getAppDrawable(R.color.white)
+    }
+
+    fun setIntroBackground() {
+        if (introBg == null) {
+            getAppDrawable(R.drawable.intro_bg)?.let {
+                introBg = cropDrawable(it, getScreenRatio())
+            }
+        }
+        binding.constIntroductionRoot.background = introBg
+    }
+
     private fun cropDrawable(drawable: Drawable, ratio: Float): Drawable {
-        val width = drawable.intrinsicWidth
-        val height = (width / ratio).toInt()
-        drawable.setBounds(0, 0, width, height)
-        return drawable
+        val originalBitmap = (drawable as BitmapDrawable).bitmap
+
+        val width = originalBitmap.width
+        val height = originalBitmap.height
+        return if (width > height * ratio) {
+            val cropWidth = (height * ratio).toInt()
+            val cropOffset = (width - cropWidth) / 2
+            val croppedBitmap = Bitmap.createBitmap(originalBitmap, cropOffset, 0, cropWidth, height)
+            croppedBitmap.toDrawable(resources)
+        } else {
+            val cropHeight = (width / ratio).toInt()
+            val cropOffset = (height - cropHeight) / 2
+            val croppedBitmap = Bitmap.createBitmap(originalBitmap, 0, cropOffset, width, cropHeight)
+            croppedBitmap.toDrawable(resources)
+        }
+//        val croppedBitmap = Bitmap.createBitmap(originalBitmap, 0, 0, 100, 100)
+//        return croppedBitmap.toDrawable(resources)
     }
 
     private fun getScreenRatio(): Float {

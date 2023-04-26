@@ -15,7 +15,13 @@ class LoginFragment : MuseumFragment<LoginFragment2Binding>(R.layout.login_fragm
 
     override fun onInitView() {
         super.onInitView()
+        (museumActivity as? IntroductionActivity)?.setWhiteBackground()
         initOnClick()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        (museumActivity as? IntroductionActivity)?.setIntroBackground()
     }
 
     private fun initOnClick() {
