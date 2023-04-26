@@ -47,6 +47,7 @@ abstract class MuseumActivity<DB : ViewDataBinding>(layoutId: Int) : BaseBinding
     fun navigateToAndClearStack(clazz: Class<out BaseActivity>, onCallback: (Intent) -> Unit = {}) {
         val intent = Intent(this, clazz)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        finishAffinity()
         onCallback.invoke(intent)
         startActivity(intent)
         animOpenScreen()
