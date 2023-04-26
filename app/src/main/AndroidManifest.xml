@@ -20,7 +20,7 @@
         android:theme="@style/Theme.MuseumAR"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.login.IntroductionActivity"
+            android:name=".presentation.intro.IntroductionActivity"
             android:theme="@style/Theme.MuseumAR.Fullscreen"
             android:exported="true">
             <intent-filter>
@@ -43,7 +43,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".presentation.login.LoginActivity"
+            android:name=".presentation.intro.LoginActivity"
             android:exported="false" />
 
     </application>

@@ -1,4 +1,4 @@
-package com.tiger.ar.museum.presentation.login
+package com.tiger.ar.museum.presentation.intro
 
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

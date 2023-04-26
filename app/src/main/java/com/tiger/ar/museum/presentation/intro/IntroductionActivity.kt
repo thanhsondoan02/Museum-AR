@@ -1,4 +1,4 @@
-package com.tiger.ar.museum.presentation.login
+package com.tiger.ar.museum.presentation.intro
 
 import android.graphics.Bitmap
 import android.graphics.Point

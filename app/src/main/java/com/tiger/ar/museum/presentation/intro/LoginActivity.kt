@@ -1,4 +1,4 @@
-package com.tiger.ar.museum.presentation.login
+package com.tiger.ar.museum.presentation.intro
 
 import android.view.inputmethod.EditorInfo
 import com.google.firebase.database.DataSnapshot
