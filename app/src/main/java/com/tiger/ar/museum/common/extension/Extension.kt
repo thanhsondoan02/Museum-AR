@@ -500,7 +500,17 @@ fun Context.toast(msg: String?) {
     ToastUtils.show(this, msg, Toast.LENGTH_SHORT)
 }
 
+fun Context.toastUndeveloped() {
+    val msg = getAppString(R.string.undeveloped)
+    ToastUtils.show(this, msg, Toast.LENGTH_SHORT)
+}
+
 fun AppCompatActivity.toast(msg: String?) {
+    ToastUtils.show(this, msg, Toast.LENGTH_SHORT)
+}
+
+fun AppCompatActivity.toastUndeveloped() {
+    val msg = getAppString(R.string.undeveloped)
     ToastUtils.show(this, msg, Toast.LENGTH_SHORT)
 }
 
@@ -509,6 +519,13 @@ fun AppCompatActivity.hideToast() {
 }
 
 fun Fragment.toast(msg: String?) {
+    context?.let {
+        ToastUtils.show(it, msg, Toast.LENGTH_SHORT)
+    }
+}
+
+fun Fragment.toastUndeveloped() {
+    val msg = getAppString(R.string.undeveloped)
     context?.let {
         ToastUtils.show(it, msg, Toast.LENGTH_SHORT)
     }

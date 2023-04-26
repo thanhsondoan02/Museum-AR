@@ -5,10 +5,7 @@ import com.tiger.ar.museum.AppPreferences
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.SpannableBuilder
 import com.tiger.ar.museum.common.binding.MuseumDialog
-import com.tiger.ar.museum.common.extension.getAppColor
-import com.tiger.ar.museum.common.extension.getAppDrawable
-import com.tiger.ar.museum.common.extension.loadImage
-import com.tiger.ar.museum.common.extension.setOnSafeClick
+import com.tiger.ar.museum.common.extension.*
 import com.tiger.ar.museum.common.view.DialogScreen
 import com.tiger.ar.museum.databinding.ProfileDialogBinding
 
@@ -35,8 +32,18 @@ class ProfileDialog : MuseumDialog<ProfileDialogBinding>(R.layout.profile_dialog
 
     private fun initOnClick() {
         binding.ivProfileClose.setOnSafeClick { dismiss() }
-        binding.llProfileContent.setOnSafeClick { }
-        binding.flProfileDown.setOnSafeClick { }
+        binding.llProfileContent.setOnSafeClick { /* do no thing */ }
+        binding.flProfileDown.setOnSafeClick { toastUndeveloped() }
+        binding.mcvProfileManageAccount.setOnSafeClick { toastUndeveloped() }
+        binding.llProfileAchievement.setOnSafeClick { toastUndeveloped() }
+        binding.llProfileCollection.setOnSafeClick { toastUndeveloped() }
+        binding.llProfileNearBy.setOnSafeClick { toastUndeveloped() }
+        binding.llProfileExperiments.setOnSafeClick { toastUndeveloped() }
+        binding.llProfileDataInApp.setOnSafeClick { toastUndeveloped() }
+        binding.llProfileSettings.setOnSafeClick { toastUndeveloped() }
+        binding.llProfileFeedback.setOnSafeClick { toastUndeveloped() }
+        binding.tvProfilePrivacyPolicy.setOnSafeClick { toastUndeveloped() }
+        binding.tvProfileTermsOfService.setOnSafeClick { toastUndeveloped() }
     }
 
     private fun setTitleColor() {

@@ -49,4 +49,5 @@
     <string name="wrong_password">"Sai mật khẩu"</string>
     <string name="sign_in_fail">Đăng nhập thất bại</string>
     <string name="please_wait">Vui lòng chờ…</string>
+    <string name="undeveloped">Tính năng chưa phát triển</string>
 </resources>

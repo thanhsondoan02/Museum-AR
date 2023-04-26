@@ -57,10 +57,10 @@
                     android:layout_marginTop="@dimen/dimen_6"
                     android:background="?android:attr/actionBarItemBackground"
                     android:padding="@dimen/dimen_2"
-                    android:src="@color/main_black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ivProfileClose"
-                    app:shapeAppearanceOverlay="@style/CircleImageView" />
+                    app:shapeAppearanceOverlay="@style/CircleImageView"
+                    tools:src="@drawable/ic_no_picture" />
 
                 <TextView
                     android:id="@+id/tvProfileFullName"
@@ -114,20 +114,29 @@
 
                 </FrameLayout>
 
-                <TextView
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/mcvProfileManageAccount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_16"
-                    android:background="@drawable/shape_rectangle_gray_stroke_1_corner_30"
-                    android:fontFamily="@font/roboto_medium"
-                    android:paddingHorizontal="@dimen/dimen_16"
-                    android:paddingVertical="@dimen/dimen_6"
-                    android:text="@string/manage_your_tiger_account"
-                    android:textColor="@color/main_black"
-                    android:textSize="@dimen/dimen_text_size_16"
+                    app:cardCornerRadius="@dimen/dimen_corner_30"
                     app:layout_constraintEnd_toEndOf="@id/tvProfileFullName"
                     app:layout_constraintStart_toStartOf="@id/tvProfileFullName"
-                    app:layout_constraintTop_toBottomOf="@id/ivProfileAvatar" />
+                    app:layout_constraintTop_toBottomOf="@id/ivProfileAvatar"
+                    app:strokeColor="@color/gray_light"
+                    app:strokeWidth="@dimen/dimen_1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_medium"
+                        android:paddingHorizontal="@dimen/dimen_16"
+                        android:paddingVertical="@dimen/dimen_6"
+                        android:text="@string/manage_your_tiger_account"
+                        android:textColor="@color/main_black"
+                        android:textSize="@dimen/dimen_text_size_16" />
+
+                </com.google.android.material.card.MaterialCardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -138,8 +147,10 @@
                 android:background="@color/gray_light" />
 
             <LinearLayout
+                android:id="@+id/llProfileAchievement"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_56"
+                android:background="?android:selectableItemBackground"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -160,8 +171,10 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llProfileCollection"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_56"
+                android:background="?android:selectableItemBackground"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -182,8 +195,10 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llProfileNearBy"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_56"
+                android:background="?android:selectableItemBackground"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -204,8 +219,10 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llProfileExperiments"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_56"
+                android:background="?android:selectableItemBackground"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -231,8 +248,10 @@
                 android:background="@color/gray_light" />
 
             <LinearLayout
+                android:id="@+id/llProfileDataInApp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_56"
+                android:background="?android:selectableItemBackground"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -253,8 +272,10 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llProfileSettings"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_56"
+                android:background="?android:selectableItemBackground"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -276,8 +297,10 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llProfileFeedback"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_56"
+                android:background="?android:selectableItemBackground"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -309,9 +332,11 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tvProfilePrivacyPolicy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/dimen_20"
+                    android:background="?android:selectableItemBackground"
                     android:fontFamily="@font/roboto_regular"
                     android:text="@string/privacy_policy"
                     android:textColor="@color/main_black"
@@ -326,9 +351,11 @@
                     android:textSize="@dimen/dimen_text_size_12" />
 
                 <TextView
+                    android:id="@+id/tvProfileTermsOfService"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_20"
+                    android:background="?android:selectableItemBackground"
                     android:fontFamily="@font/roboto_regular"
                     android:text="@string/terms_of_service"
                     android:textColor="@color/main_black"
