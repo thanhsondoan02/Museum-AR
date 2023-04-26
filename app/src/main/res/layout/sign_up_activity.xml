@@ -84,20 +84,36 @@
 
                     </FrameLayout>
 
-                    <EditText
-                        android:id="@+id/etvSignUpPasswordAgain"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dimen_56"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/dimen_16"
-                        android:background="@drawable/shape_rectangle_gray_bg_corner_30"
-                        android:fontFamily="@font/roboto_regular"
-                        android:hint="@string/password_again"
-                        android:inputType="textPassword"
-                        android:paddingHorizontal="@dimen/dimen_20"
-                        android:textColor="@color/main_black"
-                        android:textColorHint="@color/gray"
-                        android:textSize="@dimen/dimen_text_size_18" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_16">
+
+                        <EditText
+                            android:id="@+id/etvSignUpPasswordAgain"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dimen_56"
+                            android:layout_gravity="center"
+                            android:background="@drawable/shape_rectangle_gray_bg_corner_30"
+                            android:fontFamily="@font/roboto_regular"
+                            android:hint="@string/password_again"
+                            android:inputType="textPassword"
+                            android:paddingHorizontal="@dimen/dimen_20"
+                            android:textColor="@color/main_black"
+                            android:textColorHint="@color/gray"
+                            android:textSize="@dimen/dimen_text_size_18" />
+
+                        <ImageView
+                            android:id="@+id/ivSignUpShowPasswordAgain"
+                            android:layout_width="@dimen/dimen_24"
+                            android:layout_height="@dimen/dimen_24"
+                            android:layout_gravity="center_vertical|end"
+                            android:layout_marginEnd="@dimen/dimen_20"
+                            android:background="?android:attr/actionBarItemBackground"
+                            android:src="@drawable/ic_show_password_gray" />
+
+                    </FrameLayout>
+
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/btnSignUp"
