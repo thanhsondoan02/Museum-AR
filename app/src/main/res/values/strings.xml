@@ -52,4 +52,10 @@
     <string name="sign_in_fail">Đăng nhập thất bại</string>
     <string name="please_wait">Vui lòng chờ…</string>
     <string name="undeveloped">Tính năng chưa phát triển</string>
+    <string name="password_not_match">Mật khẩu không khớp</string>
+    <string name="email_empty">Vui lòng không để email trống</string>
+    <string name="password_empty">Vui lòng không để mật khẩu trống</string>
+    <string name="account_exist">Tài khoản đã tồn tại</string>
+    <string name="sign_up_fail">Đăng ký thất bại</string>
+    <string name="sign_up_success">Tạo tài khoản thành công</string>
 </resources>
