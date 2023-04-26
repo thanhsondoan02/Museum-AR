@@ -87,7 +87,7 @@
                 <com.google.android.material.bottomnavigation.BottomNavigationView
                     android:id="@+id/bnvRealMain"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@drawable/shape_rectange_transparent_bg"
                     app:itemIconTint="@color/bottom_nav_selector"
                     app:labelVisibilityMode="unlabeled"

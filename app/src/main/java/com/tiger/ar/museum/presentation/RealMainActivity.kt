@@ -9,6 +9,7 @@ import com.tiger.ar.museum.common.binding.MuseumFragment
 import com.tiger.ar.museum.common.extension.getAppFont
 import com.tiger.ar.museum.common.extension.getAppString
 import com.tiger.ar.museum.common.extension.setOnSafeClick
+import com.tiger.ar.museum.common.view.StatusBar
 import com.tiger.ar.museum.databinding.RealMainActivityBinding
 import com.tiger.ar.museum.presentation.camera.view3d.View3dActivity
 import com.tiger.ar.museum.presentation.explore.ExploreFragment
@@ -25,6 +26,8 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
     private val exploreFragment by lazy { ExploreFragment() }
     private val favoriteMainFragment by lazy { FavoriteMainFragment() }
     private val gameFragment by lazy { GameFragment() }
+
+    override fun setupStatusBar() = StatusBar(color = R.color.main_black, isDarkText = false)
 
     override fun onInitView() {
         super.onInitView()

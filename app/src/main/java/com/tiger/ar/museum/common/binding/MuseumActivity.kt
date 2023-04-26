@@ -1,5 +1,6 @@
 package com.tiger.ar.museum.common.binding
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.ViewCompat
@@ -9,6 +10,7 @@ import androidx.core.view.updatePadding
 import androidx.databinding.ViewDataBinding
 import com.tiger.ar.museum.common.navigation.FadeAnim
 import com.tiger.ar.museum.common.navigation.IScreenAnim
+import com.tiger.ar.museum.common.view.BaseActivity
 import com.tiger.ar.museum.common.view.BaseFragment
 
 abstract class MuseumActivity<DB : ViewDataBinding>(layoutId: Int) : BaseBindingActivity<DB>(layoutId) {
@@ -40,6 +42,14 @@ abstract class MuseumActivity<DB : ViewDataBinding>(layoutId: Int) : BaseBinding
             }
             windowInsets
         }
+    }
+
+    fun navigateToAndClearStack(clazz: Class<out BaseActivity>, onCallback: (Intent) -> Unit = {}) {
+        val intent = Intent(this, clazz)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        onCallback.invoke(intent)
+        startActivity(intent)
+        animOpenScreen()
     }
 
 }

@@ -45,4 +45,7 @@
     <string name="forgot_password">Quên mật khẩu?</string>
     <string name="dont_have_account">Chưa có tài khoản?</string>
     <string name="welcome_to_app">Chào mừng đến với Tiger Museum AR</string>
+    <string name="account_does_not_exist">"Tài khoản không tồn tại"</string>
+    <string name="wrong_password">"Sai mật khẩu"</string>
+    <string name="sign_in_fail">Đăng nhập thất bại</string>
 </resources>
