@@ -48,4 +48,5 @@
     <string name="account_does_not_exist">"Tài khoản không tồn tại"</string>
     <string name="wrong_password">"Sai mật khẩu"</string>
     <string name="sign_in_fail">Đăng nhập thất bại</string>
+    <string name="please_wait">Vui lòng chờ…</string>
 </resources>
