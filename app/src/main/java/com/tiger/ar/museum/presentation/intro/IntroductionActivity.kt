@@ -61,8 +61,6 @@ class IntroductionActivity : MuseumActivity<IntroductionActivityBinding>(R.layou
             val croppedBitmap = Bitmap.createBitmap(originalBitmap, 0, cropOffset, width, cropHeight)
             croppedBitmap.toDrawable(resources)
         }
-//        val croppedBitmap = Bitmap.createBitmap(originalBitmap, 0, 0, 100, 100)
-//        return croppedBitmap.toDrawable(resources)
     }
 
     private fun getScreenRatio(): Float {

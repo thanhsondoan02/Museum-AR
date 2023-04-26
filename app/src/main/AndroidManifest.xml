@@ -19,8 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MuseumAR"
         tools:targetApi="31">
+
         <activity
-            android:name=".presentation.intro.IntroductionActivity"
+            android:name=".presentation.intro.CheckPrefActivity"
             android:exported="true"
             android:theme="@style/Theme.MuseumAR.Fullscreen">
             <intent-filter>
@@ -51,6 +52,10 @@
             android:name=".presentation.intro.SignUpActivity"
             android:exported="false"
             android:launchMode="singleInstance" />
+
+        <activity
+            android:name=".presentation.intro.IntroductionActivity"
+            android:exported="false" />
 
     </application>
 

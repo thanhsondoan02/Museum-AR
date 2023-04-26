@@ -66,7 +66,6 @@ class LoginActivity : MuseumActivity<LoginFragment2Binding>(R.layout.login_fragm
                     val user = userSnapshot.getValue(User::class.java)
                     if (user?.email == email) {
                         if (user.password == password) {
-                            saveSharedPreference(user)
                             setAppPreference(user)
                             navigateToAndClearStack(RealMainActivity::class.java)
                         } else {
@@ -84,12 +83,9 @@ class LoginActivity : MuseumActivity<LoginFragment2Binding>(R.layout.login_fragm
         })
     }
 
-    private fun saveSharedPreference(user: User) {
-
-    }
-
     private fun setAppPreference(user: User) {
         AppPreferences.setUserInfo(user)
+        AppPreferences.saveLoginInfo()
     }
 
     private fun setPasswordEditText(editText: EditText, imageView: ImageView) {

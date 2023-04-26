@@ -125,7 +125,6 @@ class SignUpActivity : MuseumActivity<SignUpActivityBinding>(R.layout.sign_up_ac
             .addOnCompleteListener {
                 dialog.dismiss()
                 toast(getAppString(R.string.sign_up_success))
-                saveSharedPreference(user)
                 setAppPreference(user)
                 navigateToAndClearStack(RealMainActivity::class.java)
             }.addOnFailureListener {
@@ -134,12 +133,9 @@ class SignUpActivity : MuseumActivity<SignUpActivityBinding>(R.layout.sign_up_ac
             }
     }
 
-    private fun saveSharedPreference(user: User) {
-
-    }
-
     private fun setAppPreference(user: User) {
         AppPreferences.setUserInfo(user)
+        AppPreferences.saveLoginInfo()
     }
 
 }
