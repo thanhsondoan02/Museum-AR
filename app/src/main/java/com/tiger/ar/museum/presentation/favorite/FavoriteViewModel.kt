@@ -16,15 +16,15 @@ class FavoriteViewModel : BaseViewModel() {
 
     fun getFavoriteData(onSuccessAction: () -> Unit, onFailureAction: (message: String) -> Unit) {
         viewModelScope.launch {
+            var isSuccessItems = false
+            var isSuccessStories = false
+            var isSuccessCollections = true
 
             // Get favorites data of user
             val ref = FirebaseDatabase.getInstance().getReference("Users/${AppPreferences.getUserInfo().key}/favorites")
             ref.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val favoriteData = snapshot.getValue(FavoriteData::class.java)
-
-                    // init list favorite with 2 tab
-                    val newListFavorite = initFavoriteTabData()
 
                     // remove null in items
                     favoriteData?.items?.removeIf { it?.key == null }
@@ -44,18 +44,57 @@ class FavoriteViewModel : BaseViewModel() {
 
                                     // do success action when get 4 items or end of list
                                     if (count <= 0 || itemList.size == 4) {
-                                        (this@FavoriteViewModel.listFavorite.getOrNull(1) as? FavoriteAdapter.ItemDisplay)?.let { itemDisplay ->
+                                        (listFavorite.getOrNull(1) as? FavoriteAdapter.ItemDisplay)?.let { itemDisplay ->
                                             itemDisplay.count = favoriteData.items?.size ?: 0
                                             itemDisplay.itemList = itemList
                                         }
-                                        onSuccessAction.invoke()
-                                        return
+                                        isSuccessItems = true
+                                        if (isSuccessStories && isSuccessCollections) {
+                                            onSuccessAction.invoke()
+                                        }
                                     }
                                 }
                             }
 
                             override fun onCancelled(error: DatabaseError) {
                                 count--
+                                onFailureAction.invoke(error.message)
+                            }
+                        })
+                    }
+
+                    // remove null in stories
+                    favoriteData?.stories?.removeIf { it?.key == null }
+
+                    // get stories from list key, max 6 stories
+                    val storyList = mutableListOf<Story>()
+                    var storyCount = favoriteData?.stories?.size ?: 0
+                    if (storyCount > 6) storyCount = 6
+                    favoriteData?.stories?.subList(0, storyCount)?.forEach {
+                        val itemRef = FirebaseDatabase.getInstance().getReference("Stories/${it?.key}")
+                        itemRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                storyCount--
+                                val story = snapshot.getValue(Story::class.java)
+                                if (story != null) {
+                                    storyList.add(story)
+
+                                    // do success action when get 6 items or end of list
+                                    if (storyCount <= 0 || storyList.size == 6) {
+                                        (listFavorite.getOrNull(2) as? FavoriteAdapter.StoryDisplay)?.let { storyDisplay ->
+                                            storyDisplay.count = favoriteData.stories?.size ?: 0
+                                            storyDisplay.storyList = storyList
+                                        }
+                                        isSuccessStories = true
+                                        if (isSuccessItems && isSuccessCollections) {
+                                            onSuccessAction.invoke()
+                                        }
+                                    }
+                                }
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                storyCount--
                                 onFailureAction.invoke(error.message)
                             }
                         })
@@ -172,6 +211,14 @@ class FavoriteViewModel : BaseViewModel() {
         list.add(FavoriteAdapter.ItemDisplay().apply {
             count = 0
             itemList = listOf()
+        })
+        list.add(FavoriteAdapter.StoryDisplay().apply {
+            count = 0
+            storyList = listOf()
+        })
+        list.add(FavoriteAdapter.CollectionDisplay().apply {
+            count = 0
+            collectionList = listOf()
         })
         return list
     }
