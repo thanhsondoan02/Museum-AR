@@ -6,6 +6,51 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.tiger.ar.museum.presentation.widget.CustomViewPager
+            android:id="@+id/vpRealMain"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/babRealMainFooter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:contentInsetEnd="0dp"
+            app:contentInsetStart="0dp">
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bnvRealMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_rectange_transparent_bg"
+                android:visibility="visible"
+                app:itemIconTint="@color/bottom_nav_selector"
+                app:labelVisibilityMode="unlabeled"
+                app:menu="@menu/bottom_nav_menu" />
+
+        </com.google.android.material.bottomappbar.BottomAppBar>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabRealMainCamera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_camera"
+            app:backgroundTint="@color/white"
+            app:backgroundTintMode="src_atop"
+            app:elevation="0dp"
+            app:layout_anchor="@id/babRealMainFooter"
+            app:layout_constraintBottom_toTopOf="@id/babRealMainFooter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:maxImageSize="62dp"
+            app:tint="@null" />
+
+        <FrameLayout
+            android:id="@+id/flRealMainContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
@@ -66,45 +111,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
-
-        <com.tiger.ar.museum.presentation.widget.CustomViewPager
-            android:id="@+id/vpRealMain"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/babRealMainFooter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            app:contentInsetEnd="0dp"
-            app:contentInsetStart="0dp">
-
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bnvRealMain"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape_rectange_transparent_bg"
-                android:visibility="visible"
-                app:itemIconTint="@color/bottom_nav_selector"
-                app:labelVisibilityMode="unlabeled"
-                app:menu="@menu/bottom_nav_menu" />
-
-        </com.google.android.material.bottomappbar.BottomAppBar>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabRealMainCamera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_camera"
-            app:backgroundTint="@color/white"
-            app:backgroundTintMode="src_atop"
-            app:layout_anchor="@id/babRealMainFooter"
-            app:layout_constraintBottom_toTopOf="@id/babRealMainFooter"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:maxImageSize="62dp"
-            app:tint="@null" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

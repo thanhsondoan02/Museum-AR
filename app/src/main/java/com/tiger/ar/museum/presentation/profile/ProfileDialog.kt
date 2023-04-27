@@ -10,6 +10,7 @@ import com.tiger.ar.museum.common.view.DialogScreen
 import com.tiger.ar.museum.databinding.ProfileDialogBinding
 
 class ProfileDialog : MuseumDialog<ProfileDialogBinding>(R.layout.profile_dialog) {
+    var listener: IListener? = null
 
     override fun getBackgroundId() = R.id.flProfileBackground
 
@@ -40,7 +41,7 @@ class ProfileDialog : MuseumDialog<ProfileDialogBinding>(R.layout.profile_dialog
         binding.llProfileNearBy.setOnSafeClick { toastUndeveloped() }
         binding.llProfileExperiments.setOnSafeClick { toastUndeveloped() }
         binding.llProfileDataInApp.setOnSafeClick { toastUndeveloped() }
-        binding.llProfileSettings.setOnSafeClick { toastUndeveloped() }
+        binding.llProfileSettings.setOnSafeClick { listener?.onSetting() }
         binding.llProfileFeedback.setOnSafeClick { toastUndeveloped() }
         binding.tvProfilePrivacyPolicy.setOnSafeClick { toastUndeveloped() }
         binding.tvProfileTermsOfService.setOnSafeClick { toastUndeveloped() }
@@ -58,5 +59,9 @@ class ProfileDialog : MuseumDialog<ProfileDialogBinding>(R.layout.profile_dialog
             .appendText("r")
             .withSpan(ForegroundColorSpan(getAppColor(R.color.purple)))
             .spannedText
+    }
+
+    interface IListener {
+        fun onSetting()
     }
 }

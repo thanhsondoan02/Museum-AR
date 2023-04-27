@@ -29,6 +29,17 @@ abstract class MuseumActivity<DB : ViewDataBinding>(layoutId: Int) : BaseBinding
         super.replaceFragment(fragment, bundle, keepToBackStack, screenAnim)
     }
 
+    fun addFragmentNew(
+        fragment: BaseFragment,
+        bundle: Bundle? = null,
+        keepToBackStack: Boolean = true,
+        screenAnim: IScreenAnim = FadeAnim(),
+        containerId: Int
+    ) {
+        this.mContainerId = containerId
+        super.addFragment(fragment, bundle, keepToBackStack, screenAnim)
+    }
+
     fun setFullScreen() {
         window?.apply {
             WindowCompat.setDecorFitsSystemWindows(this, false)
@@ -53,4 +64,7 @@ abstract class MuseumActivity<DB : ViewDataBinding>(layoutId: Int) : BaseBinding
         animOpenScreen()
     }
 
+    fun hasFragment(clazz: Class<out BaseFragment>): Boolean {
+        return supportFragmentManager.fragments.any { it::class.java == clazz }
+    }
 }

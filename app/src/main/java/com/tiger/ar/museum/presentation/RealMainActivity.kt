@@ -16,6 +16,7 @@ import com.tiger.ar.museum.presentation.favorite.FavoriteMainFragment
 import com.tiger.ar.museum.presentation.game.GameFragment
 import com.tiger.ar.museum.presentation.home.HomeFragment
 import com.tiger.ar.museum.presentation.profile.ProfileDialog
+import com.tiger.ar.museum.presentation.setting.SettingFragment
 
 class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_main_activity) {
 
@@ -25,6 +26,7 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
     private val exploreFragment by lazy { ExploreFragment() }
     private val favoriteMainFragment by lazy { FavoriteMainFragment() }
     private val gameFragment by lazy { GameFragment() }
+    private var settingFragment: SettingFragment? = null
 
     override fun setupStatusBar() = StatusBar(color = R.color.main_black, isDarkText = false)
 
@@ -47,6 +49,20 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
 
         binding.ivRealMainProfile.setOnSafeClick {
             val profileDialog = ProfileDialog()
+            profileDialog.listener = object : ProfileDialog.IListener {
+                override fun onSetting() {
+                    profileDialog.dismiss()
+                    supportFragmentManager.fragments.let {
+                        if (it[it.size - 2] is SettingFragment) {
+                            settingFragment?.scrollToTop()
+                        } else {
+                            settingFragment = SettingFragment()
+                            addFragmentNew(settingFragment!!, containerId = R.id.flRealMainContainer)
+                        }
+                    }
+
+                }
+            }
             profileDialog.show(supportFragmentManager, profileDialog::class.java.simpleName)
         }
 

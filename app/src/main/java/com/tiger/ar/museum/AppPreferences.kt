@@ -41,6 +41,7 @@ object AppPreferences {
     }
 
     fun clearLoginInfo() {
+        user = null
         val sharedPreferences = getApplication().getSharedPreferences(SHARE_PREF_NAME, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.clear()
