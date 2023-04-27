@@ -123,13 +123,9 @@ class SignUpActivity : MuseumActivity<SignUpActivityBinding>(R.layout.sign_up_ac
         val ref = FirebaseDatabase.getInstance().getReference("Users")
         ref.push().setValue(user)
             .addOnCompleteListener {
-                dialog.dismiss()
-                toast(getAppString(R.string.sign_up_success))
-                setAppPreference(user)
-                navigateToAndClearStack(RealMainActivity::class.java)
+                login(user.email, user.password, dialog)
             }.addOnFailureListener {
-                dialog.dismiss()
-                toast(getAppString(R.string.sign_up_fail) + ": ${it.message}")
+                actionOnFailure(dialog, it.message ?: "")
             }
     }
 
@@ -138,4 +134,42 @@ class SignUpActivity : MuseumActivity<SignUpActivityBinding>(R.layout.sign_up_ac
         AppPreferences.saveLoginInfo()
     }
 
+    private fun login(email: String?, password: String?, dialog: LoadingDialog) {
+        val ref = FirebaseDatabase.getInstance().getReference("Users")
+        val query = ref.orderByChild("email").equalTo(email).limitToFirst(1)
+
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.childrenCount == 0L) {
+                    actionOnFailure(dialog)
+                    return
+                }
+                for (userSnapshot in snapshot.children) {
+                    val user = userSnapshot.getValue(User::class.java)
+                    if (user != null && user.email == email && user.password == password) {
+                        user.key = userSnapshot.key
+                        actionOnSuccess(user, dialog)
+                    } else {
+                        actionOnFailure(dialog)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
+
+    private fun actionOnSuccess(user: User, dialog: LoadingDialog) {
+        dialog.dismiss()
+        toast(getAppString(R.string.sign_up_success))
+        setAppPreference(user)
+        navigateToAndClearStack(RealMainActivity::class.java)
+    }
+
+
+    private fun actionOnFailure(dialog: LoadingDialog, message: String = "") {
+        dialog.dismiss()
+        toast(getAppString(R.string.sign_up_fail) + ": $message")
+    }
 }

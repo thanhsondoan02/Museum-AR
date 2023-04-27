@@ -1,6 +1,5 @@
 package com.tiger.ar.museum.domain.model
 
-import com.tiger.ar.museum.IParcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -12,7 +11,7 @@ data class MCollection(
 
     var thumbnail: String? = null
 
-) : IParcelable
+) : MuseumModel()
 
 fun mockListCollection(): List<MCollection> {
     val list: MutableList<MCollection> = mutableListOf()

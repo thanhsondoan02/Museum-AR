@@ -66,6 +66,7 @@ class LoginActivity : MuseumActivity<LoginFragment2Binding>(R.layout.login_fragm
                     val user = userSnapshot.getValue(User::class.java)
                     if (user?.email == email) {
                         if (user.password == password) {
+                            user.key = userSnapshot.key
                             setAppPreference(user)
                             navigateToAndClearStack(RealMainActivity::class.java)
                         } else {

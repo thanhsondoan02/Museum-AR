@@ -38,6 +38,7 @@ class CheckPrefActivity: AppCompatActivity() {
                 for (userSnapshot in snapshot.children) {
                     val user = userSnapshot.getValue(User::class.java)
                     if (user != null && user.email == email && user.password == password) {
+                        user.key = userSnapshot.key
                         setAppPreference(user)
                         startActivity(Intent(this@CheckPrefActivity, RealMainActivity::class.java))
                         finish()

@@ -1,6 +1,5 @@
 package com.tiger.ar.museum.domain.model
 
-import com.tiger.ar.museum.IParcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -14,4 +13,4 @@ data class Gallery(
 
     var items: List<Item>? = null
 
-) : IParcelable
+) : MuseumModel()

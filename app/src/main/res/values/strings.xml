@@ -75,4 +75,5 @@
     <string name="open_source_license">Giấy phép nguồn mở</string>
     <string name="version_1">Phiên bản: 1.0.0</string>
     <string name="log_out">Đăng xuất</string>
+    <string name="fail">Thất bại</string>
 </resources>
