@@ -25,8 +25,11 @@ class FavoriteMainFragment : MuseumFragment<FavoriteMainFragmentBinding>(R.layou
     private fun initRecyclerView() {
         adapter.listener = object : FavoriteAdapter.IListener {
             override fun onFavoriteTab() {
-                binding.cvFavoriteMain.submitList(viewModel.listFavorite)
+//                binding.cvFavoriteMain.submitList(viewModel.listFavorite)
                 viewModel.getFavoriteData(
+                    onSuccessAction = {
+                        binding.cvFavoriteMain.submitList(viewModel.listFavorite)
+                    },
                     onFailureAction = {
                         toast(getAppString(R.string.fail) + ": $it")
                     }

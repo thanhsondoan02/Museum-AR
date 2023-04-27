@@ -11,49 +11,58 @@ import com.tiger.ar.museum.domain.model.*
 import kotlinx.coroutines.launch
 
 class FavoriteViewModel : BaseViewModel() {
-    var listFavorite: MutableList<Any> = mutableListOf()
+    var listFavorite: MutableList<Any> = initFavoriteTabData()
     var listGallery: MutableList<Any> = mockGalleriesData()
 
-    fun getFavoriteData(onFailureAction: (message: String) -> Unit = {}) {
+    fun getFavoriteData(onSuccessAction: () -> Unit, onFailureAction: (message: String) -> Unit) {
         viewModelScope.launch {
-            val ref = FirebaseDatabase.getInstance().getReference("Users/${AppPreferences.getUserInfo().key}/favorites")
-//        val query = ref.orderByChild("email").equalTo(email).limitToFirst(1)
 
-            ref.addValueEventListener(object: ValueEventListener {
+            // Get favorites data of user
+            val ref = FirebaseDatabase.getInstance().getReference("Users/${AppPreferences.getUserInfo().key}/favorites")
+            ref.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val favoriteData = snapshot.getValue(FavoriteData::class.java)
-                    listFavorite = mutableListOf()
-                    listFavorite.add(FavoriteAdapter.HeaderDisplay().apply {
-                        avatarUrl = AppPreferences.getUserInfo().avatar
-                    })
-                    val itemDisplay = FavoriteAdapter.ItemDisplay().apply {
-                        count = favoriteData?.items?.size ?: 0
-                    }
-                    val itemList = mutableListOf<Item>()
-                    favoriteData?.items?.forEach {
-                        if (itemList.size == 4) return@forEach
-                        val key = it.key
-                        val itemRef = FirebaseDatabase.getInstance().getReference("Items/${key}")
 
-                        itemRef.addValueEventListener(object: ValueEventListener {
+                    // init list favorite with 2 tab
+                    val newListFavorite = initFavoriteTabData()
+
+                    // remove null in items
+                    favoriteData?.items?.removeIf { it?.key == null }
+
+                    // get items from list key, max 4 items
+                    val itemList = mutableListOf<Item>()
+                    var count = favoriteData?.items?.subList(0, 4)?.size ?: 0
+                    favoriteData?.items?.subList(0, 4)?.forEach {
+                        val itemRef = FirebaseDatabase.getInstance().getReference("Items/${it?.key}")
+                        itemRef.addListenerForSingleValueEvent(object : ValueEventListener {
                             override fun onDataChange(snapshot: DataSnapshot) {
+                                count--
                                 val item = snapshot.getValue(Item::class.java)
                                 if (item != null) {
                                     itemList.add(item)
+
+                                    // do success action when get 4 items or end of list
+                                    if (count <= 0 || itemList.size == 4) {
+                                        (this@FavoriteViewModel.listFavorite.getOrNull(1) as? FavoriteAdapter.ItemDisplay)?.let { itemDisplay ->
+                                            itemDisplay.count = favoriteData.items?.size ?: 0
+                                            itemDisplay.itemList = itemList
+                                        }
+                                        onSuccessAction.invoke()
+                                        return
+                                    }
                                 }
                             }
 
                             override fun onCancelled(error: DatabaseError) {
-                                onFailureAction(error.message)
+                                count--
+                                onFailureAction.invoke(error.message)
                             }
                         })
                     }
-                    itemDisplay.itemList = itemList
-                    listFavorite.add(itemDisplay)
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    onFailureAction(error.message)
+                    onFailureAction.invoke(error.message)
                 }
             })
         }
@@ -150,6 +159,18 @@ class FavoriteViewModel : BaseViewModel() {
                 MCollection(thumbnail = "https://i.pinimg.com/736x/10/2e/19/102e192f5ec83d1c10fa9b3241a50b1f.jpg"),
                 MCollection(thumbnail = "https://i.pinimg.com/564x/a3/0d/94/a30d9464d035e1f30dd088d2ba89103d.jpg")
             )
+        })
+        return list
+    }
+
+    private fun initFavoriteTabData(): MutableList<Any> {
+        val list = mutableListOf<Any>()
+        list.add(FavoriteAdapter.HeaderDisplay().apply {
+            avatarUrl = AppPreferences.getUserInfo().avatar
+        })
+        list.add(FavoriteAdapter.ItemDisplay().apply {
+            count = 0
+            itemList = listOf()
         })
         return list
     }

@@ -5,10 +5,10 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class FavoriteData(
 
-    var collections: List<SimpleModel>? = null,
+    var collections: MutableList<SimpleModel?>? = null,
 
-    var items: List<SimpleModel>? = null,
+    var items: MutableList<SimpleModel?>? = null,
 
-    var stories: List<SimpleModel>? = null,
+    var stories: MutableList<SimpleModel?>? = null,
 
 ) : MuseumModel()
