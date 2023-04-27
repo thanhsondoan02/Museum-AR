@@ -124,10 +124,10 @@ class FavoriteAdapter : MuseumAdapter() {
         }
 
         override fun onBind(data: ItemDisplay) {
-            binding.ivFavoriteItemItem1.loadImage(data.itemList?.getOrNull(0)?.thumbnail)
-            binding.ivFavoriteItemItem2.loadImage(data.itemList?.getOrNull(1)?.thumbnail)
-            binding.ivFavoriteItemItem3.loadImage(data.itemList?.getOrNull(2)?.thumbnail)
-            binding.ivFavoriteItemItem4.loadImage(data.itemList?.getOrNull(3)?.thumbnail)
+            binding.ivFavoriteItemItem1.loadImage(data.itemList?.getOrNull(0)?.thumbnail, placeHolder = getAppDrawable(R.color.gray_light))
+            binding.ivFavoriteItemItem2.loadImage(data.itemList?.getOrNull(1)?.thumbnail, placeHolder = getAppDrawable(R.color.gray_light))
+            binding.ivFavoriteItemItem3.loadImage(data.itemList?.getOrNull(2)?.thumbnail, placeHolder = getAppDrawable(R.color.gray_light))
+            binding.ivFavoriteItemItem4.loadImage(data.itemList?.getOrNull(3)?.thumbnail, placeHolder = getAppDrawable(R.color.gray_light))
             binding.tvFavoriteItemCount.text = data.count.toString()
         }
     }

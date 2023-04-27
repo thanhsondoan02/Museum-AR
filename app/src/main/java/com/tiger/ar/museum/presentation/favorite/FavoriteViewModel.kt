@@ -31,8 +31,9 @@ class FavoriteViewModel : BaseViewModel() {
 
                     // get items from list key, max 4 items
                     val itemList = mutableListOf<Item>()
-                    var count = favoriteData?.items?.subList(0, 4)?.size ?: 0
-                    favoriteData?.items?.subList(0, 4)?.forEach {
+                    var count = favoriteData?.items?.size ?: 0
+                    if (count > 4) count = 4
+                    favoriteData?.items?.subList(0, count)?.forEach {
                         val itemRef = FirebaseDatabase.getInstance().getReference("Items/${it?.key}")
                         itemRef.addListenerForSingleValueEvent(object : ValueEventListener {
                             override fun onDataChange(snapshot: DataSnapshot) {
