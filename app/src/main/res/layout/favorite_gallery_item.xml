@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_20"
-            android:layout_marginTop="@dimen/dimen_4"
+            android:layout_marginTop="@dimen/dimen_6"
             android:fontFamily="@font/roboto_regular"
             android:textColor="@color/gray"
             android:textSize="@dimen/dimen_text_size_14"
@@ -62,9 +62,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginHorizontal="@dimen/dimen_20"
-            android:layout_marginTop="@dimen/dimen_4"
+            android:layout_marginTop="@dimen/dimen_8"
             android:visibility="gone"
-            app:layout_constraintDimensionRatio="H, 16:9"
+            app:layout_constraintDimensionRatio="H, 1:1"
             app:layout_constraintTop_toBottomOf="@id/tvFavoriteGalleryDescription">
 
             <ImageView
@@ -81,6 +81,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginHorizontal="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_8"
             android:orientation="horizontal"
             android:visibility="gone"
             app:layout_constraintDimensionRatio="H, 2:1"
@@ -112,6 +113,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginHorizontal="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_8"
             android:orientation="horizontal"
             app:layout_constraintDimensionRatio="H, 3:1"
             app:layout_constraintTop_toBottomOf="@id/tvFavoriteGalleryDescription">

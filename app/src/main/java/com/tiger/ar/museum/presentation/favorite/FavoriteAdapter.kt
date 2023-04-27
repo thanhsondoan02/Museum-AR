@@ -1,11 +1,9 @@
 package com.tiger.ar.museum.presentation.favorite
 
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.DiffUtil
 import com.tiger.ar.museum.R
-import com.tiger.ar.museum.common.extension.gone
-import com.tiger.ar.museum.common.extension.loadImage
-import com.tiger.ar.museum.common.extension.setOnSafeClick
-import com.tiger.ar.museum.common.extension.show
+import com.tiger.ar.museum.common.extension.*
 import com.tiger.ar.museum.common.recycleview.BaseVH
 import com.tiger.ar.museum.common.recycleview.MuseumAdapter
 import com.tiger.ar.museum.databinding.*
@@ -48,6 +46,10 @@ class FavoriteAdapter : MuseumAdapter() {
         }
     }
 
+    override fun getDiffUtil(oldList: List<Any>, newList: List<Any>): DiffUtil.Callback {
+        return FavoriteDiffUtil(oldList, newList)
+    }
+
     override fun onCreateViewHolder(viewType: Int, binding: ViewDataBinding): BaseVH<*>? {
         return when (viewType) {
             HEADER_VIEW_TYPE -> HeaderVH(binding as FavoriteHeaderItemBinding)
@@ -80,17 +82,37 @@ class FavoriteAdapter : MuseumAdapter() {
 
     inner class HeaderVH(private val binding: FavoriteHeaderItemBinding) : BaseVH<HeaderDisplay>(binding) {
         init {
-            binding.mcvFavoriteMainFavorite.setOnSafeClick {
-                listener?.onFavoriteTab()
+            binding.flFavoriteHeaderTabFavorite.setOnSafeClick {
+                selectTabFavorite()
             }
 
-            binding.mcvFavoriteMainGalleries.setOnSafeClick {
-                listener?.onGalleriesTab()
+            binding.flFavoriteHeaderTabGalleries.setOnSafeClick {
+                selectTabGalleries()
             }
         }
 
         override fun onBind(data: HeaderDisplay) {
-            binding.ivProfileAvatar.loadImage(data.avatarUrl)
+            binding.ivProfileAvatar.loadImage(data.avatarUrl, placeHolder = getAppDrawable(R.drawable.ic_no_picture))
+        }
+
+        private fun selectTabFavorite() {
+            binding.vFavoriteHeaderTabFavoriteEnable.show()
+            binding.vFavoriteHeaderTabFavoriteDisable.gone()
+            binding.vFavoriteHeaderTabGalleriesEnable.gone()
+            binding.vFavoriteHeaderTabGalleriesDisable.show()
+            binding.tvFavoriteTabFavorite.setTextColor(getAppColor(R.color.main_black))
+            binding.tvFavoriteTabGalleries.setTextColor(getAppColor(R.color.gray))
+            listener?.onFavoriteTab()
+        }
+
+        private fun selectTabGalleries() {
+            binding.vFavoriteHeaderTabFavoriteEnable.gone()
+            binding.vFavoriteHeaderTabFavoriteDisable.show()
+            binding.vFavoriteHeaderTabGalleriesEnable.show()
+            binding.vFavoriteHeaderTabGalleriesDisable.gone()
+            binding.tvFavoriteTabFavorite.setTextColor(getAppColor(R.color.gray))
+            binding.tvFavoriteTabGalleries.setTextColor(getAppColor(R.color.main_black))
+            listener?.onGalleriesTab()
         }
     }
 
@@ -159,6 +181,12 @@ class FavoriteAdapter : MuseumAdapter() {
 
         override fun onBind(data: Gallery) {
             binding.tvFavoriteGalleryTitle.text = data.title
+            if (data.description.isNullOrEmpty()) {
+                binding.tvFavoriteGalleryDescription.gone()
+            } else {
+                binding.tvFavoriteGalleryDescription.show()
+                binding.tvFavoriteGalleryDescription.text = data.description
+            }
             when (data.items?.size) {
                 1 -> {
                     binding.mcvFavoriteGalleryCountOne.show()

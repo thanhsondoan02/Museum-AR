@@ -6,8 +6,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="?android:attr/actionBarSize">
+        android:orientation="vertical">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivProfileAvatar"
@@ -18,75 +17,81 @@
             android:background="?android:attr/actionBarItemBackground"
             android:padding="@dimen/dimen_2"
             android:scaleType="centerCrop"
-            tools:src="@color/main_black"
-            app:shapeAppearanceOverlay="@style/CircleImageView" />
+            app:shapeAppearanceOverlay="@style/CircleImageView"
+            tools:src="@drawable/ic_no_picture" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/mcvFavoriteMainFavorite"
+            <FrameLayout
+                android:id="@+id/flFavoriteHeaderTabFavorite"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/dimen_56"
                 android:layout_weight="1"
-                android:elevation="0dp"
-                app:cardCornerRadius="0dp">
+                android:background="?android:selectableItemBackground">
 
-                <FrameLayout
+                <TextView
+                    android:id="@+id/tvFavoriteTabFavorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/favorite"
+                    android:textColor="@color/main_black"
+                    android:textSize="@dimen/dimen_text_size_16" />
+
+                <View
+                    android:id="@+id/vFavoriteHeaderTabFavoriteEnable"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/blue" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/roboto_medium"
-                        android:text="@string/favorite"
-                        android:textColor="@color/main_black"
-                        android:textSize="@dimen/dimen_text_size_16" />
+                <View
+                    android:id="@+id/vFavoriteHeaderTabFavoriteDisable"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/gray_light"
+                    android:visibility="gone" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_gravity="bottom"
-                        android:background="@color/blue" />
+            </FrameLayout>
 
-                </FrameLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/mcvFavoriteMainGalleries"
+            <FrameLayout
+                android:id="@+id/flFavoriteHeaderTabGalleries"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/dimen_56"
                 android:layout_weight="1"
-                android:elevation="0dp"
-                app:cardCornerRadius="0dp">
+                android:background="?android:selectableItemBackground">
 
-                <FrameLayout
+                <TextView
+                    android:id="@+id/tvFavoriteTabGalleries"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/galleries"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/dimen_text_size_16" />
+
+                <View
+                    android:id="@+id/vFavoriteHeaderTabGalleriesDisable"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="0.5dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/gray_light" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/roboto_medium"
-                        android:text="@string/galleries"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/dimen_text_size_16" />
+                <View
+                    android:id="@+id/vFavoriteHeaderTabGalleriesEnable"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/blue"
+                    android:visibility="gone" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_gravity="bottom"
-                        android:background="@color/gray_light" />
-
-                </FrameLayout>
-
-            </com.google.android.material.card.MaterialCardView>
+            </FrameLayout>
 
         </LinearLayout>
 

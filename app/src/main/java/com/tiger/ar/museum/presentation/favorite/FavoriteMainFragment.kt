@@ -23,11 +23,11 @@ class FavoriteMainFragment: MuseumFragment<FavoriteMainFragmentBinding>(R.layout
     private fun initRecyclerView() {
         adapter.listener = object : FavoriteAdapter.IListener {
             override fun onFavoriteTab() {
-
+                binding.cvFavoriteMain.submitList(viewModel.listFavorite)
             }
 
             override fun onGalleriesTab() {
-
+                binding.cvFavoriteMain.submitList(viewModel.listGallery)
             }
 
             override fun onViewAllItem() {
@@ -49,7 +49,7 @@ class FavoriteMainFragment: MuseumFragment<FavoriteMainFragmentBinding>(R.layout
         binding.cvFavoriteMain.apply {
             setAdapter(this@FavoriteMainFragment.adapter)
             setLayoutManager(COLLECTION_MODE.VERTICAL)
-            submitList(viewModel.mockFavoriteTabData())
+            submitList(viewModel.listFavorite)
         }
     }
 }
