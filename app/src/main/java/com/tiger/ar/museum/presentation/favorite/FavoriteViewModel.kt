@@ -31,19 +31,20 @@ class FavoriteViewModel : BaseViewModel() {
 
                     // get items from list key, max 4 items
                     val itemList = mutableListOf<Item>()
-                    var count = favoriteData?.items?.size ?: 0
-                    if (count > 4) count = 4
-                    favoriteData?.items?.subList(0, count)?.forEach {
+                    var itemCount = favoriteData?.items?.size ?: 0
+                    if (itemCount == 0) isSuccessItems = true
+                    if (itemCount > 4) itemCount = 4
+                    favoriteData?.items?.subList(0, itemCount)?.forEach {
                         val itemRef = FirebaseDatabase.getInstance().getReference("Items/${it?.key}")
                         itemRef.addListenerForSingleValueEvent(object : ValueEventListener {
                             override fun onDataChange(snapshot: DataSnapshot) {
-                                count--
+                                itemCount--
                                 val item = snapshot.getValue(Item::class.java)
                                 if (item != null) {
                                     itemList.add(item)
 
                                     // do success action when get 4 items or end of list
-                                    if (count <= 0 || itemList.size == 4) {
+                                    if (itemCount <= 0 || itemList.size == 4) {
                                         (listFavorite.getOrNull(1) as? FavoriteAdapter.ItemDisplay)?.let { itemDisplay ->
                                             itemDisplay.count = favoriteData.items?.size ?: 0
                                             itemDisplay.itemList = itemList
@@ -57,7 +58,7 @@ class FavoriteViewModel : BaseViewModel() {
                             }
 
                             override fun onCancelled(error: DatabaseError) {
-                                count--
+                                itemCount--
                                 onFailureAction.invoke(error.message)
                             }
                         })
@@ -69,6 +70,7 @@ class FavoriteViewModel : BaseViewModel() {
                     // get stories from list key, max 6 stories
                     val storyList = mutableListOf<Story>()
                     var storyCount = favoriteData?.stories?.size ?: 0
+                    if (storyCount == 0) isSuccessStories = true
                     if (storyCount > 6) storyCount = 6
                     favoriteData?.stories?.subList(0, storyCount)?.forEach {
                         val itemRef = FirebaseDatabase.getInstance().getReference("Stories/${it?.key}")
