@@ -1,15 +1,63 @@
 package com.tiger.ar.museum.presentation.favorite
 
+import androidx.lifecycle.viewModelScope
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.tiger.ar.museum.AppPreferences
 import com.tiger.ar.museum.common.BaseViewModel
-import com.tiger.ar.museum.domain.model.Gallery
-import com.tiger.ar.museum.domain.model.Item
-import com.tiger.ar.museum.domain.model.MCollection
-import com.tiger.ar.museum.domain.model.Story
+import com.tiger.ar.museum.domain.model.*
+import kotlinx.coroutines.launch
 
 class FavoriteViewModel : BaseViewModel() {
-    var listFavorite: MutableList<Any> = mockFavoriteTabData()
+    var listFavorite: MutableList<Any> = mutableListOf()
     var listGallery: MutableList<Any> = mockGalleriesData()
+
+    fun getFavoriteData(onFailureAction: (message: String) -> Unit = {}) {
+        viewModelScope.launch {
+            val ref = FirebaseDatabase.getInstance().getReference("Users/${AppPreferences.getUserInfo().key}/favorites")
+//        val query = ref.orderByChild("email").equalTo(email).limitToFirst(1)
+
+            ref.addValueEventListener(object: ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val favoriteData = snapshot.getValue(FavoriteData::class.java)
+                    listFavorite = mutableListOf()
+                    listFavorite.add(FavoriteAdapter.HeaderDisplay().apply {
+                        avatarUrl = AppPreferences.getUserInfo().avatar
+                    })
+                    val itemDisplay = FavoriteAdapter.ItemDisplay().apply {
+                        count = favoriteData?.items?.size ?: 0
+                    }
+                    val itemList = mutableListOf<Item>()
+                    favoriteData?.items?.forEach {
+                        if (itemList.size == 4) return@forEach
+                        val key = it.key
+                        val itemRef = FirebaseDatabase.getInstance().getReference("Items/${key}")
+
+                        itemRef.addValueEventListener(object: ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                val item = snapshot.getValue(Item::class.java)
+                                if (item != null) {
+                                    itemList.add(item)
+                                }
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                onFailureAction(error.message)
+                            }
+                        })
+                    }
+                    itemDisplay.itemList = itemList
+                    listFavorite.add(itemDisplay)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    onFailureAction(error.message)
+                }
+            })
+        }
+    }
 
     private fun mockGalleriesData(): MutableList<Any> {
         val list = mutableListOf<Any>()
