@@ -4,10 +4,8 @@ import android.text.InputType
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.tiger.ar.museum.AppPreferences
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumActivity
@@ -98,33 +96,29 @@ class SignUpActivity : MuseumActivity<SignUpActivityBinding>(R.layout.sign_up_ac
         loadingDialog.show(supportFragmentManager, loadingDialog::class.java.simpleName)
 
         // check if email is already registered
-        val ref = FirebaseDatabase.getInstance().getReference("Users")
-        val query = ref.orderByChild("email").equalTo(email).limitToFirst(1)
-        query.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.childrenCount != 0L) {
+        val userRef = Firebase.firestore.collection("users")
+        userRef.whereEqualTo("email", email).get()
+            .addOnSuccessListener { snapshot ->
+                if (snapshot.documents.isNotEmpty()) {
                     loadingDialog.dismiss()
                     toast(getAppString(R.string.account_exist))
-                    return
                 } else {
                     addUserToDatabase(User(email = email, password = password), loadingDialog)
                 }
             }
-
-            override fun onCancelled(error: DatabaseError) {
+            .addOnFailureListener {
                 loadingDialog.dismiss()
-                toast(getAppString(R.string.sign_up_fail) + ": ${error.message}")
-                return
+                toast(getAppString(R.string.sign_up_fail) + ": ${it.message}")
             }
-        })
     }
 
     private fun addUserToDatabase(user: User, dialog: LoadingDialog) {
-        val ref = FirebaseDatabase.getInstance().getReference("Users")
-        ref.push().setValue(user)
-            .addOnCompleteListener {
-                login(user.email, user.password, dialog)
-            }.addOnFailureListener {
+        val ref = Firebase.firestore.collection("users")
+        ref.add(user)
+            .addOnSuccessListener {
+                actionOnSuccess(user, dialog)
+            }
+            .addOnFailureListener {
                 actionOnFailure(dialog, it.message ?: "")
             }
     }
@@ -132,32 +126,6 @@ class SignUpActivity : MuseumActivity<SignUpActivityBinding>(R.layout.sign_up_ac
     private fun setAppPreference(user: User) {
         AppPreferences.setUserInfo(user)
         AppPreferences.saveLoginInfo()
-    }
-
-    private fun login(email: String?, password: String?, dialog: LoadingDialog) {
-        val ref = FirebaseDatabase.getInstance().getReference("Users")
-        val query = ref.orderByChild("email").equalTo(email).limitToFirst(1)
-
-        query.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.childrenCount == 0L) {
-                    actionOnFailure(dialog)
-                    return
-                }
-                for (userSnapshot in snapshot.children) {
-                    val user = userSnapshot.getValue(User::class.java)
-                    if (user != null && user.email == email && user.password == password) {
-                        user.key = userSnapshot.key
-                        actionOnSuccess(user, dialog)
-                    } else {
-                        actionOnFailure(dialog)
-                    }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
     }
 
     private fun actionOnSuccess(user: User, dialog: LoadingDialog) {

@@ -8,6 +8,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.tiger.ar.museum.AppPreferences
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumActivity
@@ -34,16 +36,50 @@ class LoginActivity : MuseumActivity<LoginFragment2Binding>(R.layout.login_fragm
         binding.tvLoginSignUp.setOnSafeClick {
             navigateTo(SignUpActivity::class.java)
         }
-        binding.btnLogin.setOnSafeClick { login() }
+        binding.btnLogin.setOnSafeClick { newLogin() }
         binding.etvLoginPassword.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                login()
+                newLogin()
                 true
             } else {
                 false
             }
         }
         setPasswordEditText(binding.etvLoginPassword, binding.ivLoginShowPassword)
+    }
+
+    private fun newLogin() {
+        val dialog = LoadingDialog()
+        dialog.show(supportFragmentManager, dialog::class.java.simpleName)
+
+        val email = binding.etvLoginEmail.text.toString()
+        val password = binding.etvLoginPassword.text.toString()
+
+        val userRef = Firebase.firestore.collection("users")
+        userRef.whereEqualTo("email", email).get()
+            .addOnSuccessListener { querySnapshot ->
+                if (querySnapshot.isEmpty || querySnapshot.documents.isEmpty()) {
+                    dialog.dismiss()
+                    toast(getAppString(R.string.account_does_not_exist))
+                    return@addOnSuccessListener
+                }
+                for (document in querySnapshot.documents) {
+                    val user = document.toObject(User::class.java)
+                    if (user?.email == email) {
+                        if (user.password == password) {
+                            user.key = document.id
+                            setAppPreference(user)
+                            navigateToAndClearStack(RealMainActivity::class.java)
+                        } else {
+                            dialog.dismiss()
+                            toast(getAppString(R.string.wrong_password))
+                        }
+                    }
+                }
+            }
+            .addOnFailureListener { exception ->
+                toast("Error getting documents: $exception")
+            }
     }
 
     private fun login() {
