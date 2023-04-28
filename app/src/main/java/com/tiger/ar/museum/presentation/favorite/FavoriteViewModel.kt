@@ -18,7 +18,7 @@ class FavoriteViewModel : BaseViewModel() {
         viewModelScope.launch {
             var isSuccessItems = false
             var isSuccessStories = false
-            var isSuccessCollections = true
+            var isSuccessCollections = false
 
             // Get favorites data of user
             val ref = FirebaseDatabase.getInstance().getReference("Users/${AppPreferences.getUserInfo().key}/favorites")
@@ -64,6 +64,8 @@ class FavoriteViewModel : BaseViewModel() {
                         })
                     }
 
+
+
                     // remove null in stories
                     favoriteData?.stories?.removeIf { it?.key == null }
 
@@ -81,7 +83,7 @@ class FavoriteViewModel : BaseViewModel() {
                                 if (story != null) {
                                     storyList.add(story)
 
-                                    // do success action when get 6 items or end of list
+                                    // do success action when get 6 stories or end of list
                                     if (storyCount <= 0 || storyList.size == 6) {
                                         (listFavorite.getOrNull(2) as? FavoriteAdapter.StoryDisplay)?.let { storyDisplay ->
                                             storyDisplay.count = favoriteData.stories?.size ?: 0
@@ -97,6 +99,45 @@ class FavoriteViewModel : BaseViewModel() {
 
                             override fun onCancelled(error: DatabaseError) {
                                 storyCount--
+                                onFailureAction.invoke(error.message)
+                            }
+                        })
+                    }
+
+
+                    // remove null in collections
+                    favoriteData?.collections?.removeIf { it?.key == null }
+
+                    // get collections from list key, max 6 collections
+                    val collectionList = mutableListOf<MCollection>()
+                    var collectionCount = favoriteData?.collections?.size ?: 0
+                    if (collectionCount == 0) isSuccessCollections = true
+                    if (collectionCount > 6) collectionCount = 6
+                    favoriteData?.collections?.subList(0, collectionCount)?.forEach {
+                        val itemRef = FirebaseDatabase.getInstance().getReference("Collections/${it?.key}")
+                        itemRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                collectionCount--
+                                val collection = snapshot.getValue(MCollection::class.java)
+                                if (collection != null) {
+                                    collectionList.add(collection)
+
+                                    // do success action when get 6 collections or end of list
+                                    if (collectionCount <= 0 || collectionList.size == 6) {
+                                        (listFavorite.getOrNull(3) as? FavoriteAdapter.CollectionDisplay)?.let { collectionDisplay ->
+                                            collectionDisplay.count = favoriteData.collections?.size ?: 0
+                                            collectionDisplay.collectionList = collectionList
+                                        }
+                                        isSuccessCollections = true
+                                        if (isSuccessItems && isSuccessStories) {
+                                            onSuccessAction.invoke()
+                                        }
+                                    }
+                                }
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                collectionCount--
                                 onFailureAction.invoke(error.message)
                             }
                         })
