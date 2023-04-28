@@ -11,6 +11,8 @@ import com.tiger.ar.museum.domain.model.Story
 class FavoriteStoryAdapter : MuseumAdapter() {
     override fun getLayoutResource(viewType: Int) = R.layout.favorite_story_child_item
 
+    override fun setupEmptyState() = Empty(overrideLayoutRes = R.layout.empty_favorite_stories_item)
+
     override fun onCreateViewHolder(viewType: Int, binding: ViewDataBinding): BaseVH<*>? {
         return FavoriteStoryVH(binding as FavoriteStoryChildItemBinding)
     }

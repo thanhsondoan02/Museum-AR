@@ -14,8 +14,8 @@
             android:layout_width="@dimen/dimen_220"
             android:layout_height="@dimen/dimen_220"
             android:scaleType="centerCrop"
-            android:src="@color/black"
-            app:shapeAppearanceOverlay="@style/allCircleImageView" />
+            app:shapeAppearanceOverlay="@style/allCircleImageView"
+            tools:src="@color/black" />
 
         <TextView
             android:layout_width="wrap_content"
