@@ -21,11 +21,12 @@ class FavoriteViewModel2 : BaseViewModel() {
         const val MAX_COUNT_COLLECTION = 6
     }
 
-    val headerDisplay by lazy {
-        FavoriteAdapter.HeaderDisplay().apply {
-            avatarUrl = AppPreferences.getUserInfo().avatar
-        }
-    }
+//    val headerDisplay by lazy {
+//        FavoriteAdapter.HeaderDisplay().apply {
+//            avatarUrl = AppPreferences.getUserInfo().avatar
+//        }
+//    }
+    var isFavorite = true
     val itemDisplay by lazy {
         FavoriteAdapter.ItemDisplay().apply {
             count = 0
@@ -82,8 +83,9 @@ class FavoriteViewModel2 : BaseViewModel() {
 
     fun getShortListFavorite(): MutableList<Any> {
         val list = mutableListOf<Any>()
-        list.add(headerDisplay.apply {
+        list.add(FavoriteAdapter.HeaderDisplay().apply {
             avatarUrl = AppPreferences.getUserInfo().avatar
+            isFavoriteTab = isFavorite
         })
         list.add(itemDisplay.apply {
             count = items.size
@@ -102,8 +104,9 @@ class FavoriteViewModel2 : BaseViewModel() {
 
     fun getShortListGallery(): MutableList<Any> {
         val list = mutableListOf<Any>()
-        list.add(headerDisplay.apply {
+        list.add(FavoriteAdapter.HeaderDisplay().apply {
             avatarUrl = AppPreferences.getUserInfo().avatar
+            isFavoriteTab = isFavorite
         })
         if (galleries.isNotEmpty()) {
             list.addAll(galleries)
@@ -159,7 +162,9 @@ class FavoriteViewModel2 : BaseViewModel() {
 
     private fun initFavoriteTabData(): MutableList<Any> {
         val list = mutableListOf<Any>()
-        list.add(headerDisplay)
+        list.add(FavoriteAdapter.HeaderDisplay().apply {
+            avatarUrl = AppPreferences.getUserInfo().avatar
+        })
         list.add(itemDisplay)
         list.add(storyDisplay)
         list.add(collectionDisplay)
@@ -168,7 +173,9 @@ class FavoriteViewModel2 : BaseViewModel() {
 
     private fun initGalleryTabData(): MutableList<Any> {
         val list = mutableListOf<Any>()
-        list.add(headerDisplay)
+        list.add(FavoriteAdapter.HeaderDisplay().apply {
+            avatarUrl = AppPreferences.getUserInfo().avatar
+        })
         list.add(galleryEmpty)
         return list
     }

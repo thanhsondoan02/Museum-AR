@@ -1,13 +1,18 @@
 package com.tiger.ar.museum.presentation.favorite
 
 import com.tiger.ar.museum.common.recycleview.BaseDiffUtilCallback
+import com.tiger.ar.museum.domain.model.Gallery
 
 class FavoriteDiffUtil(oldData: List<Any>, newData: List<Any>) : BaseDiffUtilCallback<Any>(oldData, newData) {
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         val oldItem = getOldItem(oldItemPosition)
         val newItem = getNewItem(newItemPosition)
 
-        return oldItem.hashCode() == newItem.hashCode()
+        return (oldItem is FavoriteAdapter.HeaderDisplay && newItem is FavoriteAdapter.HeaderDisplay)
+                || (oldItem is FavoriteAdapter.ItemDisplay && newItem is FavoriteAdapter.ItemDisplay)
+                || (oldItem is FavoriteAdapter.StoryDisplay && newItem is FavoriteAdapter.StoryDisplay)
+                || (oldItem is FavoriteAdapter.CollectionDisplay && newItem is FavoriteAdapter.CollectionDisplay)
+                || (oldItem is Gallery && newItem is Gallery && oldItem.id == newItem.id)
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

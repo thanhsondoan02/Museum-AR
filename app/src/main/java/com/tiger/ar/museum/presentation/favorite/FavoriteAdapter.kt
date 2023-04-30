@@ -104,7 +104,26 @@ class FavoriteAdapter : MuseumAdapter() {
         }
 
         override fun onBind(data: HeaderDisplay) {
+            setAvatar(data)
+            setTab(data)
+        }
+
+        override fun onBind(data: HeaderDisplay, payloads: List<Any>) {
+            binding.apply {
+                (payloads.firstOrNull() as? List<*>)?.forEach {
+                    when (it) {
+                        AVATAR_PAYLOAD -> setAvatar(data)
+                        HEADER_TAB_PAYLOAD -> setTab(data)
+                    }
+                }
+            }
+        }
+
+        private fun setAvatar(data: HeaderDisplay) {
             binding.ivProfileAvatar.loadImage(data.avatarUrl, placeHolder = getAppDrawable(R.drawable.ic_no_picture))
+        }
+
+        private fun setTab(data: HeaderDisplay) {
             if (data.isFavoriteTab) {
                 selectTabFavorite()
             } else {

@@ -23,7 +23,7 @@ class FavoriteMainFragment : MuseumFragment<FavoriteMainFragmentBinding>(R.layou
     fun getFavoriteData() {
         viewModel.getFavoriteData(
             onSuccessAction = {
-                if (viewModel.headerDisplay.isFavoriteTab) {
+                if (viewModel.isFavorite) {
                     binding.cvFavoriteMain.submitList(viewModel.getShortListFavorite())
                 } else {
                     binding.cvFavoriteMain.submitList(viewModel.getShortListGallery())
@@ -41,12 +41,12 @@ class FavoriteMainFragment : MuseumFragment<FavoriteMainFragmentBinding>(R.layou
     private fun initRecyclerView() {
         adapter.listener = object : FavoriteAdapter.IListener {
             override fun onFavoriteTab() {
-                viewModel.headerDisplay.isFavoriteTab = true
+                viewModel.isFavorite = true
                 binding.cvFavoriteMain.submitList(viewModel.getShortListFavorite())
             }
 
             override fun onGalleriesTab() {
-                viewModel.headerDisplay.isFavoriteTab = false
+                viewModel.isFavorite = false
                 binding.cvFavoriteMain.submitList(viewModel.getShortListGallery())
             }
 
