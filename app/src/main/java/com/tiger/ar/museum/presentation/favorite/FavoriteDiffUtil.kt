@@ -12,7 +12,7 @@ class FavoriteDiffUtil(oldData: List<Any>, newData: List<Any>) : BaseDiffUtilCal
                 || (oldItem is FavoriteAdapter.ItemDisplay && newItem is FavoriteAdapter.ItemDisplay)
                 || (oldItem is FavoriteAdapter.StoryDisplay && newItem is FavoriteAdapter.StoryDisplay)
                 || (oldItem is FavoriteAdapter.CollectionDisplay && newItem is FavoriteAdapter.CollectionDisplay)
-                || (oldItem is Gallery && newItem is Gallery && oldItem.id == newItem.id)
+                || (oldItem is Gallery && newItem is Gallery && oldItem.key == newItem.key)
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.FieldPath
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -121,8 +122,8 @@ class FavoriteViewModel2 : BaseViewModel() {
         var itemListRef: Task<QuerySnapshot>? = null
         var storyRef: Task<QuerySnapshot>? = null
         var collectionRef: Task<QuerySnapshot>? = null
+        var galleryRef: Task<QuerySnapshot>? = null
         val listTask = mutableListOf<Task<QuerySnapshot>>()
-
 
         if (!AppPreferences.getUserInfo().fitems.isNullOrEmpty()) {
             itemListRef = db.collection("items")
@@ -130,7 +131,7 @@ class FavoriteViewModel2 : BaseViewModel() {
             listTask.add(itemListRef)
         }
 
-        if (AppPreferences.getUserInfo().fstories?.isNotEmpty() == true) {
+        if (!AppPreferences.getUserInfo().fstories.isNullOrEmpty()) {
             storyRef = db.collection("stories")
                 .whereIn(FieldPath.documentId(), AppPreferences.getUserInfo().fstories!!).get()
             listTask.add(storyRef)
@@ -142,16 +143,35 @@ class FavoriteViewModel2 : BaseViewModel() {
             listTask.add(collectionRef)
         }
 
+        if (AppPreferences.getUserInfo().key != null) {
+            galleryRef = db
+                .collection("users")
+                .document(AppPreferences.getUserInfo().key!!)
+                .collection("galleries")
+                .orderBy("createTime", Query.Direction.DESCENDING)
+                .get()
+            listTask.add(galleryRef)
+        }
+
+
         Tasks.whenAllSuccess<QuerySnapshot>(listTask)
             .continueWith {
                 items = (itemListRef?.result?.documents ?: listOf()).mapNotNull {
-                    it.toObject(Item::class.java)
+                    it.toObject(Item::class.java)?.apply { key = it.id }
                 }
                 stories = (storyRef?.result?.documents ?: listOf()).mapNotNull {
-                    it.toObject(Story::class.java)
+                    it.toObject(Story::class.java)?.apply { key = it.id }
                 }
                 collections = (collectionRef?.result?.documents ?: listOf()).mapNotNull {
-                    it.toObject(MCollection::class.java)
+                    it.toObject(MCollection::class.java)?.apply { key = it.id }
+                }
+                galleries = (galleryRef?.result?.documents ?: listOf()).mapNotNull {
+                    it.toObject(Gallery::class.java)?.apply {
+                        key = it.id
+                        items = (idOfItems ?: listOf()).mapNotNull { itemKey ->
+                            this@FavoriteViewModel2.items.find { item -> item.key == itemKey }
+                        }
+                    }
                 }
                 onSuccessAction.invoke()
             }
