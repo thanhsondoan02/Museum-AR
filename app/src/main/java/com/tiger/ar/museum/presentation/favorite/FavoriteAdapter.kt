@@ -20,6 +20,10 @@ class FavoriteAdapter : MuseumAdapter() {
         const val STORY_VIEW_TYPE = 1411
         const val COLLECTION_VIEW_TYPE = 1412
         const val GALLERY_VIEW_TYPE = 1413
+        const val GALLERY_EMPTY_VIEW_TYPE = 1414
+
+        const val HEADER_TAB_PAYLOAD = "HEADER_TAB_PAYLOAD"
+        const val AVATAR_PAYLOAD = "AVATAR_PAYLOAD"
     }
 
     var listener: IListener? = null
@@ -31,6 +35,7 @@ class FavoriteAdapter : MuseumAdapter() {
             STORY_VIEW_TYPE -> R.layout.favorite_story_item
             COLLECTION_VIEW_TYPE -> R.layout.favorite_collection_item
             GALLERY_VIEW_TYPE -> R.layout.favorite_gallery_item
+            GALLERY_EMPTY_VIEW_TYPE -> R.layout.favorite_gallery_empty_item
             else -> INVALID_RESOURCE
         }
     }
@@ -42,6 +47,7 @@ class FavoriteAdapter : MuseumAdapter() {
             is StoryDisplay -> STORY_VIEW_TYPE
             is CollectionDisplay -> COLLECTION_VIEW_TYPE
             is Gallery -> GALLERY_VIEW_TYPE
+            is GalleryEmpty -> GALLERY_EMPTY_VIEW_TYPE
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
@@ -57,12 +63,14 @@ class FavoriteAdapter : MuseumAdapter() {
             STORY_VIEW_TYPE -> StoryVH(binding as FavoriteStoryItemBinding)
             COLLECTION_VIEW_TYPE -> CollectionVH(binding as FavoriteCollectionItemBinding)
             GALLERY_VIEW_TYPE -> GalleryVH(binding as FavoriteGalleryItemBinding)
+            GALLERY_EMPTY_VIEW_TYPE -> GalleryEmptyVH(binding as FavoriteGalleryEmptyItemBinding)
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
 
     class HeaderDisplay {
         var avatarUrl: String? = null
+        var isFavoriteTab: Boolean = true
     }
 
     class ItemDisplay {
@@ -80,19 +88,28 @@ class FavoriteAdapter : MuseumAdapter() {
         var collectionList: List<MCollection>? = null
     }
 
+    class GalleryEmpty {
+
+    }
+
     inner class HeaderVH(private val binding: FavoriteHeaderItemBinding) : BaseVH<HeaderDisplay>(binding) {
         init {
             binding.flFavoriteHeaderTabFavorite.setOnSafeClick {
-                selectTabFavorite()
+                listener?.onFavoriteTab()
             }
 
             binding.flFavoriteHeaderTabGalleries.setOnSafeClick {
-                selectTabGalleries()
+                listener?.onGalleriesTab()
             }
         }
 
         override fun onBind(data: HeaderDisplay) {
             binding.ivProfileAvatar.loadImage(data.avatarUrl, placeHolder = getAppDrawable(R.drawable.ic_no_picture))
+            if (data.isFavoriteTab) {
+                selectTabFavorite()
+            } else {
+                selectTabGalleries()
+            }
         }
 
         private fun selectTabFavorite() {
@@ -102,7 +119,6 @@ class FavoriteAdapter : MuseumAdapter() {
             binding.vFavoriteHeaderTabGalleriesDisable.show()
             binding.tvFavoriteTabFavorite.setTextColor(getAppColor(R.color.main_black))
             binding.tvFavoriteTabGalleries.setTextColor(getAppColor(R.color.gray))
-            listener?.onFavoriteTab()
         }
 
         private fun selectTabGalleries() {
@@ -112,7 +128,6 @@ class FavoriteAdapter : MuseumAdapter() {
             binding.vFavoriteHeaderTabGalleriesDisable.gone()
             binding.tvFavoriteTabFavorite.setTextColor(getAppColor(R.color.gray))
             binding.tvFavoriteTabGalleries.setTextColor(getAppColor(R.color.main_black))
-            listener?.onGalleriesTab()
         }
     }
 
@@ -215,6 +230,11 @@ class FavoriteAdapter : MuseumAdapter() {
             }
         }
     }
+
+    inner class GalleryEmptyVH(private val binding: FavoriteGalleryEmptyItemBinding) : BaseVH<Gallery>(binding) {
+
+    }
+
 
     interface IListener {
         fun onFavoriteTab()

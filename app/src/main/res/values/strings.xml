@@ -27,7 +27,7 @@
     <string name="favorite">Yêu thích</string>
     <string name="game">Trò chơi</string>
     <string name="download">Tải xuống</string>
-    <string name="galleries">Phòng trưng bày</string>
+    <string name="galleries">Thư viện</string>
     <string name="items">Mục</string>
     <string name="stories">Câu chuyện</string>
     <string name="view_all">Xem tất cả</string>
@@ -76,4 +76,7 @@
     <string name="version_1">Phiên bản: 1.0.0</string>
     <string name="log_out">Đăng xuất</string>
     <string name="fail">Thất bại</string>
+    <string name="create_a_gallery">Tạo một thư viện</string>
+    <string name="create_a_gallery_desc">Nhóm tác phẩm nghệ thuật yêu thích của bạn thành các thư viện theo nghệ sĩ, đối tượng hoặc bất kỳ chủ đề nào bạn chọn</string>
+    <string name="create_gallery">Tạo thư viện</string>
 </resources>

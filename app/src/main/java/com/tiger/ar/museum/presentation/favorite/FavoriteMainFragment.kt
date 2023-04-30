@@ -10,13 +10,29 @@ import com.tiger.ar.museum.domain.model.Gallery
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
 class FavoriteMainFragment : MuseumFragment<FavoriteMainFragmentBinding>(R.layout.favorite_main_fragment) {
-    private val viewModel by viewModels<FavoriteViewModel>()
+    private val viewModel by viewModels<FavoriteViewModel2>()
     private val adapter: FavoriteAdapter by lazy { FavoriteAdapter() }
 
     override fun onInitView() {
         super.onInitView()
         initOnClick()
         initRecyclerView()
+        getFavoriteData()
+    }
+
+    fun getFavoriteData() {
+        viewModel.getFavoriteData(
+            onSuccessAction = {
+                if (viewModel.headerDisplay.isFavoriteTab) {
+                    binding.cvFavoriteMain.submitList(viewModel.getShortListFavorite())
+                } else {
+                    binding.cvFavoriteMain.submitList(viewModel.getShortListGallery())
+                }
+            },
+            onFailureAction = {
+                toast(getAppString(R.string.fail) + ": $it")
+            }
+        )
     }
 
     private fun initOnClick() {
@@ -25,19 +41,13 @@ class FavoriteMainFragment : MuseumFragment<FavoriteMainFragmentBinding>(R.layou
     private fun initRecyclerView() {
         adapter.listener = object : FavoriteAdapter.IListener {
             override fun onFavoriteTab() {
-//                binding.cvFavoriteMain.submitList(viewModel.listFavorite)
-                viewModel.getFavoriteData(
-                    onSuccessAction = {
-                        binding.cvFavoriteMain.submitList(viewModel.listFavorite)
-                    },
-                    onFailureAction = {
-                        toast(getAppString(R.string.fail) + ": $it")
-                    }
-                )
+                viewModel.headerDisplay.isFavoriteTab = true
+                binding.cvFavoriteMain.submitList(viewModel.getShortListFavorite())
             }
 
             override fun onGalleriesTab() {
-                binding.cvFavoriteMain.submitList(viewModel.listGallery)
+                viewModel.headerDisplay.isFavoriteTab = false
+                binding.cvFavoriteMain.submitList(viewModel.getShortListGallery())
             }
 
             override fun onViewAllItem() {
@@ -59,7 +69,7 @@ class FavoriteMainFragment : MuseumFragment<FavoriteMainFragmentBinding>(R.layou
         binding.cvFavoriteMain.apply {
             setAdapter(this@FavoriteMainFragment.adapter)
             setLayoutManager(COLLECTION_MODE.VERTICAL)
-            submitList(viewModel.listFavorite)
+            submitList(viewModel.getShortListFavorite())
         }
     }
 }

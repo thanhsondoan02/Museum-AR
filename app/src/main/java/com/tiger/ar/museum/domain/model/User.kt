@@ -11,6 +11,12 @@ data class User(
 
     var password: String? = null,
 
-    var avatar: String? = null
+    var avatar: String? = null,
+
+    var fitems: List<String>? = null,
+
+    var fcollections: List<String>? = null,
+
+    var fstories: List<String>? = null
 
 ) : MuseumModel()
