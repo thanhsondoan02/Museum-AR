@@ -155,6 +155,10 @@ class FavoriteAdapter : MuseumAdapter() {
             binding.tvFavoriteItemViewAll.setOnSafeClick {
                 listener?.onViewAllItem()
             }
+            binding.ivFavoriteItemItem1.setOnSafeClick { listener?.onViewAllItem() }
+            binding.ivFavoriteItemItem2.setOnSafeClick { listener?.onViewAllItem() }
+            binding.ivFavoriteItemItem3.setOnSafeClick { listener?.onViewAllItem() }
+            binding.ivFavoriteItemItem4.setOnSafeClick { listener?.onViewAllItem() }
         }
 
         override fun onBind(data: ItemDisplay) {

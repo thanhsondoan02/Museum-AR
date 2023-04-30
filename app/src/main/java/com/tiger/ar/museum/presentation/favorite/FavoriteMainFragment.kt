@@ -7,6 +7,7 @@ import com.tiger.ar.museum.common.extension.getAppString
 import com.tiger.ar.museum.common.extension.toast
 import com.tiger.ar.museum.databinding.FavoriteMainFragmentBinding
 import com.tiger.ar.museum.domain.model.Gallery
+import com.tiger.ar.museum.presentation.favorite.item.ItemListFragment
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
 class FavoriteMainFragment : MuseumFragment<FavoriteMainFragmentBinding>(R.layout.favorite_main_fragment) {
@@ -51,7 +52,10 @@ class FavoriteMainFragment : MuseumFragment<FavoriteMainFragmentBinding>(R.layou
             }
 
             override fun onViewAllItem() {
-
+                museumActivity.replaceFragmentNew(
+                    ItemListFragment().apply { items = viewModel.items },
+                    containerId = R.id.flRealMainContainer
+                )
             }
 
             override fun onViewAllStory() {
