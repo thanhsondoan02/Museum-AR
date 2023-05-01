@@ -79,4 +79,7 @@
     <string name="create_a_gallery">Tạo một thư viện</string>
     <string name="create_a_gallery_desc">Nhóm tác phẩm nghệ thuật yêu thích của bạn thành các thư viện theo nghệ sĩ, đối tượng hoặc bất kỳ chủ đề nào bạn chọn</string>
     <string name="create_gallery">Tạo thư viện</string>
+    <string name="buy_tickets">Mua vé</string>
+    <string name="current_exhibition">Triển lãm đang diễn ra</string>
+    <string name="exhibition_opening_soon">Triển lãm sắp khai mạc</string>
 </resources>

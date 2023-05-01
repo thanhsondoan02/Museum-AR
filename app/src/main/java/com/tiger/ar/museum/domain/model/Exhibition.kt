@@ -1,7 +1,11 @@
 package com.tiger.ar.museum.domain.model
 
 import com.google.firebase.Timestamp
+import com.tiger.ar.museum.R
+import com.tiger.ar.museum.common.extension.getAppString
 import kotlinx.parcelize.Parcelize
+import java.text.SimpleDateFormat
+import java.util.*
 
 @Parcelize
 data class Exhibition(
@@ -20,4 +24,27 @@ data class Exhibition(
 
     var endTime: Timestamp? = null
 
-) : MuseumModel()
+) : MuseumModel() {
+    fun getMuseumInfo(): String {
+        return "$museumName\n$place"
+    }
+
+    fun getExhibitionDate(): String {
+        if (startTime == null || endTime == null) return ""
+        return "Từ ${timeStampToString(startTime!!)} đến ${timeStampToString(endTime!!)}"
+    }
+
+    fun getExhibitionTitle(): String {
+        return if (startTime!! > Timestamp.now()) {
+            getAppString(R.string.exhibition_opening_soon)
+        } else {
+            getAppString(R.string.current_exhibition)
+        }
+    }
+
+    private fun timeStampToString(timestamp: Timestamp): String {
+        val date = timestamp.toDate()
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return dateFormat.format(date)
+    }
+}

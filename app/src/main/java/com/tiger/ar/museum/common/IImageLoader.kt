@@ -12,6 +12,15 @@ interface IImageLoader {
         ignoreCache: Boolean = false
     )
 
+    fun loadImageBlur(
+        view: ImageView,
+        url: String?,
+        placeHolder: Drawable? = null,
+        ignoreCache: Boolean = false,
+        radius: Int,
+        sampling: Int
+    )
+
     fun loadImage(
         view: ImageView,
         drawable: Drawable?,

@@ -352,6 +352,23 @@ fun ImageView.loadImage(
     )
 }
 
+fun ImageView.loadImageBlur(
+    url: String?,
+    ignoreCache: Boolean = false,
+    placeHolder: Drawable? = getPlaceHolderDefault(),
+    radius: Int = 100,
+    sampling: Int = 10
+) {
+    LoaderFactory.glide().loadImageBlur(
+        view = this,
+        url = url,
+        placeHolder = placeHolder,
+        ignoreCache = ignoreCache,
+        radius = radius,
+        sampling = sampling
+    )
+}
+
 fun ImageView.loadImage(
     drawable: Drawable?,
     ignoreCache: Boolean = false,

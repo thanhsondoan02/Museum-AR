@@ -5,6 +5,10 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="CircleImageViewCorner16">
+        <item name="cornerSize">@dimen/dimen_16</item>
+    </style>
+
     <style name="allCircleImageView">
         <item name="cornerSize">@dimen/dimen_corner_8</item>
     </style>

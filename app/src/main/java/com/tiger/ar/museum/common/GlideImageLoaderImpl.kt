@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.tiger.ar.museum.common.binding.CORNER_TYPE
+import jp.wasabeef.glide.transformations.BlurTransformation
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
 class GlideImageLoaderImpl : IImageLoader {
@@ -121,6 +122,20 @@ class GlideImageLoaderImpl : IImageLoader {
                 .placeholder(placeHolder)
                 .skipMemoryCache(ignoreCache)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(view)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun loadImageBlur(view: ImageView, url: String?, placeHolder: Drawable?, ignoreCache: Boolean, radius: Int, sampling: Int) {
+        try {
+            Glide.with(view)
+                .load(url)
+                .transform(BlurTransformation(radius, sampling))
+                .placeholder(placeHolder)
+                .skipMemoryCache(ignoreCache)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(view)
         } catch (e: Exception) {
             e.printStackTrace()
