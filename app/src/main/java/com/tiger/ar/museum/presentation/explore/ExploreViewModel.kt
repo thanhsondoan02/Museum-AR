@@ -48,8 +48,13 @@ class ExploreViewModel : BaseViewModel() {
         val list = mutableListOf<Any>()
         list.addAll(exhibitions)
         list.addAll(items)
-        list.shuffled()
-        exploreData = list
-        return list
+        val list2 = mutableListOf<Any>()
+        while (list.isNotEmpty()) {
+            val randomIndex = (0 until list.size).random()
+            list2.add(list[randomIndex])
+            list.removeAt(randomIndex)
+        }
+        exploreData = list2
+        return exploreData
     }
 }
