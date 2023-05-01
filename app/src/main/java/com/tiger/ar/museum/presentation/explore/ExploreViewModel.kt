@@ -1,32 +1,40 @@
 package com.tiger.ar.museum.presentation.explore
 
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.tiger.ar.museum.AppPreferences
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.BaseViewModel
 import com.tiger.ar.museum.common.extension.getAppString
 import com.tiger.ar.museum.domain.model.Exhibition
+import com.tiger.ar.museum.domain.model.Item
 import kotlinx.coroutines.launch
 
-class ExploreViewModel: BaseViewModel() {
-    private var exhibitions = listOf<Exhibition>()
+class ExploreViewModel : BaseViewModel() {
+    var exploreData: List<Any> = listOf()
 
-    fun getExhibitionData(onSuccessAction: () -> Unit, onFailureAction: (message: String) -> Unit) {
+    private var exhibitions = listOf<Exhibition>()
+    private var items = listOf<Item>()
+
+    fun getExploreDataFromDatabase(onSuccessAction: () -> Unit, onFailureAction: (message: String) -> Unit) {
         viewModelScope.launch {
-            if (AppPreferences.getUserInfo().key == null) {
-                onFailureAction("User key is null")
-                return@launch
-            }
             val exhibitionRef = Firebase.firestore
                 .collection("exhibitions")
-                .whereGreaterThan("endTime", Timestamp.now())
-            exhibitionRef.get()
-                .addOnSuccessListener {
-                    exhibitions = (it.documents).mapNotNull { exhibition ->
+                .whereGreaterThan("endTime", Timestamp.now()).get()
+
+            val itemRef = Firebase.firestore
+                .collection("items").get()
+
+            Tasks.whenAllSuccess<QuerySnapshot>(exhibitionRef, itemRef)
+                .continueWith {
+                    exhibitions = (exhibitionRef.result.documents).mapNotNull { exhibition ->
                         exhibition.toObject(Exhibition::class.java)?.apply { key = exhibition.id }
+                    }
+                    items = (itemRef.result.documents).mapNotNull { item ->
+                        item.toObject(Item::class.java)?.apply { key = item.id }
                     }
                     onSuccessAction.invoke()
                 }
@@ -36,7 +44,12 @@ class ExploreViewModel: BaseViewModel() {
         }
     }
 
-    fun getExploreData(): List<Any> {
-        return exhibitions
+    fun getShuffledExploreData(): List<Any> {
+        val list = mutableListOf<Any>()
+        list.addAll(exhibitions)
+        list.addAll(items)
+        list.shuffled()
+        exploreData = list
+        return list
     }
 }

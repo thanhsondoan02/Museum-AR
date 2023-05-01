@@ -17,9 +17,9 @@ class ExploreFragment: MuseumFragment<ExploreFragmentBinding>(R.layout.explore_f
     override fun onInitView() {
         super.onInitView()
         initViewPager2()
-        viewModel.getExhibitionData(
+        viewModel.getExploreDataFromDatabase(
             onSuccessAction = {
-                adapter.submitList(viewModel.getExploreData())
+                adapter.submitList(viewModel.getShuffledExploreData())
             },
             onFailureAction = {
                 toast(getAppString(R.string.fail) + ": $it")
@@ -38,6 +38,10 @@ class ExploreFragment: MuseumFragment<ExploreFragmentBinding>(R.layout.explore_f
             }
 
             override fun onZoomItem(item: Item) {
+
+            }
+
+            override fun onShareItem(item: Item) {
 
             }
         }

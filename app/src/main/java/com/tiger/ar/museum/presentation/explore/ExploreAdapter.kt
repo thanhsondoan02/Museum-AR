@@ -79,6 +79,10 @@ class ExploreAdapter : MuseumAdapter() {
             binding.ivExploreItemCollectionThumb.loadImage(data.collection?.thumbnail)
             binding.tvExploreItemCollectionName.text = data.collection?.name
             setLikeStatus(data)
+            binding.tvExploreItemName.text = data.name
+            binding.ivExploreItemBackground.loadImageBlur(data.thumbnail)
+            binding.ivExploreItemThumbnail.loadImage(data.thumbnail)
+            binding.tvExploreItemCreator.text = data.creator?.name
         }
 
         override fun onBind(data: Item, payloads: List<Any>) {
