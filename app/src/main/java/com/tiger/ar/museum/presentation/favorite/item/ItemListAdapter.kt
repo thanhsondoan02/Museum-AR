@@ -4,11 +4,16 @@ import androidx.databinding.ViewDataBinding
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.extension.loadImage
 import com.tiger.ar.museum.common.recycleview.BaseVH
-import com.tiger.ar.museum.common.recycleview.MuseumAdapter
 import com.tiger.ar.museum.databinding.ItemListItemBinding
 import com.tiger.ar.museum.domain.model.Item
+import com.tiger.ar.museum.presentation.widget.BaseGridAdapter
 
-class ItemListAdapter: MuseumAdapter() {
+class ItemListAdapter: BaseGridAdapter() {
+
+    override fun getItemCountInRow(viewType: Int): Int {
+        return 2
+    }
+
     override fun getLayoutResource(viewType: Int) = R.layout.item_list_item
 
     override fun onCreateViewHolder(viewType: Int, binding: ViewDataBinding): BaseVH<*>? {

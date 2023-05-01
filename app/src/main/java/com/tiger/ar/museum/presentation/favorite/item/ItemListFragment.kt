@@ -18,7 +18,8 @@ class ItemListFragment: MuseumFragment<ItemListFragmentBinding>(R.layout.item_li
         super.onInitView()
         binding.cvItemList.apply {
             setAdapter(this@ItemListFragment.adapter)
-            setLayoutManager(COLLECTION_MODE.VERTICAL)
+            setLayoutManager(COLLECTION_MODE.GRID_VERTICAL)
+            setMaxItemHorizontal(2)
             submitList(items)
         }
     }
