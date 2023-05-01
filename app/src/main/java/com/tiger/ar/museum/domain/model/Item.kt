@@ -1,13 +1,10 @@
 package com.tiger.ar.museum.domain.model
 
+import com.tiger.ar.museum.AppPreferences
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Item(
-
-    var id: Int? = null,
-
-    var authorId: Int? = null,
 
     var name: String? = null,
 
@@ -17,6 +14,18 @@ data class Item(
 
     var streetView: String? = null,
 
-    var model3d: String? = null
+    var model3d: String? = null,
 
-) : MuseumModel()
+    var collectionId: String? = null,
+
+    var collection: MCollection? = null,
+
+    var creatorId: String? = null,
+
+    var creator: Creator? = null,
+
+    ) : MuseumModel() {
+    fun isLiked(): Boolean {
+        return AppPreferences.getUserInfo().fitems?.contains(key) ?: false
+    }
+}

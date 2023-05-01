@@ -7,6 +7,8 @@ import com.tiger.ar.museum.common.binding.MuseumFragment
 import com.tiger.ar.museum.common.extension.getAppString
 import com.tiger.ar.museum.common.extension.toast
 import com.tiger.ar.museum.databinding.ExploreFragmentBinding
+import com.tiger.ar.museum.domain.model.Exhibition
+import com.tiger.ar.museum.domain.model.Item
 
 class ExploreFragment: MuseumFragment<ExploreFragmentBinding>(R.layout.explore_fragment) {
     private val viewModel by viewModels<ExploreViewModel>()
@@ -26,6 +28,20 @@ class ExploreFragment: MuseumFragment<ExploreFragmentBinding>(R.layout.explore_f
     }
 
     private fun initViewPager2() {
+        adapter.listener = object : ExploreAdapter.IListener {
+            override fun onLikeItem(item: Item) {
+
+            }
+
+            override fun onBuyTicket(exhibition: Exhibition) {
+
+            }
+
+            override fun onZoomItem(item: Item) {
+
+            }
+        }
+
         binding.vp2ExploreExhibition.apply {
             adapter = this@ExploreFragment.adapter
             orientation = ViewPager2.ORIENTATION_VERTICAL

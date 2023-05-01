@@ -39,6 +39,14 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
         loadAvatar()
     }
 
+    fun setBackIcon() {
+        binding.ivRealMainSearch.setImageResource(R.drawable.ic_back)
+    }
+
+    fun setSearchIcon() {
+        binding.ivRealMainSearch.setImageResource(R.drawable.ic_search)
+    }
+
     private fun initOnClick() {
         binding.ivRealMainCast.setOnSafeClick {
 
