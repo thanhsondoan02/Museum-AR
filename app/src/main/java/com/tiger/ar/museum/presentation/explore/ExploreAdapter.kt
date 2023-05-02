@@ -63,7 +63,7 @@ class ExploreAdapter : MuseumAdapter() {
             binding.tvExploreExhibitionMuseumInfo.text = data.getMuseumInfo()
             binding.tvExploreExhibitionDate.text = data.getExhibitionDate()
             binding.tvExploreExhibitionTitle.text = data.getExhibitionTitle()
-            binding.ivExploreExhibitionBackground.loadImageBlur(data.thumbnail, radius = 100, sampling = 10)
+            binding.ivExploreExhibitionBackground.loadImageBlur(data.thumbnail)
         }
     }
 
