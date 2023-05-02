@@ -23,7 +23,7 @@ class ExploreDiffUtil(oldData: List<Any>, newData: List<Any>) : BaseDiffUtilCall
         val newItem = getNewItem(newItemPosition)
 
         return if (oldItem is Item && newItem is Item) {
-            oldItem.isLiked() == newItem.isLiked()
+            oldItem.safeIsLiked() == newItem.safeIsLiked()
 //                    && oldItem.collection?.name == newItem.collection?.name
 //                    && oldItem.collection?.thumbnail == newItem.collection?.thumbnail
 //                    && oldItem.thumbnail == newItem.thumbnail
@@ -41,7 +41,7 @@ class ExploreDiffUtil(oldData: List<Any>, newData: List<Any>) : BaseDiffUtilCall
         val list = mutableListOf<Any>()
 
         if (oldItem is Item && newItem is Item) {
-            if (oldItem.isLiked() != newItem.isLiked()) list.add(ExploreAdapter.LIKE_PAYLOAD)
+            if (oldItem.safeIsLiked() != newItem.safeIsLiked()) list.add(ExploreAdapter.LIKE_PAYLOAD)
         }
 
         return list.ifEmpty { null }

@@ -47,6 +47,10 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
         binding.ivRealMainSearch.setImageResource(R.drawable.ic_search)
     }
 
+    fun reloadFavorite() {
+        favoriteMainFragment.getFavoriteData()
+    }
+
     private fun initOnClick() {
         binding.ivRealMainCast.setOnSafeClick {
 

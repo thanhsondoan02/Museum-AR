@@ -1,20 +1,22 @@
 package com.tiger.ar.museum.presentation.explore
 
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.tiger.ar.museum.R
+import com.tiger.ar.museum.AppPreferences
 import com.tiger.ar.museum.common.BaseViewModel
-import com.tiger.ar.museum.common.extension.getAppString
 import com.tiger.ar.museum.domain.model.Exhibition
 import com.tiger.ar.museum.domain.model.Item
+import com.tiger.ar.museum.domain.model.User
 import kotlinx.coroutines.launch
 
 class ExploreViewModel : BaseViewModel() {
-    var exploreData: List<Any> = listOf()
+    var exploreData: MutableList<Any> = mutableListOf()
 
     private var exhibitions = listOf<Exhibition>()
     private var items = listOf<Item>()
@@ -39,7 +41,7 @@ class ExploreViewModel : BaseViewModel() {
                     onSuccessAction.invoke()
                 }
                 .addOnFailureListener {
-                    onFailureAction.invoke(getAppString(R.string.fail) + ": ${it.message}")
+                    onFailureAction.invoke(it.message ?: "")
                 }
         }
     }
@@ -56,5 +58,58 @@ class ExploreViewModel : BaseViewModel() {
         }
         exploreData = list2
         return exploreData
+    }
+
+    fun likeItem(item: Item, onSuccessAction: () -> Unit, onFailureAction: (message: String) -> Unit) {
+        if (AppPreferences.getUserInfo().key == null) {
+            throw Exception("User key is null")
+        }
+        if (item.key == null) {
+            throw Exception("Item key is null")
+        }
+
+        val likeItemRef: Task<Void> = if (item.safeIsLiked()) {
+            Firebase.firestore.collection("users")
+                .document(AppPreferences.getUserInfo().key!!)
+                .update("fitems", FieldValue.arrayRemove(item.key!!))
+        } else {
+            Firebase.firestore.collection("users")
+                .document(AppPreferences.getUserInfo().key!!)
+                .update("fitems", FieldValue.arrayUnion(item.key!!))
+        }
+        likeItemRef
+            .addOnSuccessListener {
+                val userRef = Firebase.firestore
+                    .collection("users")
+                    .document(AppPreferences.getUserInfo().key!!)
+
+                userRef.get()
+                    .addOnSuccessListener {
+                        val user = it.toObject(User::class.java)?.apply { key = it.id }
+                        AppPreferences.setUserInfo(user!!)
+
+                        // create new item for resubmit list
+                        val updateItemIndex = exploreData.indexOfFirst { explore ->
+                            if (explore is Item) {
+                                explore.key == item.key
+                            } else {
+                                false
+                            }
+                        }
+                        val oldItem = exploreData.getOrNull(updateItemIndex) as Item
+                        exploreData[updateItemIndex] = oldItem.copy().apply {
+                            key = oldItem.key
+                            mapIsLiked()
+                        }
+
+                        onSuccessAction.invoke()
+                    }
+                    .addOnFailureListener {
+                        onFailureAction.invoke(it.message ?: "")
+                    }
+            }
+            .addOnFailureListener {
+                onFailureAction.invoke(it.message ?: "")
+            }
     }
 }

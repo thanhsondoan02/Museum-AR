@@ -9,6 +9,7 @@ import com.tiger.ar.museum.common.extension.toast
 import com.tiger.ar.museum.databinding.ExploreFragmentBinding
 import com.tiger.ar.museum.domain.model.Exhibition
 import com.tiger.ar.museum.domain.model.Item
+import com.tiger.ar.museum.presentation.RealMainActivity
 
 class ExploreFragment: MuseumFragment<ExploreFragmentBinding>(R.layout.explore_fragment) {
     private val viewModel by viewModels<ExploreViewModel>()
@@ -30,7 +31,15 @@ class ExploreFragment: MuseumFragment<ExploreFragmentBinding>(R.layout.explore_f
     private fun initViewPager2() {
         adapter.listener = object : ExploreAdapter.IListener {
             override fun onLikeItem(item: Item) {
-
+                viewModel.likeItem(item,
+                    onSuccessAction = {
+                        adapter.submitList(viewModel.exploreData)
+                        (museumActivity as RealMainActivity).reloadFavorite()
+                    },
+                    onFailureAction = {
+                        toast(getAppString(R.string.fail) + ": $it")
+                    }
+                )
             }
 
             override fun onBuyTicket(exhibition: Exhibition) {

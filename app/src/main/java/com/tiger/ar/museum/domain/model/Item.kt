@@ -24,8 +24,19 @@ data class Item(
 
     var creator: Creator? = null,
 
+    @Deprecated("Use fun isLiked() key instead")
+    var isLiked: Boolean? = null
+
     ) : MuseumModel() {
-    fun isLiked(): Boolean {
-        return AppPreferences.getUserInfo().fitems?.contains(key) ?: false
+
+    fun safeIsLiked(): Boolean {
+        if (isLiked == null) {
+            mapIsLiked()
+        }
+        return isLiked ?: false
+    }
+
+    fun mapIsLiked() {
+        isLiked = AppPreferences.getUserInfo().fitems?.contains(key) ?: false
     }
 }

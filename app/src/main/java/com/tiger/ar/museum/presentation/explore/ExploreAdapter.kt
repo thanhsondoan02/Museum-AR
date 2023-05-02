@@ -97,9 +97,9 @@ class ExploreAdapter : MuseumAdapter() {
 
         private fun setLikeStatus(data: Item) {
             binding.ivExploreItemLike.setImageResource(
-                when (data.isLiked()) {
+                when (data.safeIsLiked()) {
                     true -> R.drawable.ic_like_filled
-                    false -> R.drawable.ic_like
+                    else -> R.drawable.ic_like
                 }
             )
         }
