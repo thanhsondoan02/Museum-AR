@@ -11,13 +11,14 @@ import com.tiger.ar.museum.domain.model.Exhibition
 import com.tiger.ar.museum.domain.model.Item
 import com.tiger.ar.museum.presentation.RealMainActivity
 
-class ExploreFragment: MuseumFragment<ExploreFragmentBinding>(R.layout.explore_fragment) {
+class ExploreFragment : MuseumFragment<ExploreFragmentBinding>(R.layout.explore_fragment) {
     private val viewModel by viewModels<ExploreViewModel>()
     private val adapter by lazy { ExploreAdapter() }
 
     override fun onInitView() {
         super.onInitView()
         initViewPager2()
+        initTopAppBarCallBack()
         viewModel.getExploreDataFromDatabase(
             onSuccessAction = {
                 adapter.submitList(viewModel.getShuffledExploreData())
@@ -59,5 +60,17 @@ class ExploreFragment: MuseumFragment<ExploreFragmentBinding>(R.layout.explore_f
             adapter = this@ExploreFragment.adapter
             orientation = ViewPager2.ORIENTATION_VERTICAL
         }
+    }
+
+    private fun initTopAppBarCallBack() {
+//        (museumActivity as RealMainActivity).addCallBackOnOffSetChange { appbarLayOut, verticalOffset ->
+//            val params = binding.vp2ExploreExhibition.layoutParams as ViewGroup.MarginLayoutParams
+//            params.topMargin = appbarLayOut.height + verticalOffset
+//            binding.vp2ExploreExhibition.layoutParams = params
+//        }
+    }
+
+    private fun abs(a: Int): Int {
+        return if (a < 0) -a else a
     }
 }

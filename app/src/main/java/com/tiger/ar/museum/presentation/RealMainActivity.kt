@@ -1,6 +1,7 @@
 package com.tiger.ar.museum.presentation
 
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.appbar.AppBarLayout
 import com.tiger.ar.museum.AppPreferences
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.FontSpan
@@ -27,6 +28,7 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
     private val favoriteMainFragment by lazy { FavoriteMainFragment() }
     private val gameFragment by lazy { GameFragment() }
     private var settingFragment: SettingFragment? = null
+    private val listAppBarCallBack = mutableListOf<(appbarLayOut: AppBarLayout, verticalOffset: Int) -> Unit>()
 
     override fun setupStatusBar() = StatusBar(color = R.color.main_black, isDarkText = false)
 
@@ -37,6 +39,7 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
         initBottomNav()
         initViewPager()
         loadAvatar()
+        initTopAppBarCallback()
     }
 
     fun setBackIcon() {
@@ -49,6 +52,10 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
 
     fun reloadFavorite() {
         favoriteMainFragment.getFavoriteData()
+    }
+
+    fun addCallBackOnOffSetChange(callBack: (appbarLayOut: AppBarLayout, verticalOffset: Int) -> Unit) {
+        listAppBarCallBack.add(callBack)
     }
 
     private fun initOnClick() {
@@ -149,5 +156,24 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
 
     private fun loadAvatar() {
         binding.ivRealMainProfile.loadImage(AppPreferences.getUserInfo().avatar, placeHolder = getAppDrawable(R.drawable.ic_no_picture))
+    }
+
+    private fun initTopAppBarCallback() {
+        binding.ablRealMain.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+//            // Xử lý sự kiện thay đổi vị trí của AppBarLayout
+//            if (verticalOffset == 0) {
+//                // AppBarLayout hiển thị hoàn toàn
+//                // ...
+//            } else if (Math.abs(verticalOffset) >= appBarLayout?.totalScrollRange ?: 0) {
+//                // AppBarLayout bị ẩn hoàn toàn
+//                // ...
+//            } else {
+//                // AppBarLayout đang ở trạng thái trung gian
+//                // ...
+//            }
+            listAppBarCallBack.forEach {
+                it.invoke(appBarLayout, verticalOffset)
+            }
+        }
     }
 }

@@ -39,6 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginHorizontal="@dimen/dimen_46"
+            android:layout_marginBottom="28dp"
             android:background="@drawable/shape_rectangle_gray_bg_corner_30"
             android:gravity="center"
             android:orientation="vertical"

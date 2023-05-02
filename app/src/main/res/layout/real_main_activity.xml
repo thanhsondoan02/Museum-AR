@@ -10,6 +10,7 @@
         <com.tiger.ar.museum.presentation.widget.CustomViewPager
             android:id="@+id/vpRealMain"
             android:layout_width="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_height="match_parent"
             tools:background="@color/black" />
 
@@ -57,7 +58,7 @@
             android:layout_height="match_parent" />
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar"
+            android:id="@+id/ablRealMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
