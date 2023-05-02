@@ -22,8 +22,7 @@
 
         <activity
             android:name=".presentation.intro.CheckPrefActivity"
-            android:exported="true"
-            android:theme="@style/Theme.MuseumAR.Fullscreen">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -55,6 +54,7 @@
 
         <activity
             android:name=".presentation.intro.IntroductionActivity"
+            android:theme="@style/Theme.MuseumAR.Fullscreen"
             android:exported="false" />
 
     </application>

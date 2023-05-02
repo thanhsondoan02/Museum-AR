@@ -30,7 +30,7 @@ abstract class BaseBindingActivity<DB : ViewDataBinding> (layoutId: Int) : BaseA
 
     override fun onInitView() {
         super.onInitView()
-        setFullScreen()
+//        setFullScreen()
     }
 
     override fun attachView() {
