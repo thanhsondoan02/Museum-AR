@@ -1,5 +1,6 @@
 package com.tiger.ar.museum.presentation.favorite
 
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumFragment
@@ -53,7 +54,8 @@ class FavoriteMainFragment : MuseumFragment<FavoriteMainFragmentBinding>(R.layou
 
             override fun onViewAllItem() {
                 museumActivity.replaceFragmentNew(
-                    ItemListFragment().apply { items = viewModel.items },
+                    ItemListFragment(),
+                    bundleOf(ItemListFragment.ITEMS_KEY to viewModel.items),
                     containerId = R.id.flRealMainContainer
                 )
             }

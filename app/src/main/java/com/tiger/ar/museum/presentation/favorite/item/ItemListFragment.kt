@@ -1,9 +1,9 @@
 package com.tiger.ar.museum.presentation.favorite.item
 
+import androidx.fragment.app.viewModels
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumFragment
 import com.tiger.ar.museum.databinding.ItemListFragmentBinding
-import com.tiger.ar.museum.domain.model.Item
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
 class ItemListFragment: MuseumFragment<ItemListFragmentBinding>(R.layout.item_list_fragment) {
@@ -11,8 +11,13 @@ class ItemListFragment: MuseumFragment<ItemListFragmentBinding>(R.layout.item_li
         const val ITEMS_KEY = "ITEMS_KEY"
     }
 
-    var items: List<Item> = emptyList()
     private val adapter by lazy { ItemListAdapter() }
+    private val viewModel by viewModels<ItemListViewModel>()
+
+    override fun onPrepareInitView() {
+        super.onPrepareInitView()
+        viewModel.items = arguments?.getParcelableArrayList(ITEMS_KEY) ?: emptyList()
+    }
 
     override fun onInitView() {
         super.onInitView()
@@ -20,8 +25,9 @@ class ItemListFragment: MuseumFragment<ItemListFragmentBinding>(R.layout.item_li
             setAdapter(this@ItemListFragment.adapter)
             setLayoutManager(COLLECTION_MODE.GRID_VERTICAL)
             setMaxItemHorizontal(2)
-            submitList(items)
+        }
+        viewModel.calculateSizeOfListImage {
+            binding.cvItemList.submitList(viewModel.items)
         }
     }
-
 }

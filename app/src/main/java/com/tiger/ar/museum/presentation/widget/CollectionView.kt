@@ -185,6 +185,23 @@ class CollectionView constructor(
         return gridLayoutManager
     }
 
+    private fun getPeswocLayoutManager(): LayoutManager {
+        val spanCount = getOptimalSpanCount(maxItemHorizontal)
+        val gridLayoutManager = GridLayoutManager(context, spanCount, GridLayoutManager.VERTICAL, false)
+
+        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return if (baseAdapter is BaseGridAdapter) {
+                    (baseAdapter as BaseGridAdapter).getItemSpanSize(position, spanCount)
+                } else {
+                    spanCount
+                }
+            }
+        }
+
+        return gridLayoutManager
+    }
+
     private fun getOptimalSpanCount(maxItemHorizontal: Int): Int {
         var spanCount = 1
         if (maxItemHorizontal <= 0) {
