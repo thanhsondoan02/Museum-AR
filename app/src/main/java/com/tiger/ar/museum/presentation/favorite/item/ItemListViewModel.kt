@@ -14,48 +14,44 @@ import kotlinx.coroutines.launch
 
 class ItemListViewModel : BaseViewModel() {
     var items: List<Item> = emptyList()
-    var imageUrlList: List<String> = emptyList()
-    var imageSizeList: MutableList<ImageSize> = mutableListOf()
+    var itemDisplays: MutableList<ItemDisplay> = mutableListOf()
+
+    private var count = 0
 
     fun calculateSizeOfListImage(onSuccess: () -> Unit) {
         viewModelScope.launch {
-            mapImageList()
-
-            for (imageUrl in imageUrlList) {
-                Glide.with(getApplication())
-                    .load(imageUrl)
-                    .listener(object : RequestListener<Drawable> {
-                        override fun onLoadFailed(
-                            e: GlideException?,
-                            model: Any?,
-                            target: Target<Drawable>?,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            return false
-                        }
-
-                        override fun onResourceReady(
-                            resource: Drawable?,
-                            model: Any?,
-                            target: Target<Drawable>?,
-                            dataSource: DataSource?,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            if (resource != null) {
-                                val width = resource.intrinsicWidth
-                                val height = resource.intrinsicHeight
-                                imageSizeList.add(ImageSize(height, width))
-                            }
-                            return false
-                        }
-                    })
-                    .submit()
-            }
-            onSuccess.invoke()
+            loadImageUrlListWithGlide(onSuccess)
         }
     }
 
-    private fun mapImageList() {
-        imageUrlList = items.map { it.thumbnail ?: "" }
+    private fun loadImageUrlListWithGlide(onSuccess: () -> Unit) {
+        count = items.size
+        for (item in items) {
+            Glide.with(getApplication()).load(item.thumbnail).listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        count--
+                        if (count == 0) {
+                            onSuccess.invoke()
+                        }
+                        return false
+                    }
+
+                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                        count--
+                        if (resource != null) {
+                            val width = resource.intrinsicWidth
+                            val height = resource.intrinsicHeight
+                            itemDisplays.add(ItemDisplay().apply {
+                                this.item = item
+                                this.imageSize = ImageSize(height, width)
+                            })
+                        }
+                        if (count == 0) {
+                            onSuccess.invoke()
+                        }
+                        return false
+                    }
+                }).submit()
+        }
     }
 }

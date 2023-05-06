@@ -70,6 +70,7 @@ class CollectionView constructor(
             COLLECTION_MODE.VERTICAL -> CustomLinearLayoutManager(context, LinearLayoutManager.VERTICAL, isReverseView)
             COLLECTION_MODE.HORIZONTAL -> CustomLinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, isReverseView)
             COLLECTION_MODE.GRID_VERTICAL -> getGridLayoutManager()
+            COLLECTION_MODE.PESWOC -> getPeswocLayoutManager()
         }
     }
 
@@ -191,8 +192,8 @@ class CollectionView constructor(
 
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return if (baseAdapter is BaseGridAdapter) {
-                    (baseAdapter as BaseGridAdapter).getItemSpanSize(position, spanCount)
+                return if (baseAdapter is PeswocAdapter) {
+                    (baseAdapter as PeswocAdapter).getItemSpanSize(position, spanCount)
                 } else {
                     spanCount
                 }

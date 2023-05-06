@@ -5,10 +5,9 @@ import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.extension.loadImage
 import com.tiger.ar.museum.common.recycleview.BaseVH
 import com.tiger.ar.museum.databinding.ItemListItemBinding
-import com.tiger.ar.museum.domain.model.Item
-import com.tiger.ar.museum.presentation.widget.BaseGridAdapter
+import com.tiger.ar.museum.presentation.widget.PeswocAdapter
 
-class ItemListAdapter: BaseGridAdapter() {
+class ItemListAdapter: PeswocAdapter() {
 
     override fun getItemCountInRow(viewType: Int): Int {
         return 2
@@ -20,9 +19,9 @@ class ItemListAdapter: BaseGridAdapter() {
         return ItemVH(binding as ItemListItemBinding)
     }
 
-    inner class ItemVH(private val binding: ItemListItemBinding) : BaseVH<Item>(binding) {
-        override fun onBind(data: Item) {
-            binding.ivItemList.loadImage(data.thumbnail)
+    inner class ItemVH(private val binding: ItemListItemBinding) : BaseVH<ItemDisplay>(binding) {
+        override fun onBind(data: ItemDisplay) {
+            binding.ivItemList.loadImage(data.item?.thumbnail)
         }
     }
 }

@@ -23,11 +23,11 @@ class ItemListFragment: MuseumFragment<ItemListFragmentBinding>(R.layout.item_li
         super.onInitView()
         binding.cvItemList.apply {
             setAdapter(this@ItemListFragment.adapter)
-            setLayoutManager(COLLECTION_MODE.GRID_VERTICAL)
-            setMaxItemHorizontal(2)
+            setLayoutManager(COLLECTION_MODE.PESWOC)
+//            setMaxItemHorizontal(2)
         }
         viewModel.calculateSizeOfListImage {
-            binding.cvItemList.submitList(viewModel.items)
+            binding.cvItemList.submitList(viewModel.itemDisplays)
         }
     }
 }
