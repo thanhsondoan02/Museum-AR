@@ -1,24 +1,23 @@
 package com.tiger.ar.museum.presentation.widget
 
 import com.tiger.ar.museum.common.recycleview.BaseAdapter
+import com.tiger.ar.museum.presentation.favorite.item.ItemDisplay
 
 abstract class PeswocAdapter : BaseAdapter() {
 
-    abstract fun getItemCountInRow(viewType: Int): Int
-
-    private fun getMaxItemHorizontalByViewType(viewType: Int): Int {
-        return when (viewType) {
-            LOAD_MORE_VIEW_TYPE,
-            EMPTY_VIEW_TYPE,
-            LOADING_VIEW_TYPE -> 1
-            else -> getItemCountInRow(viewType)
-        }
-    }
-
     fun getItemSpanSize(position: Int, spanCount: Int): Int {
-        val viewType = getItemViewType(position)
-        val maxItemHorizontal = getMaxItemHorizontalByViewType(viewType)
-        return spanCount / maxItemHorizontal
+        val item = getDataAtPosition(position) as ItemDisplay
+        when (item.countInRow) {
+            1 -> {
+                return spanCount
+            }
+            2 -> {
+                return spanCount / 2
+            }
+            else -> {
+                throw IllegalArgumentException("getItemSpanSize: maxItemHorizontal must be 1 or 2")
+            }
+        }
     }
 }
 

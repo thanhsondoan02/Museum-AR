@@ -9,10 +9,6 @@ import com.tiger.ar.museum.presentation.widget.PeswocAdapter
 
 class ItemListAdapter: PeswocAdapter() {
 
-    override fun getItemCountInRow(viewType: Int): Int {
-        return 2
-    }
-
     override fun getLayoutResource(viewType: Int) = R.layout.item_list_item
 
     override fun onCreateViewHolder(viewType: Int, binding: ViewDataBinding): BaseVH<*>? {

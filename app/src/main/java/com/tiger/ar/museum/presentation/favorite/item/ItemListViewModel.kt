@@ -13,6 +13,10 @@ import com.tiger.ar.museum.domain.model.Item
 import kotlinx.coroutines.launch
 
 class ItemListViewModel : BaseViewModel() {
+    companion object {
+        const val VERTICAL_RATIO = 4 / 3f
+    }
+
     var items: List<Item> = emptyList()
     var itemDisplays: MutableList<ItemDisplay> = mutableListOf()
 
@@ -26,6 +30,7 @@ class ItemListViewModel : BaseViewModel() {
 
     private fun loadImageUrlListWithGlide(onSuccess: () -> Unit) {
         count = items.size
+        var hasLeft = false
         for (item in items) {
             Glide.with(getApplication()).load(item.thumbnail).listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
@@ -44,6 +49,20 @@ class ItemListViewModel : BaseViewModel() {
                             itemDisplays.add(ItemDisplay().apply {
                                 this.item = item
                                 this.imageSize = ImageSize(height, width)
+                                if (height / width.toFloat() > VERTICAL_RATIO) {
+                                    if (hasLeft) {
+                                        itemDisplays.last().countInRow = 2
+                                        this.countInRow = 2
+                                        hasLeft = false
+
+                                        val ratio = itemDisplays.last().imageSize.width / this.imageSize.width.toFloat()
+
+                                    } else {
+                                        hasLeft = true
+                                    }
+                                } else {
+                                    hasLeft = false
+                                }
                             })
                         }
                         if (count == 0) {

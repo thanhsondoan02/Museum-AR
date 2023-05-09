@@ -9,5 +9,7 @@ data class ImageSize(
 
 class ItemDisplay {
     var item: Item? = null
-    var imageSize: ImageSize? = null
+    var imageSize: ImageSize = ImageSize(1, 1)
+    var countInRow: Int = 1
+    var ratio: Float = 1f
 }

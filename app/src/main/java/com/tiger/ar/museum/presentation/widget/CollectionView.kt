@@ -53,7 +53,6 @@ class CollectionView constructor(
 
     fun setMaxItemHorizontal(@IntRange(from = 1, to = 10) number: Int) {
         maxItemHorizontal = number
-        layoutManager = getGridLayoutManager()
     }
 
     fun setLayoutManager(
@@ -187,7 +186,7 @@ class CollectionView constructor(
     }
 
     private fun getPeswocLayoutManager(): LayoutManager {
-        val spanCount = getOptimalSpanCount(maxItemHorizontal)
+        val spanCount = 10
         val gridLayoutManager = GridLayoutManager(context, spanCount, GridLayoutManager.VERTICAL, false)
 
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
