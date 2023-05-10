@@ -186,13 +186,13 @@ class CollectionView constructor(
     }
 
     private fun getPeswocLayoutManager(): LayoutManager {
-        val spanCount = 10
+        val spanCount = PeswocAdapter.SPAN_COUNT
         val gridLayoutManager = GridLayoutManager(context, spanCount, GridLayoutManager.VERTICAL, false)
 
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return if (baseAdapter is PeswocAdapter) {
-                    (baseAdapter as PeswocAdapter).getItemSpanSize(position, spanCount)
+                    (baseAdapter as PeswocAdapter).getItemSpanSize(position)
                 } else {
                     spanCount
                 }

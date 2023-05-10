@@ -10,7 +10,9 @@ import com.bumptech.glide.request.target.Target
 import com.tiger.ar.museum.common.BaseViewModel
 import com.tiger.ar.museum.common.extension.getApplication
 import com.tiger.ar.museum.domain.model.Item
+import com.tiger.ar.museum.presentation.widget.PeswocAdapter
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 class ItemListViewModel : BaseViewModel() {
     companion object {
@@ -51,12 +53,26 @@ class ItemListViewModel : BaseViewModel() {
                                 this.imageSize = ImageSize(height, width)
                                 if (height / width.toFloat() > VERTICAL_RATIO) {
                                     if (hasLeft) {
-                                        itemDisplays.last().countInRow = 2
-                                        this.countInRow = 2
+                                        val item1 = itemDisplays.last()
+                                        val item2 = this
+
+                                        item1.countInRow = 2
+                                        item2.countInRow = 2
                                         hasLeft = false
 
-                                        val ratio = itemDisplays.last().imageSize.width / this.imageSize.width.toFloat()
+                                        val ratio1 = item1.imageSize.width.toFloat() / item1.imageSize.height
+                                        val ratio2 = item2.imageSize.width.toFloat() / item2.imageSize.height
 
+                                        // first / second
+                                        var ratio = ratio1 / ratio2
+
+                                        // second
+                                        ratio = PeswocAdapter.SPAN_COUNT / (ratio + 1)
+                                        val second = ratio.roundToInt()
+                                        val first = PeswocAdapter.SPAN_COUNT - second
+
+                                        itemDisplays.last().spanSize = first
+                                        this.spanSize = second
                                     } else {
                                         hasLeft = true
                                     }
