@@ -48,7 +48,9 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
             setImageResource(R.drawable.ic_back)
             setOnSafeClick {
                 navigateBack()
-                setSearchIcon()
+                if (supportFragmentManager.fragments.size == 4) {
+                    setSearchIcon()
+                }
             }
         }
     }
