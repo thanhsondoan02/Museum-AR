@@ -82,4 +82,7 @@
     <string name="buy_tickets">Mua vé</string>
     <string name="current_exhibition">Triển lãm đang diễn ra</string>
     <string name="exhibition_opening_soon">Triển lãm sắp khai mạc</string>
+    <string name="zoom_in">Phóng to</string>
+    <string name="view_in_ar">Augmented reality</string>
+    <string name="street_view">Chế độ xem phố</string>
 </resources>

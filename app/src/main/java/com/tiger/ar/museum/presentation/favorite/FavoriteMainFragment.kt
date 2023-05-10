@@ -53,7 +53,7 @@ class FavoriteMainFragment : MuseumFragment<FavoriteMainFragmentBinding>(R.layou
             }
 
             override fun onViewAllItem() {
-                museumActivity.replaceFragmentNew(
+                museumActivity.addFragmentNew(
                     ItemListFragment(),
                     bundleOf(ItemListFragment.ITEMS_KEY to viewModel.items),
                     containerId = R.id.flRealMainContainer

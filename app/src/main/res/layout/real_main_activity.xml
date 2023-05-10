@@ -10,8 +10,8 @@
         <com.tiger.ar.museum.presentation.widget.CustomViewPager
             android:id="@+id/vpRealMain"
             android:layout_width="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:background="@color/black" />
 
         <com.google.android.material.bottomappbar.BottomAppBar

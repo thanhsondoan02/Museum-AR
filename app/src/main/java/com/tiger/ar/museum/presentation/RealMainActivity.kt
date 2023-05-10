@@ -1,5 +1,6 @@
 package com.tiger.ar.museum.presentation
 
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.appbar.AppBarLayout
 import com.tiger.ar.museum.AppPreferences
@@ -59,6 +60,18 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
 //                navigateTo(SearchActivity::class.java)
                 toastUndeveloped()
             }
+        }
+    }
+
+    fun enableScrollHideActionBar(isEnabled: Boolean) {
+        val behavior = (binding.ablRealMain.layoutParams as CoordinatorLayout.LayoutParams).behavior as AppBarLayout.Behavior
+        behavior.setDragCallback(object : AppBarLayout.Behavior.DragCallback() {
+            override fun canDrag(appBarLayout: AppBarLayout): Boolean {
+                return isEnabled
+            }
+        })
+        if (!isEnabled) {
+            binding.ablRealMain.setExpanded(true, true)
         }
     }
 

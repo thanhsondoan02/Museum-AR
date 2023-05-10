@@ -1,11 +1,14 @@
 package com.tiger.ar.museum.presentation.favorite.item
 
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.tiger.ar.museum.AppPreferences
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumFragment
 import com.tiger.ar.museum.databinding.ItemListFragmentBinding
+import com.tiger.ar.museum.domain.model.Item
 import com.tiger.ar.museum.presentation.RealMainActivity
+import com.tiger.ar.museum.presentation.item.ItemFragment
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
 class ItemListFragment : MuseumFragment<ItemListFragmentBinding>(R.layout.item_list_fragment) {
@@ -24,6 +27,17 @@ class ItemListFragment : MuseumFragment<ItemListFragmentBinding>(R.layout.item_l
     override fun onInitView() {
         super.onInitView()
         (museumActivity as? RealMainActivity)?.setBackIcon()
+
+        adapter.listener = object : ItemListAdapter.IListener {
+            override fun onItemClick(item: Item?) {
+                museumActivity.addFragmentNew(
+                    ItemFragment(),
+                    bundleOf(ItemFragment.ITEM_KEY to item),
+                    containerId = R.id.flRealMainContainer
+                )
+            }
+        }
+
         binding.cvItemList.apply {
             setAdapter(this@ItemListFragment.adapter)
             setLayoutManager(COLLECTION_MODE.PESWOC)
