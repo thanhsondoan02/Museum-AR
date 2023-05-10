@@ -58,6 +58,8 @@ class ItemListViewModel : BaseViewModel() {
 
                                         item1.countInRow = 2
                                         item2.countInRow = 2
+                                        item1.isLeft = true
+                                        item2.isLeft = false
                                         hasLeft = false
 
                                         val ratio1 = item1.imageSize.width.toFloat() / item1.imageSize.height

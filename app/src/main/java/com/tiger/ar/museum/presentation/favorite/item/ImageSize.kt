@@ -12,4 +12,5 @@ class ItemDisplay {
     var imageSize: ImageSize = ImageSize(1, 1)
     var countInRow: Int = 1
     var spanSize: Int = 1
+    var isLeft: Boolean? = null
 }
