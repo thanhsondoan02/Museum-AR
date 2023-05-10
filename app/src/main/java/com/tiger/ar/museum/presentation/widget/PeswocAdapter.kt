@@ -9,17 +9,11 @@ abstract class PeswocAdapter : BaseAdapter() {
     }
 
     fun getItemSpanSize(position: Int): Int {
-        val item = getDataAtPosition(position) as ItemDisplay
-        return when (item.countInRow) {
-            1 -> {
-                SPAN_COUNT
-            }
-            2 -> {
-                item.spanSize
-            }
-            else -> {
-                throw IllegalArgumentException("getItemSpanSize: maxItemHorizontal must be 1 or 2")
-            }
+        val item = getDataAtPosition(position) as? ItemDisplay
+        return if (item?.countInRow == 2) {
+            item.spanSize
+        } else {
+            SPAN_COUNT
         }
     }
 }

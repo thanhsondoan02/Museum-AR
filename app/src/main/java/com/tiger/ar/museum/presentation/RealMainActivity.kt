@@ -43,11 +43,23 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
     }
 
     fun setBackIcon() {
-        binding.ivRealMainSearch.setImageResource(R.drawable.ic_back)
+        binding.ivRealMainSearch.apply {
+            setImageResource(R.drawable.ic_back)
+            setOnSafeClick {
+                navigateBack()
+                setSearchIcon()
+            }
+        }
     }
 
     fun setSearchIcon() {
-        binding.ivRealMainSearch.setImageResource(R.drawable.ic_search)
+        binding.ivRealMainSearch.apply {
+            setImageResource(R.drawable.ic_search)
+            setOnSafeClick {
+//                navigateTo(SearchActivity::class.java)
+                toastUndeveloped()
+            }
+        }
     }
 
     fun reloadFavorite() {
