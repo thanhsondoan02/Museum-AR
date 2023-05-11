@@ -4,11 +4,11 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?android:attr/actionBarSize">
+        android:layout_marginTop="?android:attr/actionBarSize"
+        android:background="@color/white">
 
-        <fragment
-            android:id="@+id/fStreetView"
-            android:name="com.google.android.gms.maps.SupportStreetViewPanoramaFragment"
+        <FrameLayout
+            android:id="@+id/flStreetViewContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

@@ -61,6 +61,10 @@
             android:theme="@style/Theme.MuseumAR.Fullscreen"
             android:exported="false" />
 
+        <activity
+            android:name=".presentation.streetview.StreetViewPanoramaEventsDemoActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

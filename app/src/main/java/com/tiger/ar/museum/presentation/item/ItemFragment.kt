@@ -51,7 +51,7 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
 
                     }
                     ACTION_TYPE.STREET -> {
-                        museumActivity.addFragmentNew(
+                        museumActivity.replaceFragmentNew(
                             StreetViewFragment(),
                             bundleOf(StreetViewFragment.STREET_VIEW_KEY to viewModel.item?.streetView),
                             containerId = R.id.flRealMainContainer
