@@ -1,6 +1,5 @@
 package com.tiger.ar.museum.presentation.item
 
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumFragment
@@ -51,9 +50,9 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
 
                     }
                     ACTION_TYPE.STREET -> {
-                        museumActivity.replaceFragmentNew(
-                            StreetViewFragment(),
-                            bundleOf(StreetViewFragment.STREET_VIEW_KEY to viewModel.item?.streetView),
+                        museumActivity.addFragmentNew(
+                            StreetViewFragment().apply { this.location = viewModel.item?.streetView},
+//                            bundleOf(StreetViewFragment.GEO_POINT_KEY to viewModel.item?.streetView),
                             containerId = R.id.flRealMainContainer
                         )
                     }

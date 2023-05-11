@@ -92,4 +92,6 @@
     <string name="pan_camera">pan camera</string>
     <string name="tap_screen">tap screen</string>
     <string name="long_press_screen">long press screen</string>
+    <string name="explore_with_street_view">Khám phá với chế độ xem phố</string>
+    <string name="explore_with_street_view_desc">Từ hậu trường Nhà hát Opera Paris đến đỉnh Taj Mahal</string>
 </resources>

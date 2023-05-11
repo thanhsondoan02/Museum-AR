@@ -1,7 +1,9 @@
 package com.tiger.ar.museum.domain.model
 
+import com.google.firebase.firestore.GeoPoint
 import com.tiger.ar.museum.AppPreferences
 import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.RawValue
 
 @Parcelize
 data class Item(
@@ -14,7 +16,7 @@ data class Item(
 
     var description: String? = null,
 
-    var streetView: String? = null,
+    var streetView: @RawValue GeoPoint? = null,
 
     var model3d: String? = null,
 
@@ -64,6 +66,5 @@ fun mockItem(): Item {
             ItemDetail(title = "Medium", description = "bronze"),
         ),
         model3d = "table.glb",
-        streetView = "https://artsandculture.google.com/streetview/zAF6G_TgTp9RiQ?sv_lng=-46.63522852806224&sv_lat=-23.594668815349493&sv_h=91.11670284369464&sv_p=-4.4105560397582195&sv_pid=2xqNrPNGHHMG_g4-2DdnFQ&sv_z=1.5760047017527676"
     )
 }

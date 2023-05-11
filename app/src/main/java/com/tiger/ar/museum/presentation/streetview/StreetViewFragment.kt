@@ -6,19 +6,19 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.StreetViewPanoramaCamera
 import com.google.android.gms.maps.model.StreetViewPanoramaLocation
 import com.google.android.gms.maps.model.StreetViewPanoramaOrientation
+import com.google.firebase.firestore.GeoPoint
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumFragment
 import com.tiger.ar.museum.databinding.StreetViewFragmentBinding
-
 
 class StreetViewFragment: MuseumFragment<StreetViewFragmentBinding>(R.layout.street_view_fragment),
     StreetViewPanorama.OnStreetViewPanoramaChangeListener, StreetViewPanorama.OnStreetViewPanoramaCameraChangeListener,
     StreetViewPanorama.OnStreetViewPanoramaClickListener, StreetViewPanorama.OnStreetViewPanoramaLongClickListener {
     companion object {
-        const val STREET_VIEW_KEY = "STREET_VIEW_KEY"
+        const val GEO_POINT_KEY = "GEO_POINT_KEY"
     }
 
-    var streetViewUrl: String? = null
+    var location: GeoPoint? = null
     private val SYDNEY = LatLng(-33.87365, 151.20689)
 
     private lateinit var streetViewPanorama: StreetViewPanorama
@@ -30,7 +30,7 @@ class StreetViewFragment: MuseumFragment<StreetViewFragmentBinding>(R.layout.str
 
     override fun onPrepareInitView() {
         super.onPrepareInitView()
-        streetViewUrl = arguments?.getString(STREET_VIEW_KEY)
+//        location = arguments?.getParcelable(GEO_POINT_KEY)
     }
 
     override fun onInitView() {
@@ -38,7 +38,7 @@ class StreetViewFragment: MuseumFragment<StreetViewFragmentBinding>(R.layout.str
         val streetViewPanoramaFragment = SupportStreetViewPanoramaFragment()
         fragmentManager?.beginTransaction()?.add(R.id.flStreetViewContainer, streetViewPanoramaFragment)?.commit()
         streetViewPanoramaFragment.getStreetViewPanoramaAsync { panorama ->
-            val location = LatLng(-23.594662377984672, -46.635563873011975)
+//            val location = LatLng(-23.594662377984672, -46.635563873011975)
 //            panorama.apply {
 //                setPosition(location)
 //                isPanningGesturesEnabled = true
@@ -60,7 +60,7 @@ class StreetViewFragment: MuseumFragment<StreetViewFragmentBinding>(R.layout.str
             streetViewPanorama.setOnStreetViewPanoramaLongClickListener(
                 this@StreetViewFragment
             )
-            streetViewPanorama.setPosition(SYDNEY)
+            streetViewPanorama.setPosition(getLatLng(location))
         }
     }
 
@@ -92,5 +92,11 @@ class StreetViewFragment: MuseumFragment<StreetViewFragmentBinding>(R.layout.str
             panoLongClickTimes++
 //            panoLongClickTextView.text = "Times long clicked=$panoLongClickTimes : $point"
         }
+    }
+
+    private fun getLatLng(geoPoint: GeoPoint?): LatLng {
+        return geoPoint?.let {
+            LatLng(it.latitude, it.longitude)
+        } ?: SYDNEY
     }
 }
