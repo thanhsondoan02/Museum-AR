@@ -47,10 +47,8 @@ class ItemActionAdapter: MuseumAdapter() {
         }
 
         override fun onBind(data: ActionDisplay) {
-            binding.ivItemAction.apply {
-                text = data.getDescription()
-                setCompoundDrawablesRelativeWithIntrinsicBounds(data.getIcon(), null, null, null)
-            }
+            binding.tvItemAction.text = data.getDescription()
+            binding.ivItemActionIcon.setImageDrawable(data.getIcon())
         }
     }
 
