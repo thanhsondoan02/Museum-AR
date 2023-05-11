@@ -1,16 +1,13 @@
 package com.tiger.ar.museum.domain.model
 
-import kotlinx.parcelize.Parcelize
+import com.google.firebase.firestore.GeoPoint
 
-@Parcelize
-data class StreetView(
+class StreetView {
+    var name: String? = null
 
-    var name: String? = null,
+    var place: String? = null
 
-    var place: String? = null,
-
-    var location: SVLocation? = null,
+    var location: GeoPoint? = null
 
     var thumbnail: String? = null
-
-) : MuseumModel()
+}
