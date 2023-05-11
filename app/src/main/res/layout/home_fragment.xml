@@ -6,9 +6,9 @@
         android:layout_height="match_parent">
 
         <com.tiger.ar.museum.presentation.widget.CollectionView
+            android:id="@+id/cvHome"
             android:layout_width="match_parent"
-            android:background="@color/blue"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
     </FrameLayout>
 
