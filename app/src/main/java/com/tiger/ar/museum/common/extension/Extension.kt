@@ -12,10 +12,12 @@ import android.graphics.drawable.ShapeDrawable
 import android.net.Uri
 import android.os.Build
 import android.text.Html
+import android.util.Base64
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import android.webkit.MimeTypeMap
+import android.webkit.WebView
 import android.widget.*
 import androidx.annotation.*
 import androidx.appcompat.app.AppCompatActivity
@@ -633,4 +635,11 @@ fun RecyclerView.smoothSnapToPosition(position: Int, snapMode: Int = LinearSmoot
 
 fun SwipeRefreshLayout.hideRefresh() {
     isRefreshing = false
+}
+
+fun WebView.loadHtml(htmlData: String?) {
+    if (htmlData != null) {
+        val encodedHtml: String = Base64.encodeToString(htmlData.toByteArray(), Base64.NO_PADDING)
+        loadData(encodedHtml, "text/html", "base64")
+    }
 }

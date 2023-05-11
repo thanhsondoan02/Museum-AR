@@ -1,11 +1,13 @@
 package com.tiger.ar.museum.presentation.item
 
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumFragment
 import com.tiger.ar.museum.common.extension.loadImage
 import com.tiger.ar.museum.databinding.ItemFragmentBinding
 import com.tiger.ar.museum.presentation.RealMainActivity
+import com.tiger.ar.museum.presentation.streetview.StreetViewFragment
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
 class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment) {
@@ -49,7 +51,11 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
 
                     }
                     ACTION_TYPE.STREET -> {
-
+                        museumActivity.addFragmentNew(
+                            StreetViewFragment(),
+                            bundleOf(StreetViewFragment.STREET_VIEW_KEY to viewModel.item?.streetView),
+                            containerId = R.id.flRealMainContainer
+                        )
                     }
                 }
             }

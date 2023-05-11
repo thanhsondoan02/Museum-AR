@@ -93,6 +93,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.8.20"
     implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     implementation 'com.squareup.okhttp3:okhttp:3.14.9'
+
+    // map sdk
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
 }
 
 kapt {

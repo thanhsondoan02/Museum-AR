@@ -34,6 +34,10 @@
             android:name="com.google.ar.core"
             android:value="required" />
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAnh0p5VfA2KbVZ_32OKX6php--f0pGsQk"/>
+
         <activity
             android:name=".presentation.camera.view3d.View3dActivity"
             android:exported="false" />
