@@ -9,7 +9,7 @@
         <com.tiger.ar.museum.presentation.widget.CollectionView
             android:id="@+id/cvItem"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_70"
+            android:layout_height="@dimen/dimen_62"
             android:clipToPadding="false"
             android:paddingHorizontal="@dimen/dimen_16"
             tools:listitem="@layout/item_action_item" />

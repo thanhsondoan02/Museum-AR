@@ -1,10 +1,8 @@
 package com.tiger.ar.museum.presentation.item
 
-import android.view.ViewGroup.MarginLayoutParams
 import androidx.fragment.app.viewModels
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumFragment
-import com.tiger.ar.museum.common.extension.getAppDimensionPixel
 import com.tiger.ar.museum.common.extension.loadImage
 import com.tiger.ar.museum.databinding.ItemFragmentBinding
 import com.tiger.ar.museum.presentation.RealMainActivity
@@ -86,8 +84,5 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
 
     private fun initImage() {
         binding.ivItem.loadImage(viewModel.item?.thumbnail)
-
-        // set margin bottom
-        (binding.rlItemImage.layoutParams as MarginLayoutParams).bottomMargin = getAppDimensionPixel(R.dimen.dimen_220)
     }
 }
