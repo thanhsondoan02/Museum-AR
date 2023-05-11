@@ -23,8 +23,8 @@ class ItemActionAdapter: MuseumAdapter() {
         fun getIcon(): Drawable? {
             return when (actionType) {
                 ACTION_TYPE.ZOOM_IN -> getAppDrawable(R.drawable.ic_zoom_in)
-                ACTION_TYPE.AR -> getAppDrawable(R.drawable.ic_zoom_in)
-                ACTION_TYPE.STREET -> getAppDrawable(R.drawable.ic_zoom_in)
+                ACTION_TYPE.AR -> getAppDrawable(R.drawable.ic_ar)
+                ACTION_TYPE.STREET -> getAppDrawable(R.drawable.ic_street_view)
             }
         }
 
