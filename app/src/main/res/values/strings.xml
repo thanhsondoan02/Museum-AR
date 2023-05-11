@@ -85,4 +85,7 @@
     <string name="zoom_in">Phóng to</string>
     <string name="view_in_ar">Augmented reality</string>
     <string name="street_view">Chế độ xem phố</string>
+    <string name="read_more">Đọc thêm</string>
+    <string name="details">Chi tiết</string>
+    <string name="recommended">Gợi ý</string>
 </resources>

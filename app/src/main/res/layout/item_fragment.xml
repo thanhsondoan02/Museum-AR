@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
@@ -10,32 +9,26 @@
         android:paddingTop="?android:attr/actionBarSize">
 
         <RelativeLayout
+            android:id="@+id/rlItemImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/dimen_100">
+            android:layout_marginBottom="@dimen/dimen_150">
 
             <ImageView
                 android:id="@+id/ivItem"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_300"
-                android:layout_above="@id/cvItem"
-                android:layout_alignParentTop="true"
-                android:layout_margin="@dimen/dimen_20"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_20"
                 android:scaleType="fitCenter"
                 tools:src="@color/black" />
 
-            <com.tiger.ar.museum.presentation.widget.CollectionView
-                android:id="@+id/cvItem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:clipToPadding="false"
-                android:paddingHorizontal="@dimen/dimen_16"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:background="@color/gray"
-                tools:layout_height="@dimen/dimen_56" />
-
         </RelativeLayout>
+
+        <com.tiger.ar.museum.presentation.widget.CollectionView
+            android:id="@+id/cvItemBackDrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </FrameLayout>
 
