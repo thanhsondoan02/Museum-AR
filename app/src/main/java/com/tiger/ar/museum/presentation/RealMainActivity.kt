@@ -1,5 +1,6 @@
 package com.tiger.ar.museum.presentation
 
+import android.view.ViewOutlineProvider
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.appbar.AppBarLayout
@@ -30,6 +31,7 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
     private val gameFragment by lazy { GameFragment() }
     private var settingFragment: SettingFragment? = null
     private val listAppBarCallBack = mutableListOf<(appbarLayOut: AppBarLayout, verticalOffset: Int) -> Unit>()
+    private var isBackIcon = false
 
     override fun setupStatusBar() = StatusBar(color = R.color.main_black, isDarkText = false)
 
@@ -44,8 +46,9 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
     }
 
     fun setBackIcon() {
+        isBackIcon = true
         binding.ivRealMainSearch.apply {
-            setImageResource(R.drawable.ic_back)
+            setImageResource(R.drawable.ic_back_main_black)
             setOnSafeClick {
                 navigateBack()
                 if (supportFragmentManager.fragments.size == 4) {
@@ -56,13 +59,43 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
     }
 
     fun setSearchIcon() {
+        isBackIcon = false
         binding.ivRealMainSearch.apply {
-            setImageResource(R.drawable.ic_search)
+            setImageResource(R.drawable.ic_search_main_black)
             setOnSafeClick {
 //                navigateTo(SearchActivity::class.java)
                 toastUndeveloped()
             }
         }
+    }
+
+    fun setTransparentActionBar() {
+        binding.apply {
+            constRealMainActionBar.setBackgroundColor(getAppColor(R.color.transparent))
+            ablRealMain.outlineProvider = null
+            tvRealMainTitle.setTextColor(getAppColor(R.color.white))
+            if (isBackIcon) {
+                ivRealMainSearch.setImageResource(R.drawable.ic_back_white)
+            } else {
+                ivRealMainSearch.setImageResource(R.drawable.ic_search_white)
+            }
+            ivRealMainCast.setImageResource(R.drawable.ic_cast_white)
+        }
+    }
+
+    fun setWhiteActionBar() {
+        binding.apply {
+            constRealMainActionBar.setBackgroundColor(getAppColor(R.color.white))
+            ablRealMain.outlineProvider = ViewOutlineProvider.BOUNDS
+            tvRealMainTitle.setTextColor(getAppColor(R.color.main_black))
+            if (isBackIcon) {
+                ivRealMainSearch.setImageResource(R.drawable.ic_back_main_black)
+            } else {
+                ivRealMainSearch.setImageResource(R.drawable.ic_search_main_black)
+            }
+            ivRealMainCast.setImageResource(R.drawable.ic_cast_main_black)
+        }
+
     }
 
     fun enableScrollHideActionBar(isEnabled: Boolean) {

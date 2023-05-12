@@ -72,6 +72,31 @@ class HomeAdapter: MuseumAdapter() {
             binding.mcvHomeCollectionExploreAll.setOnSafeClick {
                 listener?.onViewAllCollections()
             }
+            binding.ivHomeCollection1.setOnSafeClick {
+                getItem {
+                    listener?.onCollectionClick(it.collections?.getOrNull(0)?.key)
+                }
+            }
+            binding.ivHomeCollection2.setOnSafeClick {
+                getItem {
+                    listener?.onCollectionClick(it.collections?.getOrNull(1)?.key)
+                }
+            }
+            binding.ivHomeCollection3.setOnSafeClick {
+                getItem {
+                    listener?.onCollectionClick(it.collections?.getOrNull(2)?.key)
+                }
+            }
+            binding.ivHomeCollection4.setOnSafeClick {
+                getItem {
+                    listener?.onCollectionClick(it.collections?.getOrNull(3)?.key)
+                }
+            }
+            binding.ivHomeCollection5.setOnSafeClick {
+                getItem {
+                    listener?.onCollectionClick(it.collections?.getOrNull(4)?.key)
+                }
+            }
         }
 
         override fun onBind(data: CollectionDisplay) {
@@ -95,5 +120,6 @@ class HomeAdapter: MuseumAdapter() {
         fun onStreetViewClick(streetView: StreetView)
         fun onViewAllStreetViewClick()
         fun onViewAllCollections()
+        fun onCollectionClick(collectionId: String?)
     }
 }

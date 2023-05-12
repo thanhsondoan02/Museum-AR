@@ -42,7 +42,7 @@ class HomeViewModel : BaseViewModel() {
                 .continueWith {
                     // collection
                     homeData?.collections = collectionRef.result.documents.mapNotNull { document ->
-                        document.toObject(MCollection::class.java)
+                        document.toObject(MCollection::class.java)?.apply { key = document.id }
                     }
                     list.add(HomeAdapter.CollectionDisplay().apply { collections = homeData?.collections })
 

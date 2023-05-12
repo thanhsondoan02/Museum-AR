@@ -1,5 +1,6 @@
 package com.tiger.ar.museum.domain.model
 
+import com.tiger.ar.museum.AppPreferences
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -13,9 +14,25 @@ data class MCollection(
 
     var description: String? = null,
 
-    var icon: String? = null
+    var icon: String? = null,
 
-) : MuseumModel()
+    @Deprecated("Use fun safeIsLiked() key instead")
+    var isLiked: Boolean? = null
+
+) : MuseumModel() {
+
+    fun safeIsLiked(): Boolean {
+        if (isLiked == null) {
+            mapIsLiked()
+        }
+        return isLiked ?: false
+    }
+
+    fun mapIsLiked() {
+        isLiked = AppPreferences.getUserInfo().fcollections?.contains(key) ?: false
+    }
+
+}
 
 fun mockListCollection(): List<MCollection> {
     val list: MutableList<MCollection> = mutableListOf()
