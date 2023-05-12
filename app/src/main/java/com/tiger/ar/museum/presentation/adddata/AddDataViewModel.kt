@@ -7,21 +7,19 @@ import com.google.gson.Gson
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.BaseViewModel
 import com.tiger.ar.museum.common.extension.getApplication
+import com.tiger.ar.museum.domain.model.Item
 import kotlinx.coroutines.launch
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
 class AddDataViewModel : BaseViewModel() {
 
-//    data class Item(val thumbnail: String, val name: String)
-    data class Item(val Index: Int, val Link: String)
-
     var itemList: List<Item> = listOf()
 
     fun addData(onSuccessAction: () -> Unit, onFailureAction: (message: String) -> Unit) {
         viewModelScope.launch {
             mapItemList()
-//            performAddToDatabase(onSuccessAction, onFailureAction)
+            performAddToDatabase(onSuccessAction, onFailureAction)
         }
     }
 
@@ -30,7 +28,7 @@ class AddDataViewModel : BaseViewModel() {
         val batch = db.batch()
 
         itemList.forEach {
-            val docRef = db.collection("items").document(); //automatically generate unique id
+            val docRef = db.collection("items").document()
             batch.set(docRef, it)
         }
 
@@ -40,10 +38,9 @@ class AddDataViewModel : BaseViewModel() {
     }
 
     private fun mapItemList() {
-        val inputStream = getApplication().resources.openRawResource(R.raw.data)
+        val inputStream = getApplication().resources.openRawResource(R.raw.data1)
         val reader = BufferedReader(InputStreamReader(inputStream))
         val json = reader.readText()
-        val listItems = Gson().fromJson(json, Array<Item>::class.java).toList()
-        println()
+        this.itemList = Gson().fromJson(json, Array<Item>::class.java).toList()
     }
 }

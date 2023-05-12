@@ -26,6 +26,8 @@ data class Item(
 
     var creatorId: String? = null,
 
+    var creatorName: String? = null,
+
     var creator: Creator? = null,
 
     @Deprecated("Use fun safeIsLiked() key instead")
