@@ -10,8 +10,9 @@ import com.google.firebase.firestore.GeoPoint
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumFragment
 import com.tiger.ar.museum.databinding.StreetViewFragmentBinding
+import com.tiger.ar.museum.presentation.RealMainActivity
 
-class StreetViewFragment: MuseumFragment<StreetViewFragmentBinding>(R.layout.street_view_fragment),
+class StreetViewFragment : MuseumFragment<StreetViewFragmentBinding>(R.layout.street_view_fragment),
     StreetViewPanorama.OnStreetViewPanoramaChangeListener, StreetViewPanorama.OnStreetViewPanoramaCameraChangeListener,
     StreetViewPanorama.OnStreetViewPanoramaClickListener, StreetViewPanorama.OnStreetViewPanoramaLongClickListener {
     companion object {
@@ -30,38 +31,12 @@ class StreetViewFragment: MuseumFragment<StreetViewFragmentBinding>(R.layout.str
 
     override fun onPrepareInitView() {
         super.onPrepareInitView()
-//        location = arguments?.getParcelable(GEO_POINT_KEY)
     }
 
     override fun onInitView() {
         super.onInitView()
-        val streetViewPanoramaFragment = SupportStreetViewPanoramaFragment()
-        fragmentManager?.beginTransaction()?.add(R.id.flStreetViewContainer, streetViewPanoramaFragment)?.commit()
-        streetViewPanoramaFragment.getStreetViewPanoramaAsync { panorama ->
-//            val location = LatLng(-23.594662377984672, -46.635563873011975)
-//            panorama.apply {
-//                setPosition(location)
-//                isPanningGesturesEnabled = true
-//                isUserNavigationEnabled = true
-//                isStreetNamesEnabled = true
-//                isZoomGesturesEnabled = true
-//            }
-
-            streetViewPanorama = panorama
-            streetViewPanorama.setOnStreetViewPanoramaChangeListener(
-                this@StreetViewFragment
-            )
-            streetViewPanorama.setOnStreetViewPanoramaCameraChangeListener(
-                this@StreetViewFragment
-            )
-            streetViewPanorama.setOnStreetViewPanoramaClickListener(
-                this@StreetViewFragment
-            )
-            streetViewPanorama.setOnStreetViewPanoramaLongClickListener(
-                this@StreetViewFragment
-            )
-            streetViewPanorama.setPosition(getLatLng(location))
-        }
+        initActionBar()
+        initStreetView()
     }
 
     override fun onStreetViewPanoramaChange(p0: StreetViewPanoramaLocation) {
@@ -98,5 +73,33 @@ class StreetViewFragment: MuseumFragment<StreetViewFragmentBinding>(R.layout.str
         return geoPoint?.let {
             LatLng(it.latitude, it.longitude)
         } ?: SYDNEY
+    }
+
+    private fun initActionBar() {
+        (museumActivity as RealMainActivity).apply {
+            setBackIcon()
+            enableScrollHideActionBar(false)
+        }
+    }
+
+    private fun initStreetView() {
+        val streetViewPanoramaFragment = SupportStreetViewPanoramaFragment()
+        fragmentManager?.beginTransaction()?.add(R.id.flStreetViewContainer, streetViewPanoramaFragment)?.commit()
+        streetViewPanoramaFragment.getStreetViewPanoramaAsync { panorama ->
+            streetViewPanorama = panorama
+            streetViewPanorama.setOnStreetViewPanoramaChangeListener(
+                this@StreetViewFragment
+            )
+            streetViewPanorama.setOnStreetViewPanoramaCameraChangeListener(
+                this@StreetViewFragment
+            )
+            streetViewPanorama.setOnStreetViewPanoramaClickListener(
+                this@StreetViewFragment
+            )
+            streetViewPanorama.setOnStreetViewPanoramaLongClickListener(
+                this@StreetViewFragment
+            )
+            streetViewPanorama.setPosition(getLatLng(location))
+        }
     }
 }
