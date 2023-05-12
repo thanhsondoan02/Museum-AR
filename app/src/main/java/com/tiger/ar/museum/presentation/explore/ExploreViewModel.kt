@@ -25,10 +25,10 @@ class ExploreViewModel : BaseViewModel() {
         viewModelScope.launch {
             val exhibitionRef = Firebase.firestore
                 .collection("exhibitions")
-                .whereGreaterThan("endTime", Timestamp.now()).get()
+                .whereGreaterThan("endTime", Timestamp.now()).limit(10).get()
 
             val itemRef = Firebase.firestore
-                .collection("items").get()
+                .collection("items").limit(10).get()
 
             Tasks.whenAllSuccess<QuerySnapshot>(exhibitionRef, itemRef)
                 .continueWith {
