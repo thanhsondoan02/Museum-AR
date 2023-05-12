@@ -3,6 +3,7 @@ package com.tiger.ar.museum.presentation
 import android.view.ViewOutlineProvider
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.viewpager.widget.ViewPager
+import com.google.android.gms.maps.SupportStreetViewPanoramaFragment
 import com.google.android.material.appbar.AppBarLayout
 import com.tiger.ar.museum.AppPreferences
 import com.tiger.ar.museum.R
@@ -51,7 +52,9 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
             setImageResource(R.drawable.ic_back_main_black)
             setOnSafeClick {
                 navigateBack()
-                if (supportFragmentManager.fragments.size == 4) {
+                if (supportFragmentManager.fragments.size == 4 ||
+                    supportFragmentManager.fragments.lastOrNull() is SupportStreetViewPanoramaFragment
+                ) {
                     setSearchIcon()
                 }
             }

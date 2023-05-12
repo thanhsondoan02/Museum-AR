@@ -1,5 +1,6 @@
 package com.tiger.ar.museum.presentation.streetview
 
+import androidx.fragment.app.FragmentManager
 import com.google.android.gms.maps.StreetViewPanorama
 import com.google.android.gms.maps.SupportStreetViewPanoramaFragment
 import com.google.android.gms.maps.model.LatLng
@@ -23,20 +24,29 @@ class StreetViewFragment : MuseumFragment<StreetViewFragmentBinding>(R.layout.st
     private val SYDNEY = LatLng(-33.87365, 151.20689)
 
     private lateinit var streetViewPanorama: StreetViewPanorama
+    private var streetViewPanoramaFragment: SupportStreetViewPanoramaFragment? = null
 
     private var panoChangeTimes = 0
     private var panoCameraChangeTimes = 0
     private var panoClickTimes = 0
     private var panoLongClickTimes = 0
 
-    override fun onPrepareInitView() {
-        super.onPrepareInitView()
-    }
-
     override fun onInitView() {
         super.onInitView()
         initActionBar()
         initStreetView()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        (museumActivity as RealMainActivity).supportFragmentManager.apply {
+            if (fragments.lastOrNull() is SupportStreetViewPanoramaFragment) {
+                if (streetViewPanoramaFragment != null) {
+                    beginTransaction().remove(streetViewPanoramaFragment!!).commit();
+                }
+                popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            }
+        }
     }
 
     override fun onStreetViewPanoramaChange(p0: StreetViewPanoramaLocation) {
@@ -83,9 +93,9 @@ class StreetViewFragment : MuseumFragment<StreetViewFragmentBinding>(R.layout.st
     }
 
     private fun initStreetView() {
-        val streetViewPanoramaFragment = SupportStreetViewPanoramaFragment()
-        fragmentManager?.beginTransaction()?.add(R.id.flStreetViewContainer, streetViewPanoramaFragment)?.commit()
-        streetViewPanoramaFragment.getStreetViewPanoramaAsync { panorama ->
+        streetViewPanoramaFragment = SupportStreetViewPanoramaFragment()
+        fragmentManager?.beginTransaction()?.add(R.id.flStreetViewContainer, streetViewPanoramaFragment!!)?.commit()
+        streetViewPanoramaFragment!!.getStreetViewPanoramaAsync { panorama ->
             streetViewPanorama = panorama
             streetViewPanorama.setOnStreetViewPanoramaChangeListener(
                 this@StreetViewFragment
