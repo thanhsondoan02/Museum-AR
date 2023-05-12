@@ -3,6 +3,7 @@ package com.tiger.ar.museum.presentation.home
 import androidx.fragment.app.viewModels
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumFragment
+import com.tiger.ar.museum.common.extension.toast
 import com.tiger.ar.museum.common.extension.toastUndeveloped
 import com.tiger.ar.museum.databinding.HomeFragmentBinding
 import com.tiger.ar.museum.domain.model.StreetView
@@ -16,9 +17,14 @@ class HomeFragment : MuseumFragment<HomeFragmentBinding>(R.layout.home_fragment)
     override fun onInitView() {
         super.onInitView()
         initRecyclerView()
-        viewModel.getHomeData {
-            binding.cvHome.submitList(viewModel.list)
-        }
+        viewModel.getHomeData (
+            onSuccessAction = {
+                binding.cvHome.submitList(viewModel.list)
+            },
+            onFailureAction = {
+                toast("Fail: $it")
+            }
+        )
     }
 
     private fun initRecyclerView() {
@@ -26,12 +32,15 @@ class HomeFragment : MuseumFragment<HomeFragmentBinding>(R.layout.home_fragment)
             override fun onStreetViewClick(streetView: StreetView) {
                 museumActivity.addFragmentNew(
                     StreetViewFragment().apply { this.location = streetView.location },
-//                    bundleOf(StreetViewFragment.GEO_POINT_KEY to streetView.location),
                     containerId = R.id.flRealMainContainer
                 )
             }
 
             override fun onViewAllStreetViewClick() {
+                toastUndeveloped()
+            }
+
+            override fun onViewAllCollections() {
                 toastUndeveloped()
             }
         }

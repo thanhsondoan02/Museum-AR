@@ -5,11 +5,15 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class MCollection(
 
-    var id: Int? = null,
-
     var name: String? = null,
 
-    var thumbnail: String? = null
+    var thumbnail: String? = null,
+
+    var place: String? = null,
+
+    var description: String? = null,
+
+    var icon: String? = null
 
 ) : MuseumModel()
 
@@ -18,7 +22,6 @@ fun mockListCollection(): List<MCollection> {
     for (i in 0 until 100) {
         list.add(
             MCollection(
-                id = i,
                 name = "Collection $i",
                 thumbnail = listOf(
                     "https://firebasestorage.googleapis.com/v0/b/museum-ar-32277.appspot.com/o/mock%20server%2Fcollection%20images%2Ffacebook_1677293945972_7035080706770265309.jpg?alt=media&token=5a51bb73-8b69-4ec5-9de1-4b9909dedc55.\n",

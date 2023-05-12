@@ -94,4 +94,6 @@
     <string name="long_press_screen">long press screen</string>
     <string name="explore_with_street_view">Khám phá với chế độ xem phố</string>
     <string name="explore_with_street_view_desc">Từ hậu trường Nhà hát Opera Paris đến đỉnh Taj Mahal</string>
+    <string name="follow_your_favorite">Theo dõi bộ sưu tập yêu thích</string>
+    <string name="discover_collections">Khám phá các bộ sưu tập</string>
 </resources>

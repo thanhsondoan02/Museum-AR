@@ -4,5 +4,9 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 class HomeData(
-    var streetViews: List<StreetView>? = null
+
+    var streetViews: List<StreetView>? = null,
+
+    var collections: List<MCollection>? = null
+
 ) : MuseumModel()

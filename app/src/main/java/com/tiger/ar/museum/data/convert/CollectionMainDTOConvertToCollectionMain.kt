@@ -15,7 +15,7 @@ class CollectionMainDTOConvertToCollectionMain : IConverter<CollectionMainDTO, C
     }
 
     private val collectionDTOConvertToMCollectionMapper = Mapper(CollectionDTO::class, MCollection::class).apply {
-        addNameMapper(MCollection::id) {
+        addNameMapper(MCollection::key) {
             return@addNameMapper CollectionDTO::id
         }
         addNameMapper(MCollection::name) {

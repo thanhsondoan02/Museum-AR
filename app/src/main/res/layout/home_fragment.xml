@@ -8,7 +8,9 @@
         <com.tiger.ar.museum.presentation.widget.CollectionView
             android:id="@+id/cvHome"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/dimen_100" />
 
     </FrameLayout>
 
