@@ -5,6 +5,7 @@ import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumFragment
 import com.tiger.ar.museum.common.extension.loadImage
 import com.tiger.ar.museum.common.extension.toast
+import com.tiger.ar.museum.common.extension.toastUndeveloped
 import com.tiger.ar.museum.databinding.ItemFragmentBinding
 import com.tiger.ar.museum.presentation.RealMainActivity
 import com.tiger.ar.museum.presentation.favorite.item.ItemListFragment
@@ -71,7 +72,6 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
             }
 
             override fun onDetailTitleClick(isOpen: Boolean) {
-//                TODO("Not yet implemented")
             }
 
             override fun onLikeClick() {
@@ -101,7 +101,7 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
             }
 
             override fun onShareClick() {
-
+                toastUndeveloped()
             }
         }
     }

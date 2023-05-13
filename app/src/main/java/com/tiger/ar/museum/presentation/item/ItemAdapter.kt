@@ -112,7 +112,7 @@ class ItemAdapter : MuseumAdapter() {
                 val actionBarSize = TypedValue.complexToDimensionPixelSize(tv.data, getApplication().resources.displayMetrics)
                 val screenHeight = getApplication().resources.displayMetrics.heightPixels - getApplication().getStatusBarHeight()
                 binding.vItemTransparent.layoutParams.apply {
-                    height = screenHeight - getAppDimensionPixel(R.dimen.dimen_220) - actionBarSize
+                    height = screenHeight - getAppDimensionPixel(R.dimen.dimen_230) - actionBarSize
                 }
             }
         }

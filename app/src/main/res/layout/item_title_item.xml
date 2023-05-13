@@ -5,7 +5,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_158">
+        android:layout_height="@dimen/dimen_168">
 
         <View
             android:layout_width="match_parent"
@@ -14,7 +14,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_150"
+            android:layout_height="@dimen/dimen_160"
             android:layout_gravity="bottom"
             android:background="@drawable/shape_rectangle_white_bg_corner_top_16">
 
@@ -68,29 +68,34 @@
 
             <ImageView
                 android:id="@+id/ivItemCollectionThumb"
-                android:layout_width="@dimen/dimen_56"
-                android:layout_height="@dimen/dimen_56"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dimen_10"
                 android:layout_marginEnd="@dimen/dimen_30"
-                android:scaleType="fitCenter"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="@dimen/dimen_6"
+                android:adjustViewBounds="true"
                 app:layout_constraintBottom_toTopOf="@id/tvItemCollection"
                 app:layout_constraintEnd_toEndOf="parent"
-                tools:src="@color/black" />
+                app:layout_constraintTop_toBottomOf="@id/tvItemCreator"
+                tools:src="@drawable/bg_login" />
 
             <TextView
                 android:id="@+id/tvItemCollection"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_30"
-                android:layout_marginTop="@dimen/dimen_2"
+                android:layout_marginStart="@dimen/dimen_50"
                 android:layout_marginEnd="@dimen/dimen_30"
                 android:layout_marginBottom="@dimen/dimen_10"
+                android:ellipsize="end"
                 android:fontFamily="@font/roboto_regular"
+                android:gravity="end"
+                android:maxLines="1"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/dimen_text_size_14"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                tools:text="Foundation Venazo Crocetti" />
+                app:layout_constraintStart_toEndOf="@id/ivItemShare"
+                tools:text="Foundation Venazo Crocetti Foundadsaf as" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
