@@ -1,6 +1,7 @@
 package com.tiger.ar.museum
 
 import android.content.Context
+import android.widget.Toast
 import com.tiger.ar.museum.common.extension.getApplication
 import com.tiger.ar.museum.domain.model.User
 
@@ -13,6 +14,15 @@ object AppPreferences {
 
     fun getUserInfo(): User {
         return user!!
+    }
+
+    fun getUserId(): String {
+        return try {
+            user?.key!!
+        } catch (e: Exception) {
+            Toast.makeText(getApplication(), "User key is null", Toast.LENGTH_SHORT).show()
+            throw Exception("User key is null")
+        }
     }
 
     fun setUserInfo(user: User) {

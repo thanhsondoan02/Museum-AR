@@ -23,6 +23,8 @@ class ItemAdapter : MuseumAdapter() {
         const val DETAIL_TITLE_TYPE = 1414
         const val DETAIL_INFO_TYPE = 1412
         const val RECOMMEND_TYPE = 1413
+
+        const val LIKE_PAYLOAD = "LIKE_PAYLOAD"
     }
 
     var listener: IListener? = null
@@ -74,14 +76,14 @@ class ItemAdapter : MuseumAdapter() {
         var actions: List<ItemActionAdapter.ActionDisplay>? = null
     }
 
-    class TitleDisplay {
-        var title: String? = null
-        var creator: String? = null
-        var time: String? = null
-        var collectionName: String? = null
-        var collectionThumb: String? = null
+    data class TitleDisplay (
+        var title: String? = null,
+        var creator: String? = null,
+        var time: String? = null,
+        var collectionName: String? = null,
+        var collectionThumb: String? = null,
         var isLike: Boolean = false
-    }
+    )
 
     class DescriptionDisplay {
         var description: String? = null
@@ -159,6 +161,25 @@ class ItemAdapter : MuseumAdapter() {
                 tvItemCreator.text = data.creator + "  " + data.time
                 tvItemCollection.text = data.collectionName
                 ivItemCollectionThumb.loadImage(data.collectionThumb)
+            }
+            updateLikeStatus(data)
+        }
+
+        override fun onBind(data: TitleDisplay, payloads: List<Any>) {
+            binding.apply {
+                (payloads.firstOrNull() as? List<*>)?.forEach {
+                    when (it) {
+                        LIKE_PAYLOAD -> updateLikeStatus(data)
+                    }
+                }
+            }
+        }
+
+        private fun updateLikeStatus(data: TitleDisplay) {
+            if (data.isLike) {
+                binding.ivItemLike.setImageResource(R.drawable.ic_like_filled_black)
+            } else {
+                binding.ivItemLike.setImageResource(R.drawable.ic_like_black)
             }
         }
     }

@@ -4,6 +4,7 @@ import androidx.fragment.app.viewModels
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumFragment
 import com.tiger.ar.museum.common.extension.loadImage
+import com.tiger.ar.museum.common.extension.toast
 import com.tiger.ar.museum.databinding.ItemFragmentBinding
 import com.tiger.ar.museum.presentation.RealMainActivity
 import com.tiger.ar.museum.presentation.favorite.item.ItemListFragment
@@ -20,7 +21,7 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
 
     override fun onPrepareInitView() {
         super.onPrepareInitView()
-//        viewModel.item = arguments?.getParcelable(ITEM_KEY)
+        viewModel.itemId = arguments?.getString(ITEM_KEY)
     }
 
     override fun onInitView() {
@@ -29,9 +30,17 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
             setBackIcon()
             enableScrollHideActionBar(false)
         }
-        initImage()
         initAction()
         initBackDrop()
+        viewModel.getItemData(
+            onSuccessAction = {
+                binding.ivItem.loadImage(viewModel.item?.thumbnail)
+                binding.cvItemBackDrop.submitList(viewModel.itemData)
+            },
+            onFailureAction = {
+                toast("Get item data fail: $it")
+            }
+        )
     }
 
     override fun onBackPressByFragment() {
@@ -66,15 +75,33 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
             }
 
             override fun onLikeClick() {
-//                TODO("Not yet implemented")
+                viewModel.likeUpdate(
+                    true,
+                    onSuccessAction = {
+                        binding.cvItemBackDrop.submitList(viewModel.itemData)
+                        realMainActivity.reloadFavorite()
+                    },
+                    onFailureAction = {
+                        toast("Like fail: $it")
+                    }
+                )
             }
 
             override fun onDislikeClick() {
-//                TODO("Not yet implemented")
+                viewModel.likeUpdate(
+                    false,
+                    onSuccessAction = {
+                        binding.cvItemBackDrop.submitList(viewModel.itemData)
+                        (museumActivity as RealMainActivity).reloadFavorite()
+                    },
+                    onFailureAction = {
+                        toast("Like fail: $it")
+                    }
+                )
             }
 
             override fun onShareClick() {
-//                TODO("Not yet implemented")
+
             }
         }
     }
@@ -84,13 +111,6 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
             setAdapter(this@ItemFragment.adapter)
             setLayoutManager(COLLECTION_MODE.VERTICAL)
         }
-        viewModel.mapDataForAdapter {
-            binding.cvItemBackDrop.submitList(viewModel.itemData)
-        }
-    }
-
-    private fun initImage() {
-        binding.ivItem.loadImage(viewModel.item?.thumbnail)
     }
 
     override fun onDestroy() {

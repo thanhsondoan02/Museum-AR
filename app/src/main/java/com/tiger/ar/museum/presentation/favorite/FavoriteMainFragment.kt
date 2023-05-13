@@ -82,6 +82,7 @@ class FavoriteMainFragment : MuseumFragment<FavoriteMainFragmentBinding>(R.layou
             }
 
             override fun onItemClick(itemId: String?) {
+                if (itemId == null) return
                 museumActivity.addFragmentNew(
                     ItemFragment(),
                     bundleOf(ItemFragment.ITEM_KEY to itemId),
