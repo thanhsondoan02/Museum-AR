@@ -114,11 +114,14 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
                         AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or
                         AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP
             } else {
-                binding.ablRealMain.setExpanded(true, true)
+                expandAppBar()
                 0
             }
         }
+    }
 
+    fun expandAppBar() {
+        binding.ablRealMain.setExpanded(true, true)
     }
 
     fun reloadFavorite() {

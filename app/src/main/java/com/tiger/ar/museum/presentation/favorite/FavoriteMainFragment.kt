@@ -8,7 +8,9 @@ import com.tiger.ar.museum.common.extension.getAppString
 import com.tiger.ar.museum.common.extension.toast
 import com.tiger.ar.museum.databinding.FavoriteMainFragmentBinding
 import com.tiger.ar.museum.domain.model.Gallery
+import com.tiger.ar.museum.presentation.collection.CollectionFragment
 import com.tiger.ar.museum.presentation.favorite.item.ItemListFragment
+import com.tiger.ar.museum.presentation.item.ItemFragment
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
 class FavoriteMainFragment : MuseumFragment<FavoriteMainFragmentBinding>(R.layout.favorite_main_fragment) {
@@ -56,7 +58,7 @@ class FavoriteMainFragment : MuseumFragment<FavoriteMainFragmentBinding>(R.layou
                 museumActivity.addFragmentNew(
                     ItemListFragment(),
                     bundleOf(ItemListFragment.ITEMS_KEY to viewModel.items),
-                    containerId = R.id.flRealMainContainer
+                    containerId = R.id.flRealMainContainerWithScrollBehavior
                 )
             }
 
@@ -70,6 +72,26 @@ class FavoriteMainFragment : MuseumFragment<FavoriteMainFragmentBinding>(R.layou
 
             override fun onMoreGallery(gallery: Gallery) {
 
+            }
+
+            override fun onItemClick(itemId: String?) {
+                museumActivity.addFragmentNew(
+                    ItemFragment(),
+                    bundleOf(ItemFragment.ITEM_KEY to itemId),
+                    containerId = R.id.flRealMainContainer
+                )
+            }
+
+            override fun onStoryClick(storyId: String?) {
+
+            }
+
+            override fun onCollectionClick(collectionId: String?) {
+                museumActivity.addFragmentNew(
+                    CollectionFragment(),
+                    bundleOf(CollectionFragment.COLLECTION_ID_KEY to collectionId),
+                    containerId = R.id.flRealMainContainer
+                )
             }
         }
         binding.cvFavoriteMain.apply {

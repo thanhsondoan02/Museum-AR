@@ -58,11 +58,9 @@ class CollectionFragment : MuseumFragment<CollectionFragmentBinding>(R.layout.co
                 viewModel.follow(
                     onSuccessAction = {
                         binding.cvCollection.submitList(viewModel.list)
-                        toast("Follow success")
+                        (museumActivity as RealMainActivity).reloadFavorite()
                     },
-                    onFailureAction = {
-                        toast("Fail: $it")
-                    }
+                    onFailureAction = { toast("Fail: $it") }
                 )
             }
 
@@ -70,11 +68,9 @@ class CollectionFragment : MuseumFragment<CollectionFragmentBinding>(R.layout.co
                 viewModel.unFollow(
                     onSuccessAction = {
                         binding.cvCollection.submitList(viewModel.list)
-                        toast("Unfollow success")
+                        (museumActivity as RealMainActivity).reloadFavorite()
                     },
-                    onFailureAction = {
-                        toast("Fail: $it")
-                    }
+                    onFailureAction = { toast("Fail: $it") }
                 )
             }
 

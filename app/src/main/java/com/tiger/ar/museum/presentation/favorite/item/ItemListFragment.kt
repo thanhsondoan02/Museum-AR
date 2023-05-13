@@ -26,7 +26,10 @@ class ItemListFragment : MuseumFragment<ItemListFragmentBinding>(R.layout.item_l
 
     override fun onInitView() {
         super.onInitView()
-        (museumActivity as? RealMainActivity)?.setBackIcon()
+        (museumActivity as? RealMainActivity)?.apply {
+            setBackIcon()
+            expandAppBar()
+        }
 
         adapter.listener = object : ItemListAdapter.IListener {
             override fun onItemClick(item: Item?) {

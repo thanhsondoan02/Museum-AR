@@ -3,10 +3,20 @@ package com.tiger.ar.museum.presentation.favorite
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import com.tiger.ar.museum.R
-import com.tiger.ar.museum.common.extension.*
+import com.tiger.ar.museum.common.extension.getAppColor
+import com.tiger.ar.museum.common.extension.getAppDrawable
+import com.tiger.ar.museum.common.extension.gone
+import com.tiger.ar.museum.common.extension.loadImage
+import com.tiger.ar.museum.common.extension.setOnSafeClick
+import com.tiger.ar.museum.common.extension.show
 import com.tiger.ar.museum.common.recycleview.BaseVH
 import com.tiger.ar.museum.common.recycleview.MuseumAdapter
-import com.tiger.ar.museum.databinding.*
+import com.tiger.ar.museum.databinding.FavoriteCollectionItemBinding
+import com.tiger.ar.museum.databinding.FavoriteGalleryEmptyItemBinding
+import com.tiger.ar.museum.databinding.FavoriteGalleryItemBinding
+import com.tiger.ar.museum.databinding.FavoriteHeaderItemBinding
+import com.tiger.ar.museum.databinding.FavoriteItemItemBinding
+import com.tiger.ar.museum.databinding.FavoriteStoryItemBinding
 import com.tiger.ar.museum.domain.model.Gallery
 import com.tiger.ar.museum.domain.model.Item
 import com.tiger.ar.museum.domain.model.MCollection
@@ -155,10 +165,26 @@ class FavoriteAdapter : MuseumAdapter() {
             binding.tvFavoriteItemViewAll.setOnSafeClick {
                 listener?.onViewAllItem()
             }
-            binding.ivFavoriteItemItem1.setOnSafeClick { listener?.onViewAllItem() }
-            binding.ivFavoriteItemItem2.setOnSafeClick { listener?.onViewAllItem() }
-            binding.ivFavoriteItemItem3.setOnSafeClick { listener?.onViewAllItem() }
-            binding.ivFavoriteItemItem4.setOnSafeClick { listener?.onViewAllItem() }
+            binding.ivFavoriteItemItem1.setOnSafeClick {
+                getItem {
+                    listener?.onItemClick(it.itemList?.getOrNull(0)?.key)
+                }
+            }
+            binding.ivFavoriteItemItem2.setOnSafeClick {
+                getItem {
+                    listener?.onItemClick(it.itemList?.getOrNull(1)?.key)
+                }
+            }
+            binding.ivFavoriteItemItem3.setOnSafeClick {
+                getItem {
+                    listener?.onItemClick(it.itemList?.getOrNull(2)?.key)
+                }
+            }
+            binding.ivFavoriteItemItem4.setOnSafeClick {
+                getItem {
+                    listener?.onItemClick(it.itemList?.getOrNull(3)?.key)
+                }
+            }
         }
 
         override fun onBind(data: ItemDisplay) {
@@ -174,6 +200,11 @@ class FavoriteAdapter : MuseumAdapter() {
         private val adapter: FavoriteStoryAdapter by lazy { FavoriteStoryAdapter() }
 
         init {
+            adapter.listener = object : FavoriteStoryAdapter.IListener {
+                override fun onStoryClick(storyId: String?) {
+                    listener?.onStoryClick(storyId)
+                }
+            }
             binding.cvFavoriteStory.apply {
                 setAdapter(this@StoryVH.adapter)
                 setLayoutManager(COLLECTION_MODE.HORIZONTAL)
@@ -193,6 +224,11 @@ class FavoriteAdapter : MuseumAdapter() {
         private val adapter: FavoriteCollectionAdapter by lazy { FavoriteCollectionAdapter() }
 
         init {
+            adapter.listener = object : FavoriteCollectionAdapter.IListener {
+                override fun onCollectionClick(collectionId: String?) {
+                    listener?.onCollectionClick(collectionId)
+                }
+            }
             binding.cvFavoriteCollection.apply {
                 setAdapter(this@CollectionVH.adapter)
                 setLayoutManager(COLLECTION_MODE.HORIZONTAL)
@@ -266,5 +302,8 @@ class FavoriteAdapter : MuseumAdapter() {
         fun onViewAllStory()
         fun onViewAllCollection()
         fun onMoreGallery(gallery: Gallery)
+        fun onItemClick(itemId: String?)
+        fun onStoryClick(storyId: String?)
+        fun onCollectionClick(collectionId: String?)
     }
 }

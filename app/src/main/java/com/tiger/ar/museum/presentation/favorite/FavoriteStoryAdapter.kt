@@ -9,6 +9,8 @@ import com.tiger.ar.museum.databinding.FavoriteStoryChildItemBinding
 import com.tiger.ar.museum.domain.model.Story
 
 class FavoriteStoryAdapter : MuseumAdapter() {
+    var listener: IListener? = null
+
     override fun getLayoutResource(viewType: Int) = R.layout.favorite_story_child_item
 
     override fun setupEmptyState() = Empty(overrideLayoutRes = R.layout.empty_favorite_stories_item)
@@ -18,10 +20,22 @@ class FavoriteStoryAdapter : MuseumAdapter() {
     }
 
     inner class FavoriteStoryVH(private val binding: FavoriteStoryChildItemBinding) : BaseVH<Story>(binding) {
+        init {
+            binding.root.setOnClickListener {
+                getItem {
+                    listener?.onStoryClick(it.key)
+                }
+            }
+        }
+
         override fun onBind(data: Story) {
             binding.ivFavoriteStoryChildThumbnail.loadImage(data.thumbnail)
             binding.tvFavoriteStoryChildTitle.text = data.title
             binding.tvFavoriteStoryChildDescription.text = data.description
         }
+    }
+
+    interface IListener {
+        fun onStoryClick(storyId: String?)
     }
 }
