@@ -3,7 +3,11 @@ package com.tiger.ar.museum.presentation.collection
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import com.tiger.ar.museum.R
-import com.tiger.ar.museum.common.extension.*
+import com.tiger.ar.museum.common.extension.getAppColor
+import com.tiger.ar.museum.common.extension.gone
+import com.tiger.ar.museum.common.extension.loadImage
+import com.tiger.ar.museum.common.extension.setOnSafeClick
+import com.tiger.ar.museum.common.extension.show
 import com.tiger.ar.museum.common.recycleview.BaseVH
 import com.tiger.ar.museum.common.recycleview.MuseumAdapter
 import com.tiger.ar.museum.databinding.CollectionHeaderItemBinding
@@ -14,7 +18,8 @@ class CollectionAdapter : MuseumAdapter() {
     companion object {
         const val HEADER_VIEW_TYPE = 1409
 
-        const val HEADER_TAB_PAYLOAD = "HEADER_TAB_PAYLOAD"
+        const val FOLLOW_PAYLOAD = "FOLLOW_PAYLOAD"
+        const val TAB_PAYLOAD = "TAB_PAYLOAD"
     }
 
     var listener: IListener? = null
@@ -53,18 +58,21 @@ class CollectionAdapter : MuseumAdapter() {
                     if (isFollow) {
                         listener?.onUnFollowClick()
                     } else {
-                        listener?.onUnFollowClick()
+                        listener?.onFollowClick()
                     }
-                    setFollowStatus(!isFollow)
                 }
             }
 
             binding.flFavoriteHeaderTabFavorite.setOnSafeClick {
-                listener?.onCollectionTab()
+                listener?.onCollectionTabClick()
             }
 
             binding.flFavoriteHeaderTabGalleries.setOnSafeClick {
-                listener?.onVisitTab()
+                listener?.onVisitTabClick()
+            }
+
+            binding.ivCollectionHeaderShare.setOnSafeClick {
+                listener?.onShareClick()
             }
         }
 
@@ -75,8 +83,19 @@ class CollectionAdapter : MuseumAdapter() {
                 tvCollectionHeaderName.text = data.collection?.name
                 tvCollectionHeaderPlace.text = data.collection?.place
             }
-            setFollowStatus(data.collection?.safeIsLiked() ?: false)
+            setFollowStatus(data)
             setTab(data)
+        }
+
+        override fun onBind(data: HeaderDisplay, payloads: List<Any>) {
+            binding.apply {
+                (payloads.firstOrNull() as? List<*>)?.forEach {
+                    when (it) {
+                        FOLLOW_PAYLOAD -> setFollowStatus(data)
+                        TAB_PAYLOAD -> setTab(data)
+                    }
+                }
+            }
         }
 
         private fun setTab(data: HeaderDisplay) {
@@ -105,7 +124,8 @@ class CollectionAdapter : MuseumAdapter() {
             binding.tvFavoriteTabGalleries.setTextColor(getAppColor(R.color.main_black))
         }
 
-        private fun setFollowStatus(isFollow: Boolean) {
+        private fun setFollowStatus(data: HeaderDisplay) {
+            val isFollow = data.collection?.safeIsLiked() ?: false
             if (isFollow) {
                 binding.llCollectionHeaderFollowing.show()
                 binding.llCollectionHeaderFollow.gone()
@@ -119,6 +139,16 @@ class CollectionAdapter : MuseumAdapter() {
     class HeaderDisplay {
         var collection: MCollection? = null
         var isCollectionTab: Boolean = true
+
+        fun copy(): HeaderDisplay {
+            val newItem = HeaderDisplay()
+            newItem.collection = collection?.copy()?.apply {
+                key = collection?.key
+                mapIsLiked()
+            }
+            newItem.isCollectionTab = isCollectionTab
+            return newItem
+        }
     }
 
     interface IListener {
@@ -126,7 +156,8 @@ class CollectionAdapter : MuseumAdapter() {
         fun onStoryClick(storyId: String)
         fun onFollowClick()
         fun onUnFollowClick()
-        fun onCollectionTab()
-        fun onVisitTab()
+        fun onCollectionTabClick()
+        fun onVisitTabClick()
+        fun onShareClick()
     }
 }

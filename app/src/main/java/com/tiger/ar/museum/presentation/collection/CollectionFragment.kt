@@ -4,6 +4,7 @@ import androidx.fragment.app.viewModels
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumFragment
 import com.tiger.ar.museum.common.extension.toast
+import com.tiger.ar.museum.common.extension.toastUndeveloped
 import com.tiger.ar.museum.databinding.CollectionFragmentBinding
 import com.tiger.ar.museum.presentation.RealMainActivity
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
@@ -54,19 +55,39 @@ class CollectionFragment : MuseumFragment<CollectionFragmentBinding>(R.layout.co
             }
 
             override fun onFollowClick() {
-
+                viewModel.follow(
+                    onSuccessAction = {
+                        binding.cvCollection.submitList(viewModel.list)
+                        toast("Follow success")
+                    },
+                    onFailureAction = {
+                        toast("Fail: $it")
+                    }
+                )
             }
 
             override fun onUnFollowClick() {
+                viewModel.unFollow(
+                    onSuccessAction = {
+                        binding.cvCollection.submitList(viewModel.list)
+                        toast("Unfollow success")
+                    },
+                    onFailureAction = {
+                        toast("Fail: $it")
+                    }
+                )
+            }
+
+            override fun onCollectionTabClick() {
 
             }
 
-            override fun onCollectionTab() {
+            override fun onVisitTabClick() {
 
             }
 
-            override fun onVisitTab() {
-
+            override fun onShareClick() {
+                toastUndeveloped()
             }
         }
         binding.cvCollection.apply {
