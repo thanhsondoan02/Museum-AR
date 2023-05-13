@@ -4,6 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"
+        tools:ignore="ScopedStorage" />
 
     <uses-feature
         android:name="android.hardware.camera.ar"
@@ -40,7 +44,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAnh0p5VfA2KbVZ_32OKX6php--f0pGsQk"/>
+            android:value="AIzaSyAnh0p5VfA2KbVZ_32OKX6php--f0pGsQk" />
 
         <activity
             android:name=".presentation.camera.view3d.View3dActivity"
@@ -62,8 +66,8 @@
 
         <activity
             android:name=".presentation.intro.IntroductionActivity"
-            android:theme="@style/Theme.MuseumAR.Fullscreen"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.MuseumAR.Fullscreen" />
 
         <activity
             android:name=".presentation.streetview.StreetViewPanoramaEventsDemoActivity"

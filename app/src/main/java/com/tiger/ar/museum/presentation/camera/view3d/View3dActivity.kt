@@ -1,5 +1,10 @@
 package com.tiger.ar.museum.presentation.camera.view3d
 
+import android.app.DownloadManager
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.net.Uri
 import android.view.MotionEvent
 import androidx.activity.viewModels
@@ -9,58 +14,46 @@ import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.assets.RenderableSource
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.ArFragment
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.storage.FirebaseStorage
 import com.tiger.ar.museum.R
-import com.tiger.ar.museum.common.IViewListener
 import com.tiger.ar.museum.common.binding.MuseumActivity
-import com.tiger.ar.museum.common.extension.coroutinesLaunch
-import com.tiger.ar.museum.common.extension.handleUiState
 import com.tiger.ar.museum.common.extension.toast
 import com.tiger.ar.museum.databinding.View3dActivityBinding
 import com.tiger.ar.museum.domain.model.Model3d
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
-import java.io.File
-import java.io.IOException
 
 class View3dActivity : MuseumActivity<View3dActivityBinding>(R.layout.view_3d_activity) {
     private val viewModel by viewModels<View3dViewModel>()
     private val adapter by lazy { View3dAdapter() }
     private var arFragment: ArFragment? = null
+    private val downloadReceiver = DownloadReceiver()
 
     override fun onInitView() {
         super.onInitView()
         initRecyclerView()
         initArFragment()
-        get3dModelList()
+
+        val filter = IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+        registerReceiver(downloadReceiver, filter)
+
+        viewModel.getFileFromUrl2(
+            onStartAction = {
+                toast("Bắt đầu tải xuống")
+            }, onSuccessAction = {
+                toast("Download thành công")
+            }, onFailureAction = {
+                toast("Download thất bại: $it")
+            }
+        )
     }
 
-    override fun onObserverViewModel() {
-        super.onObserverViewModel()
-
-        coroutinesLaunch(viewModel.get3dModelListState) {
-            handleUiState(it, object : IViewListener {
-                override fun onLoading() {
-                }
-
-                override fun onFailure() {
-                    toast("Lấy danh sách mô hình thất bại: ${it.throwable?.message}")
-                }
-
-                override fun onSuccess() {
-                    binding.cvView3d.submitList(it.data)
-                }
-            })
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(downloadReceiver)
     }
 
     private fun initRecyclerView() {
         adapter.listener = object : View3dAdapter.IListener {
             override fun onDownloadClick(model3d: Model3d) {
-                downloadModel3d(model3d)
             }
         }
         binding.cvView3d.apply {
@@ -78,26 +71,8 @@ class View3dActivity : MuseumActivity<View3dActivityBinding>(R.layout.view_3d_ac
         }
     }
 
-    private fun downloadModel3d(model3d: Model3d) {
-        if (model3d.path == null) {
-            toast("Tên mô hình null")
-        }
-        val modelRef = FirebaseStorage.getInstance().reference.child(model3d.path!!)
-
-        try {
-            viewModel.tempFile = File.createTempFile("table", "glb")
-            modelRef.getFile(viewModel.tempFile!!).apply {
-                toast("Bắt đầu tải mô hình ${model3d.path}")
-                addOnSuccessListener { buildModel() }
-                addOnFailureListener { toast("Lỗi tải mô hình: ${it.message}") }
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-            toast("Lỗi tải mô hình: ${e.message}")
-        }
-    }
-
     private fun buildModel() {
+        toast("Bắt đầu render mô hình")
         val renderableSource = RenderableSource
             .builder()
             .setSource(this, Uri.parse(viewModel.tempFile?.path), RenderableSource.SourceType.GLB)
@@ -109,29 +84,22 @@ class View3dActivity : MuseumActivity<View3dActivityBinding>(R.layout.view_3d_ac
             .setRegistryId(viewModel.tempFile?.path)
             .build()
             .thenAccept { modelRenderable: ModelRenderable? ->
-                if (modelRenderable != null) toast("Tải mô hình thành công")
-                viewModel.model3d = modelRenderable
+                if (modelRenderable != null) {
+                    toast("Render mô hình thành công")
+                    viewModel.model3d = modelRenderable
+                }
             }
     }
 
-    private fun get3dModelList() {
-        val db = FirebaseDatabase.getInstance()
-        val ref = db.getReference("Model3d")
-        ref.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val list = mutableListOf<Model3d>()
-                for (data in snapshot.children) {
-                    val model3d = data.getValue(Model3d::class.java)
-                    if (model3d != null) {
-                        list.add(model3d)
-                    }
+    inner class DownloadReceiver : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == DownloadManager.ACTION_DOWNLOAD_COMPLETE) {
+                val downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+                if (downloadId != -1L) {
+                    buildModel()
+                    toast("Tải mô hình thành công")
                 }
-                binding.cvView3d.submitList(list)
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                toast("Lấy danh sách mô hình thất bại: ${error.message}")
-            }
-        })
+        }
     }
 }
