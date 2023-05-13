@@ -17,31 +17,38 @@
             android:scaleType="centerCrop"
             app:layout_constraintDimensionRatio="H, 16:9"
             app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/CircleImageViewCorner16"
+            app:shapeAppearanceOverlay="@style/CircleImageViewCorner8"
             tools:src="@color/black" />
 
-        <ImageView
-            android:id="@+id/ivCollectionsIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dimen_56"
+        <FrameLayout
+            android:id="@+id/flCollectionsIcon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dimen_10"
-            android:layout_marginTop="@dimen/dimen_10"
-            android:adjustViewBounds="true"
-            android:src="@drawable/bg_login"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivCollectionsThumbnail" />
+            android:layout_marginTop="@dimen/dimen_16"
+            app:layout_constraintTop_toBottomOf="@id/ivCollectionsThumbnail">
+
+            <ImageView
+                android:id="@+id/ivCollectionsIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen_40"
+                android:adjustViewBounds="true"
+                android:src="@drawable/bg_login"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </FrameLayout>
 
         <TextView
             android:id="@+id/tvCollectionsName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dimen_10"
-            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginTop="@dimen/dimen_12"
             android:fontFamily="@font/roboto_medium"
             android:textColor="@color/main_black"
-            android:textSize="@dimen/dimen_text_size_20"
+            android:textSize="@dimen/dimen_text_size_18"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivCollectionsIcon"
+            app:layout_constraintTop_toBottomOf="@id/flCollectionsIcon"
             tools:text="Day la ten cua collection that dai dong" />
 
         <TextView
@@ -53,7 +60,7 @@
             android:layout_marginBottom="@dimen/dimen_10"
             android:fontFamily="@font/roboto_regular"
             android:textColor="@color/gray"
-            android:textSize="@dimen/dimen_text_size_16"
+            android:textSize="@dimen/dimen_text_size_14"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvCollectionsName"

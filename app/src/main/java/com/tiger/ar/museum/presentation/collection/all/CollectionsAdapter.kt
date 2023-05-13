@@ -10,6 +10,8 @@ import com.tiger.ar.museum.domain.model.MCollection
 
 class CollectionsAdapter : GridMuseumAdapter() {
 
+    override fun setupEmptyState() = Empty(overrideLayoutRes = R.layout.collections_empty_item)
+
     override fun getItemCountInRow(viewType: Int) = 2
 
     override fun getLayoutResource(viewType: Int) = R.layout.collections_item

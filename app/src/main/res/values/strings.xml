@@ -102,4 +102,7 @@
     <string name="all">Tất cả</string>
     <string name="az">A-Z</string>
     <string name="map">Bản đồ</string>
+    <string name="collection_not_found">Không tìm thấy bộ sưu tập phù hợp.</string>
+    <string name="no_data_found">Không tìm thấy dữ liệu!</string>
+    <string name="please_try_again_later">Vui lòng thử lại vào lần sau.</string>
 </resources>
