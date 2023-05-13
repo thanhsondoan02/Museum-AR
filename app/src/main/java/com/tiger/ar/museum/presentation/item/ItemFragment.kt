@@ -1,5 +1,6 @@
 package com.tiger.ar.museum.presentation.item
 
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumFragment
@@ -8,13 +9,14 @@ import com.tiger.ar.museum.common.extension.toast
 import com.tiger.ar.museum.common.extension.toastUndeveloped
 import com.tiger.ar.museum.databinding.ItemFragmentBinding
 import com.tiger.ar.museum.presentation.RealMainActivity
+import com.tiger.ar.museum.presentation.ZoomFragment
 import com.tiger.ar.museum.presentation.favorite.item.ItemListFragment
 import com.tiger.ar.museum.presentation.streetview.StreetViewFragment
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
 class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment) {
     companion object {
-        const val ITEM_KEY = "ITEMS_KEY"
+        const val ITEM_ID_KEY = "ITEMS_KEY"
     }
 
     private val adapter by lazy { ItemAdapter() }
@@ -22,7 +24,7 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
 
     override fun onPrepareInitView() {
         super.onPrepareInitView()
-        viewModel.itemId = arguments?.getString(ITEM_KEY)
+        viewModel.itemId = arguments?.getString(ITEM_ID_KEY)
     }
 
     override fun onInitView() {
@@ -55,7 +57,11 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
             override fun onActionClick(actionType: ACTION_TYPE) {
                 when (actionType) {
                     ACTION_TYPE.ZOOM_IN -> {
-
+                        realMainActivity.addFragmentNew(
+                            ZoomFragment(),
+                            bundleOf(ZoomFragment.IMAGE_URL_KEY to viewModel.item?.thumbnail),
+                            containerId = R.id.flRealMainContainer
+                        )
                     }
 
                     ACTION_TYPE.AR -> {

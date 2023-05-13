@@ -35,7 +35,7 @@ class ItemListFragment : MuseumFragment<ItemListFragmentBinding>(R.layout.item_l
             override fun onItemClick(item: Item?) {
                 museumActivity.addFragmentNew(
                     ItemFragment(),
-                    bundleOf(ItemFragment.ITEM_KEY to item),
+                    bundleOf(ItemFragment.ITEM_ID_KEY to item?.key),
                     containerId = R.id.flRealMainContainer
                 )
             }

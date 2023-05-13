@@ -85,7 +85,7 @@ class FavoriteMainFragment : MuseumFragment<FavoriteMainFragmentBinding>(R.layou
                 if (itemId == null) return
                 museumActivity.addFragmentNew(
                     ItemFragment(),
-                    bundleOf(ItemFragment.ITEM_KEY to itemId),
+                    bundleOf(ItemFragment.ITEM_ID_KEY to itemId),
                     containerId = R.id.flRealMainContainer
                 )
             }
