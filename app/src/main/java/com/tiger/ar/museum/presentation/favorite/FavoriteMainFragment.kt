@@ -9,6 +9,7 @@ import com.tiger.ar.museum.common.extension.toast
 import com.tiger.ar.museum.databinding.FavoriteMainFragmentBinding
 import com.tiger.ar.museum.domain.model.Gallery
 import com.tiger.ar.museum.presentation.collection.CollectionFragment
+import com.tiger.ar.museum.presentation.favorite.collection.FavoriteCollectionsFragment
 import com.tiger.ar.museum.presentation.favorite.item.ItemListFragment
 import com.tiger.ar.museum.presentation.item.ItemFragment
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
@@ -67,7 +68,11 @@ class FavoriteMainFragment : MuseumFragment<FavoriteMainFragmentBinding>(R.layou
             }
 
             override fun onViewAllCollection() {
-
+                museumActivity.addFragmentNew(
+                    FavoriteCollectionsFragment(),
+                    bundleOf(FavoriteCollectionsFragment.COLLECTION_LIST_KEY to viewModel.collections),
+                    containerId = R.id.flRealMainContainerWithScrollBehavior
+                )
             }
 
             override fun onMoreGallery(gallery: Gallery) {

@@ -234,7 +234,7 @@ class FavoriteAdapter : MuseumAdapter() {
                 setLayoutManager(COLLECTION_MODE.HORIZONTAL)
             }
             binding.tvFavoriteCollectionViewAll.setOnSafeClick {
-                listener?.onViewAllStory()
+                listener?.onViewAllCollection()
             }
         }
 

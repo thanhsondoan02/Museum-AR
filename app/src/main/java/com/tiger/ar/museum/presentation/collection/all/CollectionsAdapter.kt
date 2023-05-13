@@ -8,7 +8,7 @@ import com.tiger.ar.museum.common.recycleview.GridMuseumAdapter
 import com.tiger.ar.museum.databinding.CollectionsItemBinding
 import com.tiger.ar.museum.domain.model.MCollection
 
-class CollectionsAdapter : GridMuseumAdapter() {
+open class CollectionsAdapter : GridMuseumAdapter() {
     var listener: IListener? = null
 
     override fun setupEmptyState() = Empty(overrideLayoutRes = R.layout.collections_empty_item)
