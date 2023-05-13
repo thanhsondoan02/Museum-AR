@@ -99,4 +99,7 @@
     <string name="visit">Tham quan</string>
     <string name="following">Đang theo dõi</string>
     <string name="follow">Theo dõi</string>
+    <string name="all">Tất cả</string>
+    <string name="az">A-Z</string>
+    <string name="map">Bản đồ</string>
 </resources>

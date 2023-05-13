@@ -16,7 +16,7 @@ import kotlin.math.roundToInt
 
 class ItemListViewModel : BaseViewModel() {
     companion object {
-        const val VERTICAL_RATIO = 4 / 3f
+        const val VERTICAL_RATIO = 10 / 9f
     }
 
     var items: List<Item> = emptyList()

@@ -9,6 +9,7 @@ import com.tiger.ar.museum.common.extension.toastUndeveloped
 import com.tiger.ar.museum.databinding.HomeFragmentBinding
 import com.tiger.ar.museum.domain.model.StreetView
 import com.tiger.ar.museum.presentation.collection.CollectionFragment
+import com.tiger.ar.museum.presentation.collection.all.CollectionsFragment
 import com.tiger.ar.museum.presentation.streetview.StreetViewFragment
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
@@ -43,7 +44,10 @@ class HomeFragment : MuseumFragment<HomeFragmentBinding>(R.layout.home_fragment)
             }
 
             override fun onViewAllCollections() {
-                toastUndeveloped()
+                museumActivity.addFragmentNew(
+                    CollectionsFragment(),
+                    containerId = R.id.flRealMainContainer
+                )
             }
 
             override fun onCollectionClick(collectionId: String?) {

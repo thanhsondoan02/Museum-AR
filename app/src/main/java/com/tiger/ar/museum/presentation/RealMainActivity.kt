@@ -1,7 +1,7 @@
 package com.tiger.ar.museum.presentation
 
 import android.view.ViewOutlineProvider
-import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.updateLayoutParams
 import androidx.viewpager.widget.ViewPager
 import com.google.android.gms.maps.SupportStreetViewPanoramaFragment
 import com.google.android.material.appbar.AppBarLayout
@@ -11,7 +11,13 @@ import com.tiger.ar.museum.common.FontSpan
 import com.tiger.ar.museum.common.SpannableBuilder
 import com.tiger.ar.museum.common.binding.MuseumActivity
 import com.tiger.ar.museum.common.binding.MuseumFragment
-import com.tiger.ar.museum.common.extension.*
+import com.tiger.ar.museum.common.extension.getAppColor
+import com.tiger.ar.museum.common.extension.getAppDrawable
+import com.tiger.ar.museum.common.extension.getAppFont
+import com.tiger.ar.museum.common.extension.getAppString
+import com.tiger.ar.museum.common.extension.loadImage
+import com.tiger.ar.museum.common.extension.setOnSafeClick
+import com.tiger.ar.museum.common.extension.toastUndeveloped
 import com.tiger.ar.museum.common.view.StatusBar
 import com.tiger.ar.museum.databinding.RealMainActivityBinding
 import com.tiger.ar.museum.presentation.camera.view3d.View3dActivity
@@ -102,15 +108,17 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
     }
 
     fun enableScrollHideActionBar(isEnabled: Boolean) {
-        val behavior = (binding.ablRealMain.layoutParams as CoordinatorLayout.LayoutParams).behavior as AppBarLayout.Behavior
-        behavior.setDragCallback(object : AppBarLayout.Behavior.DragCallback() {
-            override fun canDrag(appBarLayout: AppBarLayout): Boolean {
-                return isEnabled
+        binding.constRealMainActionBar.updateLayoutParams {
+            (this as AppBarLayout.LayoutParams).scrollFlags = if (isEnabled) {
+                AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or
+                        AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or
+                        AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP
+            } else {
+                binding.ablRealMain.setExpanded(true, true)
+                0
             }
-        })
-        if (!isEnabled) {
-            binding.ablRealMain.setExpanded(true, true)
         }
+
     }
 
     fun reloadFavorite() {
@@ -168,18 +176,22 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
                     binding.vpRealMain.setCurrentItem(0, false)
                     true
                 }
+
                 R.id.iBottomNavExplore -> {
                     binding.vpRealMain.setCurrentItem(1, false)
                     true
                 }
+
                 R.id.iBottomNavFavorite -> {
                     binding.vpRealMain.setCurrentItem(2, false)
                     true
                 }
+
                 R.id.iBottomNavGame -> {
                     binding.vpRealMain.setCurrentItem(3, false)
                     true
                 }
+
                 else -> throw IllegalArgumentException("Invalid item id")
             }
         }
