@@ -1,17 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
         android:orientation="vertical">
 
+        <com.tiger.ar.museum.presentation.widget.CustomViewPager
+            android:id="@+id/vpCollections"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llCollectionsHeader" />
+
+        <View
+            android:id="@+id/vCollectionsLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/dimen_6"
+            app:layout_constraintTop_toBottomOf="@id/llCollectionsHeader" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dimen_100"
+            android:background="@drawable/bg_shadow"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/vCollectionsLine"
+            app:layout_constraintTop_toTopOf="@id/llCollectionsHeader" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray_light"
+            app:layout_constraintTop_toBottomOf="@id/llCollectionsHeader" />
+
         <LinearLayout
+            android:id="@+id/llCollectionsHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="?android:attr/actionBarSize"
-            android:orientation="vertical">
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -136,10 +169,5 @@
 
         </LinearLayout>
 
-        <com.tiger.ar.museum.presentation.widget.CustomViewPager
-            android:id="@+id/vpCollections"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
