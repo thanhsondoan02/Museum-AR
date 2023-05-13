@@ -18,48 +18,53 @@ import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumActivity
 import com.tiger.ar.museum.common.extension.toast
 import com.tiger.ar.museum.databinding.View3dActivityBinding
-import com.tiger.ar.museum.domain.model.Model3d
-import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
+import com.tiger.ar.museum.presentation.camera.view3d.control.View3dControllerAdapter
+import com.tiger.ar.museum.presentation.camera.view3d.control.View3dControllerFragment
 
 class View3dActivity : MuseumActivity<View3dActivityBinding>(R.layout.view_3d_activity) {
     private val viewModel by viewModels<View3dViewModel>()
-    private val adapter by lazy { View3dAdapter() }
     private var arFragment: ArFragment? = null
     private val downloadReceiver = DownloadReceiver()
 
+    override fun getContainerId() = R.id.flView3DFragmentContainer
+
     override fun onInitView() {
         super.onInitView()
-        initRecyclerView()
         initArFragment()
+        registerReceiver(downloadReceiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
-        val filter = IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
-        registerReceiver(downloadReceiver, filter)
+//        viewModel.getFileFromUrl2(
+//            onStartAction = {
+//                toast("Bắt đầu tải xuống")
+//            }, onSuccessAction = {
+//                toast("Download thành công")
+//            }, onFailureAction = {
+//                toast("Download thất bại: $it")
+//            }
+//        )
 
-        viewModel.getFileFromUrl2(
-            onStartAction = {
-                toast("Bắt đầu tải xuống")
-            }, onSuccessAction = {
-                toast("Download thành công")
-            }, onFailureAction = {
-                toast("Download thất bại: $it")
+        addFragment(View3dControllerFragment().apply {
+            listener = object : View3dControllerFragment.IListener {
+                override fun onDownloadClick(itemDisplay: View3dControllerAdapter.ItemDisplay) {
+                    viewModel.getFileFromUrl(
+                        itemDisplay.item.model3d,
+                        onStartAction = {
+                            toast("Bắt đầu tải xuống")
+                        }, onSuccessAction = {
+                            toast("Download thành công")
+                            buildModel()
+                        }, onFailureAction = {
+                            toast("Download thất bại: $it")
+                        }
+                    )
+                }
             }
-        )
+        })
     }
 
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(downloadReceiver)
-    }
-
-    private fun initRecyclerView() {
-        adapter.listener = object : View3dAdapter.IListener {
-            override fun onDownloadClick(model3d: Model3d) {
-            }
-        }
-        binding.cvView3d.apply {
-            setAdapter(this@View3dActivity.adapter)
-            setLayoutManager(COLLECTION_MODE.HORIZONTAL)
-        }
     }
 
     private fun initArFragment() {

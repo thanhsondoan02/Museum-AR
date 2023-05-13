@@ -13,8 +13,12 @@ class View3dViewModel : BaseViewModel() {
     var model3d: ModelRenderable? = null
     var tempFile: File? = null
 
-    fun getFileFromUrl2(onStartAction: () -> Unit, onSuccessAction: () -> Unit, onFailureAction: (message: String) -> Unit) {
-        val url = "https://culturalinstitute-3d-serving.storage.googleapis.com/240391958/_QETQaU_ZZSf1g/1625055444215/gltf/model.glb"
+    fun getFileFromUrl(url: String?, onStartAction: () -> Unit, onSuccessAction: () -> Unit, onFailureAction: (message: String) -> Unit) {
+        if (url == null) {
+            onFailureAction.invoke("Url is null")
+            return
+        }
+//        val url = "https://culturalinstitute-3d-serving.storage.googleapis.com/240391958/_QETQaU_ZZSf1g/1625055444215/gltf/model.glb"
 //        val url = "https://firebasestorage.googleapis.com/v0/b/museum-ar-32277.appspot.com/o/trash_can.glb?alt=media&token=2423a161-0d0e-4a99-be9e-b82cada39824"
         val fileName = "suck.glb"
 
