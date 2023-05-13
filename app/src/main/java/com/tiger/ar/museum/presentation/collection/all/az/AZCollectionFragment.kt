@@ -1,10 +1,13 @@
 package com.tiger.ar.museum.presentation.collection.all.az
 
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumFragment
 import com.tiger.ar.museum.common.extension.toast
 import com.tiger.ar.museum.databinding.AzCollectionFragmentBinding
+import com.tiger.ar.museum.domain.model.MCollection
+import com.tiger.ar.museum.presentation.collection.CollectionFragment
 import com.tiger.ar.museum.presentation.collection.all.CollectionsAdapter
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
@@ -51,6 +54,16 @@ class AZCollectionFragment : MuseumFragment<AzCollectionFragmentBinding>(R.layou
     }
 
     private fun initRecyclerViewCollection() {
+        collectionAdapter.listener = object : CollectionsAdapter.IListener {
+            override fun onCollectionClick(collection: MCollection) {
+                museumActivity.addFragmentNew(
+                    CollectionFragment(),
+                    bundleOf(CollectionFragment.COLLECTION_ID_KEY to collection.key),
+                    containerId = R.id.flRealMainContainer
+                )
+            }
+        }
+
         binding.cvAzCollection.apply {
             setAdapter(this@AZCollectionFragment.collectionAdapter)
             setLayoutManager(COLLECTION_MODE.GRID_VERTICAL)
