@@ -12,6 +12,7 @@ import com.tiger.ar.museum.common.navigation.FadeAnim
 import com.tiger.ar.museum.common.navigation.IScreenAnim
 import com.tiger.ar.museum.common.view.BaseActivity
 import com.tiger.ar.museum.common.view.BaseFragment
+import com.tiger.ar.museum.presentation.RealMainActivity
 
 abstract class MuseumActivity<DB : ViewDataBinding>(layoutId: Int) : BaseBindingActivity<DB>(layoutId) {
     var mContainerId: Int = 0
@@ -34,10 +35,18 @@ abstract class MuseumActivity<DB : ViewDataBinding>(layoutId: Int) : BaseBinding
         bundle: Bundle? = null,
         keepToBackStack: Boolean = true,
         screenAnim: IScreenAnim = FadeAnim(),
-        containerId: Int
+        containerId: Int,
+        isEnableFragmentContainerScrollingBehavior: Boolean = false
     ) {
         this.mContainerId = containerId
         super.addFragment(fragment, bundle, keepToBackStack, screenAnim)
+        if (this is RealMainActivity) {
+            if (isEnableFragmentContainerScrollingBehavior) {
+                enableFragmentContainerScrollingBehavior()
+            } else {
+                disableFragmentContainerScrollingBehavior()
+            }
+        }
     }
 
     fun setFullScreen() {

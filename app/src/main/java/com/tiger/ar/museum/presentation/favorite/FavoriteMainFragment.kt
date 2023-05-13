@@ -59,7 +59,8 @@ class FavoriteMainFragment : MuseumFragment<FavoriteMainFragmentBinding>(R.layou
                 museumActivity.addFragmentNew(
                     ItemListFragment(),
                     bundleOf(ItemListFragment.ITEMS_KEY to viewModel.items),
-                    containerId = R.id.flRealMainContainerWithScrollBehavior
+                    containerId = R.id.flRealMainContainer,
+                    isEnableFragmentContainerScrollingBehavior = true
                 )
             }
 
@@ -71,7 +72,8 @@ class FavoriteMainFragment : MuseumFragment<FavoriteMainFragmentBinding>(R.layou
                 museumActivity.addFragmentNew(
                     FavoriteCollectionsFragment(),
                     bundleOf(FavoriteCollectionsFragment.COLLECTION_LIST_KEY to viewModel.collections),
-                    containerId = R.id.flRealMainContainerWithScrollBehavior
+                    containerId = R.id.flRealMainContainer,
+                    isEnableFragmentContainerScrollingBehavior = true
                 )
             }
 

@@ -6,6 +6,7 @@ import com.tiger.ar.museum.common.binding.MuseumFragment
 import com.tiger.ar.museum.common.extension.loadImage
 import com.tiger.ar.museum.databinding.ItemFragmentBinding
 import com.tiger.ar.museum.presentation.RealMainActivity
+import com.tiger.ar.museum.presentation.favorite.item.ItemListFragment
 import com.tiger.ar.museum.presentation.streetview.StreetViewFragment
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
@@ -46,12 +47,14 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
                     ACTION_TYPE.ZOOM_IN -> {
 
                     }
+
                     ACTION_TYPE.AR -> {
 
                     }
+
                     ACTION_TYPE.STREET -> {
                         museumActivity.addFragmentNew(
-                            StreetViewFragment().apply { this.location = viewModel.item?.streetView},
+                            StreetViewFragment().apply { this.location = viewModel.item?.streetView },
                             containerId = R.id.flRealMainContainer
                         )
                     }
@@ -88,5 +91,12 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
 
     private fun initImage() {
         binding.ivItem.loadImage(viewModel.item?.thumbnail)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (museumActivity.supportFragmentManager.fragments.lastOrNull() is ItemListFragment) {
+            (museumActivity as? RealMainActivity)?.enableFragmentContainerScrollingBehavior()
+        }
     }
 }

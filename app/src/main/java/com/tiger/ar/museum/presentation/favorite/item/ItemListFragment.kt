@@ -52,4 +52,11 @@ class ItemListFragment : MuseumFragment<ItemListFragmentBinding>(R.layout.item_l
             binding.cvItemList.submitList(tempList)
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        (museumActivity as? RealMainActivity)?.apply {
+            disableFragmentContainerScrollingBehavior()
+        }
+    }
 }

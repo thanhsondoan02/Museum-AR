@@ -1,6 +1,7 @@
 package com.tiger.ar.museum.presentation
 
 import android.view.ViewOutlineProvider
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.updateLayoutParams
 import androidx.viewpager.widget.ViewPager
 import com.google.android.gms.maps.SupportStreetViewPanoramaFragment
@@ -50,6 +51,18 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
         initViewPager()
         loadAvatar()
         initTopAppBarCallback()
+    }
+
+    fun enableFragmentContainerScrollingBehavior() {
+        val layoutParams = binding.flRealMainContainer.layoutParams as CoordinatorLayout.LayoutParams
+        layoutParams.behavior = AppBarLayout.ScrollingViewBehavior()
+        binding.flRealMainContainer.layoutParams = layoutParams
+    }
+
+    fun disableFragmentContainerScrollingBehavior() {
+        val layoutParams = binding.flRealMainContainer.layoutParams as CoordinatorLayout.LayoutParams
+        layoutParams.behavior = null
+        binding.flRealMainContainer.layoutParams = layoutParams
     }
 
     fun setBackIcon() {

@@ -52,4 +52,9 @@ class FavoriteCollectionsFragment : MuseumFragment<FavoriteCollectionsFragmentBi
             submitList(newList)
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        (museumActivity as RealMainActivity).disableFragmentContainerScrollingBehavior()
+    }
 }

@@ -7,6 +7,7 @@ import com.tiger.ar.museum.common.extension.toast
 import com.tiger.ar.museum.common.extension.toastUndeveloped
 import com.tiger.ar.museum.databinding.CollectionFragmentBinding
 import com.tiger.ar.museum.presentation.RealMainActivity
+import com.tiger.ar.museum.presentation.favorite.collection.FavoriteCollectionsFragment
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
 class CollectionFragment : MuseumFragment<CollectionFragmentBinding>(R.layout.collection_fragment) {
@@ -35,6 +36,11 @@ class CollectionFragment : MuseumFragment<CollectionFragmentBinding>(R.layout.co
 
     override fun onDestroy() {
         super.onDestroy()
+
+        if (museumActivity.supportFragmentManager.fragments.lastOrNull() is FavoriteCollectionsFragment) {
+            (museumActivity as? RealMainActivity)?.enableFragmentContainerScrollingBehavior()
+        }
+
         (museumActivity as RealMainActivity).apply {
             setWhiteActionBar()
         }
