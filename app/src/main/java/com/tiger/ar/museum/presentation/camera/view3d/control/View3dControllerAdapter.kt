@@ -40,6 +40,13 @@ class View3dControllerAdapter: MuseumAdapter() {
                     listener?.onItemClick(it)
                 }
             }
+
+            binding.mcvView3dControllerThumbnail.setOnLongClickListener {
+                getItem {
+                    listener?.onItemLongClick(it)
+                }
+                true
+            }
         }
 
         override fun onBind(data: ItemDisplay) {
@@ -101,5 +108,6 @@ class View3dControllerAdapter: MuseumAdapter() {
 
     interface IListener {
         fun onItemClick(itemDisplay: ItemDisplay)
+        fun onItemLongClick(itemDisplay: ItemDisplay)
     }
 }

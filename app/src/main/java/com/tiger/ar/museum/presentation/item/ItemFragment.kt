@@ -16,7 +16,7 @@ import com.tiger.ar.museum.presentation.favorite.item.ItemListFragment
 import com.tiger.ar.museum.presentation.streetview.StreetViewFragment
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
-class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment) {
+open class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment) {
     companion object {
         const val ITEM_ID_KEY = "ITEMS_KEY"
     }

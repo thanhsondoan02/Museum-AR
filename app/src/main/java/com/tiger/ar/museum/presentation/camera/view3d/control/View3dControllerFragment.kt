@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.util.Log
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumFragment
@@ -13,6 +14,7 @@ import com.tiger.ar.museum.common.extension.getAppString
 import com.tiger.ar.museum.common.extension.toast
 import com.tiger.ar.museum.databinding.View3dControllerFragmentBinding
 import com.tiger.ar.museum.presentation.camera.view3d.DOWNLOAD_STATUS
+import com.tiger.ar.museum.presentation.camera.view3d.RealMainActivity2
 import com.tiger.ar.museum.presentation.camera.view3d.View3dViewModel
 import com.tiger.ar.museum.presentation.dialog.LoadingDialog
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
@@ -56,6 +58,10 @@ class View3dControllerFragment : MuseumFragment<View3dControllerFragmentBinding>
         adapter.listener = object : View3dControllerAdapter.IListener {
             override fun onItemClick(itemDisplay: View3dControllerAdapter.ItemDisplay) {
                 onItemClick(itemDisplay.item.key)
+            }
+
+            override fun onItemLongClick(itemDisplay: View3dControllerAdapter.ItemDisplay) {
+                navigateTo(RealMainActivity2::class.java, bundleOf(RealMainActivity2.ITEM_ID_KEY to itemDisplay.item.key))
             }
         }
         binding.cvView3d.apply {

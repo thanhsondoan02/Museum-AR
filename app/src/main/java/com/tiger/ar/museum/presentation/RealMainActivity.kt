@@ -29,7 +29,7 @@ import com.tiger.ar.museum.presentation.home.HomeFragment
 import com.tiger.ar.museum.presentation.profile.ProfileDialog
 import com.tiger.ar.museum.presentation.setting.SettingFragment
 
-class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_main_activity) {
+open class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_main_activity) {
 
     private val pagerAdapter by lazy { MainViewPagerAdapter(supportFragmentManager) }
     private val fragmentList = mutableListOf<MuseumFragment<*>>()
