@@ -52,11 +52,11 @@ class CollectionFragment : MuseumFragment<CollectionFragmentBinding>(R.layout.co
 
     private fun initRecyclerView() {
         adapter.listener = object : CollectionAdapter.IListener {
-            override fun onItemClick(itemId: String) {
+            override fun onItemClick(itemId: String?) {
 
             }
 
-            override fun onStoryClick(storyId: String) {
+            override fun onStoryClick(storyId: String?) {
 
             }
 
@@ -80,15 +80,11 @@ class CollectionFragment : MuseumFragment<CollectionFragmentBinding>(R.layout.co
                 )
             }
 
-            override fun onCollectionTabClick() {
-
-            }
-
-            override fun onVisitTabClick() {
-
-            }
-
             override fun onShareClick() {
+                toastUndeveloped()
+            }
+
+            override fun onViewAllStories() {
                 toastUndeveloped()
             }
         }

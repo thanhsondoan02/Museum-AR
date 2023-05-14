@@ -31,6 +31,9 @@ class CollectionViewModel : BaseViewModel() {
                     list.add(CollectionAdapter.HeaderDisplay().apply {
                         this.collection = collection
                     })
+                    list.add(CollectionAdapter.DescriptionDisplay(collection.description))
+                    list.add(CollectionAdapter.StoriesDisplay(collectionId))
+                    list.add(CollectionAdapter.ItemsDisplay(collectionId))
                     onSuccessAction.invoke()
                 } else {
                     onFailureAction.invoke("Collection is null")

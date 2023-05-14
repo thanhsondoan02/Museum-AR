@@ -20,7 +20,6 @@ class CollectionDiffUtil(oldData: List<Any>, newData: List<Any>) : BaseDiffUtilC
 
         return if (oldItem is CollectionAdapter.HeaderDisplay && newItem is CollectionAdapter.HeaderDisplay) {
             oldItem.collection?.safeIsLiked() == newItem.collection?.safeIsLiked()
-                    && oldItem.isCollectionTab == newItem.isCollectionTab
         } else {
             true
         }
@@ -34,7 +33,6 @@ class CollectionDiffUtil(oldData: List<Any>, newData: List<Any>) : BaseDiffUtilC
 
         if (oldItem is CollectionAdapter.HeaderDisplay && newItem is CollectionAdapter.HeaderDisplay) {
             if (oldItem.collection?.safeIsLiked() != newItem.collection?.safeIsLiked()) list.add(CollectionAdapter.FOLLOW_PAYLOAD)
-            if (oldItem.isCollectionTab != newItem.isCollectionTab) list.add(CollectionAdapter.TAB_PAYLOAD)
         }
 
         return list.ifEmpty { null }

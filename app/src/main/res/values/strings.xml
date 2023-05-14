@@ -30,6 +30,7 @@
     <string name="galleries">Thư viện</string>
     <string name="items">Mục</string>
     <string name="stories">Câu chuyện</string>
+    <string name="stories_lower_case">câu chuyện</string>
     <string name="view_all">Xem tất cả</string>
     <string name="online_exhibit">triển lãm trực tuyến</string>
     <string name="input_user_name">Nhập tên đăng nhập</string>
@@ -114,4 +115,5 @@
     <string name="confirm_delete_desc1">Bạn có chắc chắn muốn xóa mô hình</string>
     <string name="confirm_delete_desc2"> khỏi bộ nhớ thiết bị?</string>
     <string name="no_download_available">Bạn chưa tải xuống mô hình nào.</string>
+    <string name="read_less">Rút gọn</string>
 </resources>

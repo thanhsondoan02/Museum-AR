@@ -9,6 +9,8 @@ data class Story(
 
     var description: String? = null,
 
-    var thumbnail: String? = null
+    var thumbnail: String? = null,
+
+    var collectionId: String? = null
 
 ) : MuseumModel()
