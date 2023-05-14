@@ -10,6 +10,7 @@ import com.tiger.ar.museum.common.extension.toastUndeveloped
 import com.tiger.ar.museum.databinding.ItemFragmentBinding
 import com.tiger.ar.museum.presentation.RealMainActivity
 import com.tiger.ar.museum.presentation.ZoomFragment
+import com.tiger.ar.museum.presentation.camera.view3d.View3dActivity
 import com.tiger.ar.museum.presentation.favorite.item.ItemListFragment
 import com.tiger.ar.museum.presentation.streetview.StreetViewFragment
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
@@ -21,6 +22,7 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
 
     private val adapter by lazy { ItemAdapter() }
     private val viewModel by viewModels<ItemViewModel>()
+    private var oldScroll = false
 
     override fun onPrepareInitView() {
         super.onPrepareInitView()
@@ -31,7 +33,7 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
         super.onInitView()
         (museumActivity as? RealMainActivity)?.apply {
             setBackIcon()
-            enableScrollHideActionBar(false)
+            oldScroll = enableScrollHideActionBar(false)
         }
         initAction()
         initBackDrop()
@@ -46,10 +48,12 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
         )
     }
 
-    override fun onBackPressByFragment() {
-        (museumActivity as? RealMainActivity)?.apply {
-            enableScrollHideActionBar(true)
+    override fun onDestroy() {
+        super.onDestroy()
+        if (museumActivity.supportFragmentManager.fragments.lastOrNull() is ItemListFragment) {
+            realMainActivity.enableFragmentContainerScrollingBehavior()
         }
+        realMainActivity.enableScrollHideActionBar(oldScroll)
     }
 
     private fun initAction() {
@@ -65,14 +69,22 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
                     }
 
                     ACTION_TYPE.AR -> {
-
+                        if (viewModel.item?.model3d == null) {
+                            toast("Tác phẩm này không có mô hình")
+                        } else {
+                            navigateTo(View3dActivity::class.java, bundleOf(View3dActivity.ITEM_ID_KEY to viewModel.itemId))
+                        }
                     }
 
                     ACTION_TYPE.STREET -> {
-                        museumActivity.addFragmentNew(
-                            StreetViewFragment().apply { this.location = viewModel.item?.streetView },
-                            containerId = R.id.flRealMainContainer
-                        )
+                        if (viewModel.item?.streetView == null) {
+                            toast("Tác phẩm này không có street view")
+                        } else {
+                            museumActivity.addFragmentNew(
+                                StreetViewFragment().apply { this.location = viewModel.item?.streetView },
+                                containerId = R.id.flRealMainContainer
+                            )
+                        }
                     }
                 }
             }
@@ -116,13 +128,6 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
         binding.cvItemBackDrop.apply {
             setAdapter(this@ItemFragment.adapter)
             setLayoutManager(COLLECTION_MODE.VERTICAL)
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (museumActivity.supportFragmentManager.fragments.lastOrNull() is ItemListFragment) {
-            (museumActivity as? RealMainActivity)?.enableFragmentContainerScrollingBehavior()
         }
     }
 }

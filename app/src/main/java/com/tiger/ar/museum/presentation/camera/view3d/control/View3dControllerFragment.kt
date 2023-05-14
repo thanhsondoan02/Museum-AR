@@ -34,6 +34,9 @@ class View3dControllerFragment : MuseumFragment<View3dControllerFragmentBinding>
         viewModel.getListItem(
             onSuccessAction = {
                 binding.cvView3d.submitList(viewModel.listItemDisplay)
+                if (viewModel.selectItemId != null) {
+                    onItemClick(viewModel.selectItemId)
+                }
                 requireContext().registerReceiver(downloadReceiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
             }, onFailAction = {
                 toast("Fail: $it")
@@ -49,15 +52,7 @@ class View3dControllerFragment : MuseumFragment<View3dControllerFragmentBinding>
     private fun initRecyclerView() {
         adapter.listener = object : View3dControllerAdapter.IListener {
             override fun onItemClick(itemDisplay: View3dControllerAdapter.ItemDisplay) {
-                viewModel.updateSelectedItem(itemDisplay.item.key,
-                    onSuccessAction = {
-                        binding.cvView3d.submitList(viewModel.listItemDisplay)
-                    }, onBuildStart = {
-                        showLoading()
-                    }, onBuildEnd = {
-                        hideLoading()
-                    }
-                )
+                onItemClick(itemDisplay.item.key)
             }
         }
         binding.cvView3d.apply {
@@ -86,6 +81,18 @@ class View3dControllerFragment : MuseumFragment<View3dControllerFragmentBinding>
                 }
             }
         }
+    }
+
+    private fun onItemClick(itemId: String?) {
+        viewModel.updateSelectedItem(itemId,
+            onSuccessAction = {
+                binding.cvView3d.submitList(viewModel.listItemDisplay)
+            }, onBuildStart = {
+                showLoading()
+            }, onBuildEnd = {
+                hideLoading()
+            }
+        )
     }
 
     private fun showLoading() {

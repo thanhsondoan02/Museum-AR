@@ -120,7 +120,12 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
 
     }
 
-    fun enableScrollHideActionBar(isEnabled: Boolean) {
+    private fun isEnableScrollHideActionBar(): Boolean {
+        return (binding.constRealMainActionBar.layoutParams as AppBarLayout.LayoutParams).scrollFlags != 0
+    }
+
+    fun enableScrollHideActionBar(isEnabled: Boolean): Boolean {
+        val oldScroll = isEnableScrollHideActionBar()
         binding.constRealMainActionBar.updateLayoutParams {
             (this as AppBarLayout.LayoutParams).scrollFlags = if (isEnabled) {
                 AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or
@@ -131,6 +136,7 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
                 0
             }
         }
+        return oldScroll
     }
 
     fun expandAppBar() {

@@ -2,6 +2,8 @@ package com.tiger.ar.museum.presentation.explore
 
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.extension.loadImage
 import com.tiger.ar.museum.common.extension.loadImageBlur
@@ -12,6 +14,7 @@ import com.tiger.ar.museum.databinding.ExploreExhibitionItemBinding
 import com.tiger.ar.museum.databinding.ExploreItemItemBinding
 import com.tiger.ar.museum.domain.model.Exhibition
 import com.tiger.ar.museum.domain.model.Item
+import com.tiger.ar.museum.domain.model.MCollection
 
 class ExploreAdapter : MuseumAdapter() {
     companion object {
@@ -19,6 +22,7 @@ class ExploreAdapter : MuseumAdapter() {
         const val ITEM_TYPE = 2003
 
         const val LIKE_PAYLOAD = 3001
+        const val COLLECTION_PAYLOAD = 3002
     }
 
     var listener: IListener? = null
@@ -73,16 +77,19 @@ class ExploreAdapter : MuseumAdapter() {
             binding.ivExploreItemShare.setOnSafeClick { getItem { listener?.onShareItem(it) } }
             binding.ivExploreItemZoom.setOnSafeClick { getItem { listener?.onZoomItem(it) } }
             binding.ivExploreItemThumbnail.setOnSafeClick { getItem { listener?.onZoomItem(it) } }
+            binding.tvExploreItemCreator.setOnSafeClick { getItem { listener?.onViewItem(it.key) } }
+            binding.tvExploreItemName.setOnSafeClick { getItem { listener?.onViewItem(it.key) } }
+            binding.ivExploreItemCollectionIcon.setOnSafeClick { getItem { listener?.onViewCollection(it.collectionId) } }
+            binding.tvExploreItemCollectionName.setOnSafeClick { getItem { listener?.onViewCollection(it.collectionId) } }
         }
 
         override fun onBind(data: Item) {
-            binding.ivExploreItemCollectionThumb.loadImage(data.collection?.thumbnail)
-            binding.tvExploreItemCollectionName.text = data.collection?.name
+            getDataCollection(data)
             setLikeStatus(data)
             binding.tvExploreItemName.text = data.name
             binding.ivExploreItemBackground.loadImageBlur(data.thumbnail)
             binding.ivExploreItemThumbnail.loadImage(data.thumbnail)
-            binding.tvExploreItemCreator.text = data.creator?.name
+            binding.tvExploreItemCreator.text = data.creatorName
         }
 
         override fun onBind(data: Item, payloads: List<Any>) {
@@ -90,9 +97,15 @@ class ExploreAdapter : MuseumAdapter() {
                 (payloads.firstOrNull() as? List<*>)?.forEach {
                     when (it) {
                         LIKE_PAYLOAD -> setLikeStatus(data)
+                        COLLECTION_PAYLOAD -> updateCollection(data)
                     }
                 }
             }
+        }
+
+        private fun updateCollection(data: Item) {
+            binding.ivExploreItemCollectionIcon.loadImage(data.collection?.icon)
+            binding.tvExploreItemCollectionName.text = data.collection?.name
         }
 
         private fun setLikeStatus(data: Item) {
@@ -103,6 +116,17 @@ class ExploreAdapter : MuseumAdapter() {
                 }
             )
         }
+
+        private fun getDataCollection(data: Item) {
+            if (data.collectionId != null) {
+                val db = Firebase.firestore
+                val collectionRef = db.collection("collections").document(data.collectionId!!)
+                collectionRef.get().addOnSuccessListener { collectionSnapshot ->
+                    data.collection = collectionSnapshot.toObject(MCollection::class.java)?.apply { key = collectionSnapshot.id }
+                    updateCollection(data)
+                }
+            }
+        }
     }
 
     interface IListener {
@@ -110,5 +134,7 @@ class ExploreAdapter : MuseumAdapter() {
         fun onBuyTicket(exhibition: Exhibition)
         fun onZoomItem(item: Item)
         fun onShareItem(item: Item)
+        fun onViewItem(itemId: String?)
+        fun onViewCollection(collectionId: String?)
     }
 }

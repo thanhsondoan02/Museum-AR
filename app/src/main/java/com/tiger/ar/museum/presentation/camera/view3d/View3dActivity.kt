@@ -37,10 +37,6 @@ class View3dActivity : MuseumActivity<View3dActivityBinding>(R.layout.view_3d_ac
         addFragment(View3dControllerFragment())
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
     private fun initArFragment() {
         arFragment = supportFragmentManager.findFragmentById(R.id.fView3dArFragment) as? ArFragment
         arFragment?.setOnTapArPlaneListener { hitResult: HitResult, plane: Plane?, motionEvent: MotionEvent? ->

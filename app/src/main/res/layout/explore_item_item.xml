@@ -12,8 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            tools:alpha="0.2"
-            tools:src="@drawable/bg_login" />
+            tools:src="@color/black_overlay_strong" />
 
         <View
             android:layout_width="match_parent"
@@ -27,18 +26,19 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="@dimen/dimen_20"
-            app:layout_constraintTop_toBottomOf="@id/ivExploreItemCollectionThumb" />
+            app:layout_constraintTop_toBottomOf="@id/ivExploreItemCollectionIcon" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/ivExploreItemCollectionThumb"
+            android:id="@+id/ivExploreItemCollectionIcon"
             android:layout_width="@dimen/dimen_48"
             android:layout_height="@dimen/dimen_48"
             android:layout_marginStart="@dimen/dimen_30"
             android:layout_marginTop="@dimen/dimen_20"
+            android:background="@color/white"
+            android:scaleType="fitCenter"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/CircleImageView"
-            tools:src="@color/black" />
+            app:shapeAppearanceOverlay="@style/CircleImageView" />
 
         <TextView
             android:id="@+id/tvExploreItemCollectionName"
@@ -49,11 +49,11 @@
             android:fontFamily="@font/roboto_medium"
             android:maxLines="2"
             android:textColor="@color/white"
-            android:textSize="@dimen/dimen_text_size_18"
-            app:layout_constraintBottom_toBottomOf="@id/ivExploreItemCollectionThumb"
+            android:textSize="@dimen/dimen_text_size_16"
+            app:layout_constraintBottom_toBottomOf="@id/ivExploreItemCollectionIcon"
             app:layout_constraintEnd_toStartOf="@id/ivExploreItemLike"
-            app:layout_constraintStart_toEndOf="@id/ivExploreItemCollectionThumb"
-            app:layout_constraintTop_toTopOf="@id/ivExploreItemCollectionThumb"
+            app:layout_constraintStart_toEndOf="@id/ivExploreItemCollectionIcon"
+            app:layout_constraintTop_toTopOf="@id/ivExploreItemCollectionIcon"
             tools:text="Collection Name Collection Name Collection Name" />
 
         <ImageView
@@ -77,9 +77,9 @@
             android:background="?android:selectableItemBackground"
             android:padding="@dimen/dimen_10"
             android:src="@drawable/ic_share"
-            app:layout_constraintBottom_toBottomOf="@id/ivExploreItemCollectionThumb"
+            app:layout_constraintBottom_toBottomOf="@id/ivExploreItemCollectionIcon"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/ivExploreItemCollectionThumb"
+            app:layout_constraintTop_toTopOf="@id/ivExploreItemCollectionIcon"
             tools:background="@color/black" />
 
         <ImageView
@@ -87,11 +87,11 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="@dimen/dimen_30"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             app:layout_constraintBottom_toTopOf="@id/tvExploreItemName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivExploreItemCollectionThumb"
+            app:layout_constraintTop_toBottomOf="@id/ivExploreItemCollectionIcon"
             tools:src="@drawable/bg_login" />
 
         <TextView
@@ -100,41 +100,65 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_30"
             android:layout_marginEnd="@dimen/dimen_16"
+            android:layout_marginBottom="@dimen/dimen_2"
             android:ellipsize="end"
             android:fontFamily="@font/roboto_medium"
-            android:maxLines="1"
+            android:maxLines="2"
             android:textColor="@color/white"
-            android:textSize="@dimen/dimen_text_size_24"
-            app:layout_constraintBottom_toTopOf="@id/tvExploreItemCreator"
+            android:textSize="@dimen/dimen_text_size_22"
+            app:layout_constraintBottom_toTopOf="@id/llExploreItemCreator"
             app:layout_constraintEnd_toStartOf="@id/flExploreItemZoom"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="Item Name Item Name Item Name Item Name Item Name Item Name Item Name Item Name " />
 
-        <TextView
-            android:id="@+id/tvExploreItemCreator"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/llExploreItemCreator"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_30"
-            android:layout_marginEnd="@dimen/dimen_16"
+            android:layout_marginEnd="@dimen/dimen_50"
             android:layout_marginBottom="144dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/roboto_regular"
-            android:gravity="center"
-            android:maxLines="1"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dimen_text_size_16"
-            app:drawableEndCompat="@drawable/ic_info"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/flExploreItemZoom"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Creator Name Creator Name Creator Name Creator Name" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/tvExploreItemCreator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dimen_10"
+                android:ellipsize="end"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_text_size_16"
+                app:drawableEndCompat="@drawable/ic_info"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Creator Name Creator Name Creator Name Creator Name" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/ivExploreItemInfo"
+            android:layout_width="@dimen/dimen_30"
+            android:layout_height="@dimen/dimen_30"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:src="@drawable/ic_info"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/llExploreItemCreator"
+            app:layout_constraintStart_toEndOf="@id/llExploreItemCreator"
+            app:layout_constraintTop_toTopOf="@id/llExploreItemCreator" />
 
         <FrameLayout
             android:id="@+id/flExploreItemZoom"
             android:layout_width="@dimen/dimen_48"
             android:layout_height="@dimen/dimen_48"
             android:layout_marginEnd="@dimen/dimen_30"
-            app:layout_constraintBottom_toBottomOf="@id/tvExploreItemCreator"
+            app:layout_constraintBottom_toBottomOf="@id/llExploreItemCreator"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tvExploreItemName"
             tools:background="@color/black">

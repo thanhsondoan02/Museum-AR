@@ -1,15 +1,20 @@
 package com.tiger.ar.museum.presentation.explore
 
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumFragment
 import com.tiger.ar.museum.common.extension.getAppString
 import com.tiger.ar.museum.common.extension.toast
+import com.tiger.ar.museum.common.extension.toastUndeveloped
 import com.tiger.ar.museum.databinding.ExploreFragmentBinding
 import com.tiger.ar.museum.domain.model.Exhibition
 import com.tiger.ar.museum.domain.model.Item
 import com.tiger.ar.museum.presentation.RealMainActivity
+import com.tiger.ar.museum.presentation.ZoomFragment
+import com.tiger.ar.museum.presentation.collection.CollectionFragment
+import com.tiger.ar.museum.presentation.item.ItemFragment
 
 class ExploreFragment : MuseumFragment<ExploreFragmentBinding>(R.layout.explore_fragment) {
     private val viewModel by viewModels<ExploreViewModel>()
@@ -48,11 +53,31 @@ class ExploreFragment : MuseumFragment<ExploreFragmentBinding>(R.layout.explore_
             }
 
             override fun onZoomItem(item: Item) {
-
+                addFragmentNew(
+                    ZoomFragment(),
+                    bundleOf(ZoomFragment.IMAGE_URL_KEY to item.thumbnail),
+                    containerId = R.id.flRealMainContainer
+                )
             }
 
             override fun onShareItem(item: Item) {
+                toastUndeveloped()
+            }
 
+            override fun onViewItem(itemId: String?) {
+                addFragmentNew(
+                    ItemFragment(),
+                    bundleOf(ItemFragment.ITEM_ID_KEY to itemId),
+                    containerId = R.id.flRealMainContainer
+                )
+            }
+
+            override fun onViewCollection(collectionId: String?) {
+                addFragmentNew(
+                    CollectionFragment(),
+                    bundleOf(CollectionFragment.COLLECTION_ID_KEY to collectionId),
+                    containerId = R.id.flRealMainContainer
+                )
             }
         }
 
