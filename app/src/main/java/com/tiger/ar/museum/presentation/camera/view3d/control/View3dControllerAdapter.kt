@@ -25,8 +25,6 @@ class View3dControllerAdapter: MuseumAdapter() {
         init {
             binding.mcvView3dControllerThumbnail.setOnSafeClick {
                 getItem {
-                    it.downloadStatus = DOWNLOAD_STATUS.DOWNLOADING
-                    updateDownloadStatus(it)
                     listener?.onDownloadClick(it)
                 }
             }
@@ -40,15 +38,15 @@ class View3dControllerAdapter: MuseumAdapter() {
         private fun updateDownloadStatus(data: ItemDisplay) {
             when (data.downloadStatus) {
                 DOWNLOAD_STATUS.DOWNLOADED -> {
-                    binding.ivView3dControllerDownload.gone()
+                    binding.flView3dControllerDownload.gone()
                     binding.flView3dControllerProgress.gone()
                 }
                 DOWNLOAD_STATUS.DOWNLOADING -> {
-                    binding.ivView3dControllerDownload.gone()
+                    binding.flView3dControllerDownload.gone()
                     binding.flView3dControllerProgress.show()
                 }
                 DOWNLOAD_STATUS.NOT_DOWNLOADED -> {
-                    binding.ivView3dControllerDownload.show()
+                    binding.flView3dControllerDownload.show()
                     binding.flView3dControllerProgress.gone()
                 }
             }

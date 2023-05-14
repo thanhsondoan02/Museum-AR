@@ -8,13 +8,19 @@
         android:layout_height="match_parent"
         tools:background="@color/gray_light">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_100"
+            android:background="@drawable/bg_shadow"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/ivView3dControllerBack"
             android:layout_width="?android:attr/actionBarSize"
             android:layout_height="?android:attr/actionBarSize"
             android:background="?android:attr/actionBarItemBackground"
             android:padding="@dimen/dimen_18"
-            android:src="@drawable/ic_back_main_black"
+            android:src="@drawable/ic_back_white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +30,7 @@
             android:layout_height="?android:attr/actionBarSize"
             android:background="?android:attr/actionBarItemBackground"
             android:padding="@dimen/dimen_18"
-            android:src="@drawable/ic_more_main_black"
+            android:src="@drawable/ic_more_white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
