@@ -1,6 +1,7 @@
 package com.tiger.ar.museum.presentation.download
 
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.DiffUtil
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.extension.loadImage
 import com.tiger.ar.museum.common.extension.setOnSafeClick
@@ -10,6 +11,14 @@ import com.tiger.ar.museum.databinding.DownloadItemBinding
 
 class DownloadAdapter : MuseumAdapter() {
     var listener: IListener? = null
+
+    override fun setupEmptyState(): Empty {
+        return Empty(overrideLayoutRes = R.layout.download_empty_item)
+    }
+
+    override fun getDiffUtil(oldList: List<Any>, newList: List<Any>): DiffUtil.Callback {
+        return DownloadDiffUtil(oldList, newList)
+    }
 
     override fun getLayoutResource(viewType: Int): Int {
         return R.layout.download_item
@@ -27,7 +36,7 @@ class DownloadAdapter : MuseumAdapter() {
 
         override fun onBind(data: DownloadItem) {
             binding.tvDownloadName.text = data.name
-            binding.tvDownloadSize.text = data.getSize()
+            binding.tvDownloadSize.text = data.size
             binding.ivDownloadThumbnail.loadImage(data.thumbnail)
         }
     }
@@ -35,12 +44,9 @@ class DownloadAdapter : MuseumAdapter() {
     data class DownloadItem(
         var id: String? = null,
         var name: String? = null,
-        var thumbnail: String? = null
-    ) {
-        fun getSize(): String {
-            return "39 MB"
-        }
-    }
+        var thumbnail: String? = null,
+        var size: String? = null
+    )
 
     interface IListener {
         fun onDelete(item: DownloadItem)

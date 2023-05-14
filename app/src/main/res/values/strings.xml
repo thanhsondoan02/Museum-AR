@@ -113,4 +113,5 @@
     <string name="sure_delete_title">Xóa mô hình này?</string>
     <string name="confirm_delete_desc1">Bạn có chắc chắn muốn xóa mô hình</string>
     <string name="confirm_delete_desc2"> khỏi bộ nhớ thiết bị?</string>
+    <string name="no_download_available">Bạn chưa tải xuống mô hình nào.</string>
 </resources>

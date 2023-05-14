@@ -12,6 +12,9 @@ class SettingFragment : MuseumFragment<SettingFragmentBinding>(R.layout.setting_
 
     override fun onInitView() {
         super.onInitView()
+        realMainActivity.apply {
+            setBackIcon()
+        }
         initOnClick()
     }
 
