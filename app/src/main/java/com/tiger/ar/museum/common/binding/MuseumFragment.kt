@@ -16,6 +16,13 @@ abstract class MuseumFragment<DB : ViewDataBinding>(layoutId: Int) : BaseBinding
         requireActivity() as RealMainActivity
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        if (museumActivity is RealMainActivity) {
+            realMainActivity.checkSearchIcon()
+        }
+    }
+
     protected fun replaceFragmentNew(
         fragment: BaseFragment,
         bundle: Bundle? = null,

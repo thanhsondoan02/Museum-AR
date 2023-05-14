@@ -91,6 +91,15 @@ class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_m
         }
     }
 
+    fun checkSearchIcon() {
+        val fragments = supportFragmentManager.fragments
+        if (fragments.size == 4 || fragments.lastOrNull() is SupportStreetViewPanoramaFragment) {
+            setSearchIcon()
+        } else {
+            setBackIcon()
+        }
+    }
+
     fun setTransparentActionBar() {
         binding.apply {
             constRealMainActionBar.setBackgroundColor(getAppColor(R.color.transparent))

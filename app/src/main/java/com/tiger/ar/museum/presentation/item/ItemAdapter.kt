@@ -3,6 +3,10 @@ package com.tiger.ar.museum.presentation.item
 import android.annotation.SuppressLint
 import android.util.TypedValue
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.DiffUtil
+import com.google.firebase.firestore.FieldPath
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.FontSpan
 import com.tiger.ar.museum.common.SpannableBuilder
@@ -10,8 +14,8 @@ import com.tiger.ar.museum.common.extension.*
 import com.tiger.ar.museum.common.recycleview.BaseVH
 import com.tiger.ar.museum.common.recycleview.MuseumAdapter
 import com.tiger.ar.museum.databinding.*
+import com.tiger.ar.museum.domain.model.Item
 import com.tiger.ar.museum.domain.model.ItemDetail
-import com.tiger.ar.museum.presentation.favorite.item.ItemDisplay
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
 class ItemAdapter : MuseumAdapter() {
@@ -25,9 +29,14 @@ class ItemAdapter : MuseumAdapter() {
         const val RECOMMEND_TYPE = 1413
 
         const val LIKE_PAYLOAD = "LIKE_PAYLOAD"
+        const val DETAIL_INFO_PAYLOAD = "DETAIL_INFO_PAYLOAD"
     }
 
     var listener: IListener? = null
+
+    override fun getDiffUtil(oldList: List<Any>, newList: List<Any>): DiffUtil.Callback {
+        return ItemDiffUtil(oldList, newList)
+    }
 
     override fun getItemViewTypeCustom(position: Int): Int {
         return when (getDataAtPosition(position)) {
@@ -76,7 +85,7 @@ class ItemAdapter : MuseumAdapter() {
         var actions: List<ItemActionAdapter.ActionDisplay>? = null
     }
 
-    data class TitleDisplay (
+    data class TitleDisplay(
         var title: String? = null,
         var creator: String? = null,
         var time: String? = null,
@@ -98,7 +107,8 @@ class ItemAdapter : MuseumAdapter() {
     }
 
     class RecommendDisplay {
-        var list: List<ItemDisplay>? = null
+        var currentItemId: String? = null
+        var list: List<Item>? = null
     }
 
     inner class TransparentVH(private val binding: ItemTransparentItemBinding) : BaseVH<TransparentDisplay>(binding) {
@@ -152,6 +162,8 @@ class ItemAdapter : MuseumAdapter() {
             binding.ivItemShare.setOnSafeClick {
                 listener?.onShareClick()
             }
+            binding.ivItemCollectionThumb.setOnSafeClick { getItem { listener?.onCollectionClick() } }
+            binding.tvItemCollection.setOnSafeClick { getItem { listener?.onCollectionClick() } }
         }
 
         @SuppressLint("SetTextI18n")
@@ -229,7 +241,43 @@ class ItemAdapter : MuseumAdapter() {
     }
 
     inner class RecommendVH(private val binding: ItemRecommendItemBinding) : BaseVH<RecommendDisplay>(binding) {
+        private val adapter by lazy { ItemRecommendAdapter() }
+
+        init {
+            adapter.listener = object : ItemRecommendAdapter.IListener {
+                override fun onClickItem(itemId: String?) {
+                    listener?.onRecommendedItemClick(itemId)
+                }
+            }
+
+            binding.cvItemRecommendItem.apply {
+                setAdapter(this@RecommendVH.adapter)
+                setLayoutManager(COLLECTION_MODE.HORIZONTAL)
+            }
+        }
+
         override fun onBind(data: RecommendDisplay) {
+            if (data.list == null) {
+                getDataFromDb(data)
+            } else {
+                binding.cvItemRecommendItem.submitList(data.list)
+            }
+        }
+
+        private fun getDataFromDb(data: RecommendDisplay) {
+            if (data.currentItemId != null) {
+                val db = Firebase.firestore
+                val itemListRef = db.collection("items")
+                    .whereNotEqualTo(FieldPath.documentId(), data.currentItemId!!)
+                    .limit(10)
+                itemListRef.get().addOnSuccessListener { itemListSnapshot ->
+                    data.list = itemListSnapshot.documents.mapNotNull { itemSnapshot ->
+                        itemSnapshot.toObject(Item::class.java)?.apply { key = itemSnapshot.id }
+                    }
+                    data.list?.shuffled()
+                    binding.cvItemRecommendItem.submitList(data.list)
+                }
+            }
         }
     }
 
@@ -239,5 +287,7 @@ class ItemAdapter : MuseumAdapter() {
         fun onLikeClick()
         fun onDislikeClick()
         fun onShareClick()
+        fun onCollectionClick()
+        fun onRecommendedItemClick(itemId: String?)
     }
 }

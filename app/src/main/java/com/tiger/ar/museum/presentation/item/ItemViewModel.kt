@@ -66,7 +66,7 @@ class ItemViewModel : BaseViewModel() {
             isOpen = false
         })
 
-        itemData.add(ItemAdapter.RecommendDisplay())
+        itemData.add(ItemAdapter.RecommendDisplay().apply { currentItemId = this@ItemViewModel.itemId })
 
         onSuccessAction.invoke()
     }

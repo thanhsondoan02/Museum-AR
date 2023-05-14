@@ -11,6 +11,7 @@ import com.tiger.ar.museum.databinding.ItemFragmentBinding
 import com.tiger.ar.museum.presentation.RealMainActivity
 import com.tiger.ar.museum.presentation.ZoomFragment
 import com.tiger.ar.museum.presentation.camera.view3d.View3dActivity
+import com.tiger.ar.museum.presentation.collection.CollectionFragment
 import com.tiger.ar.museum.presentation.favorite.item.ItemListFragment
 import com.tiger.ar.museum.presentation.streetview.StreetViewFragment
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
@@ -50,10 +51,12 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
 
     override fun onDestroy() {
         super.onDestroy()
-        if (museumActivity.supportFragmentManager.fragments.lastOrNull() is ItemListFragment) {
-            realMainActivity.enableFragmentContainerScrollingBehavior()
+        realMainActivity.apply {
+            enableScrollHideActionBar(oldScroll)
+            if (supportFragmentManager.fragments.lastOrNull() is ItemListFragment) {
+                realMainActivity.enableFragmentContainerScrollingBehavior()
+            }
         }
-        realMainActivity.enableScrollHideActionBar(oldScroll)
     }
 
     private fun initAction() {
@@ -120,6 +123,22 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
 
             override fun onShareClick() {
                 toastUndeveloped()
+            }
+
+            override fun onCollectionClick() {
+                addFragmentNew(
+                    CollectionFragment(),
+                    bundleOf(CollectionFragment.COLLECTION_ID_KEY to viewModel.item?.collectionId),
+                    containerId = R.id.flRealMainContainer
+                )
+            }
+
+            override fun onRecommendedItemClick(itemId: String?) {
+                addFragmentNew(
+                    ItemFragment(),
+                    bundleOf(ItemFragment.ITEM_ID_KEY to itemId),
+                    containerId = R.id.flRealMainContainer
+                )
             }
         }
     }
