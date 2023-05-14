@@ -8,6 +8,9 @@ import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.ux.ArFragment
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumActivity
+import com.tiger.ar.museum.common.extension.setOnSafeClick
+import com.tiger.ar.museum.common.extension.toast
+import com.tiger.ar.museum.common.extension.toastUndeveloped
 import com.tiger.ar.museum.databinding.View3dActivityBinding
 import com.tiger.ar.museum.presentation.camera.view3d.control.View3dControllerFragment
 
@@ -20,6 +23,7 @@ class View3dActivity : MuseumActivity<View3dActivityBinding>(R.layout.view_3d_ac
     override fun onInitView() {
         super.onInitView()
         initArFragment()
+        initOnClick()
         addFragment(View3dControllerFragment())
     }
 
@@ -35,8 +39,15 @@ class View3dActivity : MuseumActivity<View3dActivityBinding>(R.layout.view_3d_ac
                 anchorNode.renderable = viewModel.modelRenderable
                 arFragment!!.arSceneView.scene.addChild(anchorNode)
             } else {
-                throw Exception("Model renderable is null")
+                toast("Vui lòng chọn 1 mô hình")
             }
         }
+    }
+
+    private fun initOnClick() {
+        binding.ivView3dControllerBack.setOnSafeClick {
+            finish()
+        }
+        binding.ivView3dControllerMore.setOnSafeClick { toastUndeveloped() }
     }
 }

@@ -9,9 +9,7 @@ import android.util.Log
 import androidx.fragment.app.activityViewModels
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumFragment
-import com.tiger.ar.museum.common.extension.setOnSafeClick
 import com.tiger.ar.museum.common.extension.toast
-import com.tiger.ar.museum.common.extension.toastUndeveloped
 import com.tiger.ar.museum.databinding.View3dControllerFragmentBinding
 import com.tiger.ar.museum.presentation.camera.view3d.DOWNLOAD_STATUS
 import com.tiger.ar.museum.presentation.camera.view3d.View3dViewModel
@@ -25,7 +23,6 @@ class View3dControllerFragment : MuseumFragment<View3dControllerFragmentBinding>
     override fun onInitView() {
         super.onInitView()
         initRecyclerView()
-        initOnClick()
         requireContext().registerReceiver(downloadReceiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
         viewModel.getListItem(
             onSuccessAction = {
@@ -36,11 +33,11 @@ class View3dControllerFragment : MuseumFragment<View3dControllerFragmentBinding>
         )
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        requireContext().unregisterReceiver(downloadReceiver)
-        museumActivity.navigateBack()
-    }
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        requireContext().unregisterReceiver(downloadReceiver)
+//        museumActivity.navigateBack()
+//    }
 
     private fun initRecyclerView() {
         adapter.listener = object : View3dControllerAdapter.IListener {
@@ -84,13 +81,6 @@ class View3dControllerFragment : MuseumFragment<View3dControllerFragmentBinding>
             setAdapter(this@View3dControllerFragment.adapter)
             setLayoutManager(COLLECTION_MODE.HORIZONTAL)
         }
-    }
-
-    private fun initOnClick() {
-        binding.ivView3dControllerBack.setOnSafeClick {
-            navigateBack()
-        }
-        binding.ivView3dControllerMore.setOnSafeClick { toastUndeveloped() }
     }
 
     inner class DownloadReceiver : BroadcastReceiver() {
