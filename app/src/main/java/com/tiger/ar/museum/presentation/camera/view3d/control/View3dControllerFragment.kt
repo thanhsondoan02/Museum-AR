@@ -41,40 +41,10 @@ class View3dControllerFragment : MuseumFragment<View3dControllerFragmentBinding>
 
     private fun initRecyclerView() {
         adapter.listener = object : View3dControllerAdapter.IListener {
-            override fun onDownloadClick(itemDisplay: View3dControllerAdapter.ItemDisplay) {
-                when (itemDisplay.downloadStatus) {
-                    DOWNLOAD_STATUS.DOWNLOADING -> {
-                        toast("Vui lòng chờ tải xuống hoàn tất")
-                    }
-
-                    DOWNLOAD_STATUS.DOWNLOADED -> {
-                        val itemId = itemDisplay.item.key
-                        viewModel.buildModel(
-                            itemId,
-                            onStartAction = {
-                                toast("Bắt đầu render $itemId")
-                            },
-                            onSuccessAction = {
-                                toast("Render $itemId thành công")
-                            },
-                            onFailAction = {
-                                toast("Render $itemId thất bại: $it")
-                            }
-                        )
-                    }
-
-                    DOWNLOAD_STATUS.NOT_DOWNLOADED -> {
-                        viewModel.updateItemDownloadState(itemDisplay.item.key, DOWNLOAD_STATUS.DOWNLOADING,
-                            onSuccessAction = { binding.cvView3d.submitList(viewModel.listItem) }
-                        )
-                        viewModel.getFileFromUrl(
-                            itemDisplay.item,
-                            onStartAction = {},
-                            onSuccessAction = {},
-                            onFailureAction = { toast("Download thất bại: $it") }
-                        )
-                    }
-                }
+            override fun onItemClick(itemDisplay: View3dControllerAdapter.ItemDisplay) {
+                viewModel.updateSelectedItem(itemDisplay.item.key, onSuccessAction = {
+                    binding.cvView3d.submitList(viewModel.listItem)
+                })
             }
         }
         binding.cvView3d.apply {

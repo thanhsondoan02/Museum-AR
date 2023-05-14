@@ -21,6 +21,7 @@ class View3dViewModel : BaseViewModel() {
     var tempFile: File? = null
     var listItem: MutableList<View3dControllerAdapter.ItemDisplay> = mutableListOf()
     var downloadMap: MutableMap<Long, String> = mutableMapOf()
+    var startItemId: String? = null
 
     fun updateItemDownloadState(itemKey: String?, downloadStatus: DOWNLOAD_STATUS, onSuccessAction: () -> Unit) {
         viewModelScope.launch {
@@ -76,13 +77,68 @@ class View3dViewModel : BaseViewModel() {
         return file.exists()
     }
 
+    fun updateSelectedItem(itemId: String?, onSuccessAction: () -> Unit) {
+        viewModelScope.launch {
+            // update old select
+            val oldSelectedIndex = listItem.indexOfFirst { it.isSelected }
+            if (oldSelectedIndex != -1) {
+                val oldItem = listItem[oldSelectedIndex]
+                listItem[oldSelectedIndex] = oldItem.copy().apply { isSelected = false }
+            }
+
+            // update new select
+            val index = listItem.indexOfFirst { it.item.key == itemId }
+            if (index != -1) {
+                val oldItem = listItem[index]
+                listItem[index] = oldItem.copy().apply { isSelected = true }
+            }
+
+            onSuccessAction.invoke()
+        }
+
+//            when (itemDisplay.downloadStatus) {
+//                DOWNLOAD_STATUS.DOWNLOADING -> {
+//                    toast("Vui lòng chờ tải xuống hoàn tất")
+//                }
+//
+//                DOWNLOAD_STATUS.DOWNLOADED -> {
+//                    val itemId = itemDisplay.item.key
+//                    viewModel.buildModel(
+//                        itemId,
+//                        onStartAction = {
+//                            toast("Bắt đầu render $itemId")
+//                        },
+//                        onSuccessAction = {
+//                            toast("Render $itemId thành công")
+//                        },
+//                        onFailAction = {
+//                            toast("Render $itemId thất bại: $it")
+//                        }
+//                    )
+//                }
+//
+//                DOWNLOAD_STATUS.NOT_DOWNLOADED -> {
+//                    viewModel.updateItemDownloadState(itemDisplay.item.key, DOWNLOAD_STATUS.DOWNLOADING,
+//                        onSuccessAction = { binding.cvView3d.submitList(viewModel.listItem) }
+//                    )
+//                    viewModel.getFileFromUrl(
+//                        itemDisplay.item,
+//                        onStartAction = {},
+//                        onSuccessAction = {},
+//                        onFailureAction = { toast("Download thất bại: $it") }
+//                    )
+//                }
+//            }
+//        }
+    }
+
     fun getListItem(onSuccessAction: () -> Unit, onFailAction: (String) -> Unit) {
         viewModelScope.launch {
             val db = Firebase.firestore
             val itemsRef = db.collection("items")
             val query = itemsRef.whereNotEqualTo("model3d", null)
-            query.get().addOnSuccessListener {
-                listItem = it.documents.mapNotNull { itemSnapshot ->
+            query.get().addOnSuccessListener { itemsSnapshot ->
+                listItem = itemsSnapshot.documents.mapNotNull { itemSnapshot ->
                     val item = itemSnapshot.toObject(Item::class.java)?.apply { key = itemSnapshot.id }
                     var itemDisplay: View3dControllerAdapter.ItemDisplay? = null
                     if (item?.key != null) {
@@ -93,6 +149,10 @@ class View3dViewModel : BaseViewModel() {
                     }
                     itemDisplay
                 }.toMutableList()
+                if (startItemId == null) {
+                    startItemId = listItem.firstOrNull()?.item?.key
+                }
+                listItem.firstOrNull { it.item.key == startItemId }?.isSelected = true
                 onSuccessAction.invoke()
             }.addOnFailureListener {
                 onFailAction.invoke(it.message ?: "Unknown error")

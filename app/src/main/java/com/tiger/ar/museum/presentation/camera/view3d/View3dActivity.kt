@@ -15,10 +15,19 @@ import com.tiger.ar.museum.databinding.View3dActivityBinding
 import com.tiger.ar.museum.presentation.camera.view3d.control.View3dControllerFragment
 
 class View3dActivity : MuseumActivity<View3dActivityBinding>(R.layout.view_3d_activity) {
+    companion object {
+        const val ITEM_ID_KEY = "ITEM_ID_KEY"
+    }
+
     private val viewModel by viewModels<View3dViewModel>()
     private var arFragment: ArFragment? = null
 
     override fun getContainerId() = R.id.flView3DFragmentContainer
+
+    override fun onPrepareInitView() {
+        super.onPrepareInitView()
+        viewModel.startItemId = intent.getStringExtra(ITEM_ID_KEY)
+    }
 
     override fun onInitView() {
         super.onInitView()
