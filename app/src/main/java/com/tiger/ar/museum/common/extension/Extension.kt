@@ -528,6 +528,10 @@ fun AppCompatActivity.toast(msg: String?) {
     ToastUtils.show(this, msg, Toast.LENGTH_SHORT)
 }
 
+fun toast(msg: String?) {
+    ToastUtils.show(getApplication(), msg, Toast.LENGTH_SHORT)
+}
+
 fun AppCompatActivity.toastUndeveloped() {
     val msg = getAppString(R.string.undeveloped)
     ToastUtils.show(this, msg, Toast.LENGTH_SHORT)

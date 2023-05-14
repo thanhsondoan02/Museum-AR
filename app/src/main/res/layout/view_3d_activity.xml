@@ -14,6 +14,19 @@
             android:layout_height="match_parent"
             tools:layout="@layout/support_simple_spinner_dropdown_item" />
 
+        <TextView
+            android:id="@+id/tvView3dControllerTutorial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_60"
+            android:layout_marginTop="@dimen/dimen_100"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center"
+            android:text="@string/ar_tutorial"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimen_text_size_20"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_gravity="top"

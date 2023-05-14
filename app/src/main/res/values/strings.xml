@@ -105,5 +105,7 @@
     <string name="collection_not_found">Không tìm thấy bộ sưu tập phù hợp.</string>
     <string name="no_data_found">Không tìm thấy dữ liệu!</string>
     <string name="please_try_again_later">Vui lòng thử lại vào lần sau.</string>
-    <string name="ar_tutorial">Hướng máy ảnh của bạn xuống sàn và di chuyển vòng quanh để đặt tác phẩm lên mặt phẳng.</string>
+    <string name="ar_tutorial">Hướng máy ảnh của bạn xuống sàn và di chuyển vòng quanh để xác định mặt phẳng.</string>
+    <string name="please_wait_for_render_model">Vui lòng chờ render mô hình…</string>
+    <string name="close">Đóng</string>
 </resources>

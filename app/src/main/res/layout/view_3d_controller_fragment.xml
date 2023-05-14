@@ -8,20 +8,6 @@
         android:layout_height="wrap_content"
         tools:background="@color/gray_light">
 
-        <TextView
-            android:id="@+id/tvView3dControllerTutorial"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/dimen_60"
-            android:layout_marginTop="@dimen/dimen_100"
-            android:fontFamily="@font/roboto_regular"
-            android:gravity="center"
-            android:text="@string/ar_tutorial"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dimen_text_size_20"
-            android:visibility="gone"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <com.tiger.ar.museum.presentation.widget.CollectionView
             android:id="@+id/cvView3d"
             android:layout_width="match_parent"

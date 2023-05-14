@@ -8,6 +8,7 @@ import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.ux.ArFragment
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumActivity
+import com.tiger.ar.museum.common.extension.gone
 import com.tiger.ar.museum.common.extension.setOnSafeClick
 import com.tiger.ar.museum.common.extension.toast
 import com.tiger.ar.museum.common.extension.toastUndeveloped
@@ -26,7 +27,7 @@ class View3dActivity : MuseumActivity<View3dActivityBinding>(R.layout.view_3d_ac
 
     override fun onPrepareInitView() {
         super.onPrepareInitView()
-        viewModel.startItemId = intent.getStringExtra(ITEM_ID_KEY)
+        viewModel.selectItemId = intent.getStringExtra(ITEM_ID_KEY)
     }
 
     override fun onInitView() {
@@ -43,6 +44,7 @@ class View3dActivity : MuseumActivity<View3dActivityBinding>(R.layout.view_3d_ac
     private fun initArFragment() {
         arFragment = supportFragmentManager.findFragmentById(R.id.fView3dArFragment) as? ArFragment
         arFragment?.setOnTapArPlaneListener { hitResult: HitResult, plane: Plane?, motionEvent: MotionEvent? ->
+            binding.tvView3dControllerTutorial.gone()
             if (viewModel.modelRenderable != null) {
                 val anchorNode = AnchorNode(hitResult.createAnchor())
                 anchorNode.renderable = viewModel.modelRenderable
