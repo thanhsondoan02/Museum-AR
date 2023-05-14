@@ -157,7 +157,7 @@ class CollectionAdapter : MuseumAdapter() {
                 setAdapter(this@StoriesVH.adapter)
                 setLayoutManager(COLLECTION_MODE.HORIZONTAL)
             }
-            binding.tvCollectionStoriesViewAll.setOnSafeClick { getItem { listener?.onViewAllStories() } }
+            binding.tvCollectionStoriesViewAll.setOnSafeClick { getItem { listener?.onViewAllStories(it.stories) } }
         }
 
         override fun onBind(data: StoriesDisplay) {
@@ -233,6 +233,6 @@ class CollectionAdapter : MuseumAdapter() {
         fun onFollowClick()
         fun onUnFollowClick()
         fun onShareClick()
-        fun onViewAllStories()
+        fun onViewAllStories(stories: List<Story>?)
     }
 }

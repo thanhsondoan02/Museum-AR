@@ -1,13 +1,16 @@
 package com.tiger.ar.museum.presentation.collection
 
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumFragment
 import com.tiger.ar.museum.common.extension.toast
 import com.tiger.ar.museum.common.extension.toastUndeveloped
 import com.tiger.ar.museum.databinding.CollectionFragmentBinding
+import com.tiger.ar.museum.domain.model.Story
 import com.tiger.ar.museum.presentation.RealMainActivity
 import com.tiger.ar.museum.presentation.favorite.collection.FavoriteCollectionsFragment
+import com.tiger.ar.museum.presentation.storylist.StoryListFragment
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
 class CollectionFragment : MuseumFragment<CollectionFragmentBinding>(R.layout.collection_fragment) {
@@ -84,8 +87,12 @@ class CollectionFragment : MuseumFragment<CollectionFragmentBinding>(R.layout.co
                 toastUndeveloped()
             }
 
-            override fun onViewAllStories() {
-                toastUndeveloped()
+            override fun onViewAllStories(stories: List<Story>?) {
+                addFragmentNew(
+                    StoryListFragment(),
+                    bundleOf(StoryListFragment.STORIES_KEY to stories),
+                    containerId = R.id.flRealMainContainer
+                )
             }
         }
         binding.cvCollection.apply {

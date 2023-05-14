@@ -12,6 +12,7 @@ import com.tiger.ar.museum.presentation.collection.CollectionFragment
 import com.tiger.ar.museum.presentation.favorite.collection.FavoriteCollectionsFragment
 import com.tiger.ar.museum.presentation.favorite.item.ItemListFragment
 import com.tiger.ar.museum.presentation.item.ItemFragment
+import com.tiger.ar.museum.presentation.storylist.StoryListFragment
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
 class FavoriteMainFragment : MuseumFragment<FavoriteMainFragmentBinding>(R.layout.favorite_main_fragment) {
@@ -65,7 +66,12 @@ class FavoriteMainFragment : MuseumFragment<FavoriteMainFragmentBinding>(R.layou
             }
 
             override fun onViewAllStory() {
-
+                museumActivity.addFragmentNew(
+                    StoryListFragment(),
+                    bundleOf(StoryListFragment.STORIES_KEY to viewModel.stories),
+                    containerId = R.id.flRealMainContainer,
+                    isEnableFragmentContainerScrollingBehavior = true
+                )
             }
 
             override fun onViewAllCollection() {
