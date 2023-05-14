@@ -12,7 +12,6 @@
             android:id="@+id/tvView3dControllerTutorial"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_marginHorizontal="@dimen/dimen_60"
             android:layout_marginTop="@dimen/dimen_100"
             android:fontFamily="@font/roboto_regular"
@@ -20,16 +19,17 @@
             android:text="@string/ar_tutorial"
             android:textColor="@color/white"
             android:textSize="@dimen/dimen_text_size_20"
+            android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.tiger.ar.museum.presentation.widget.CollectionView
             android:id="@+id/cvView3d"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_100"
+            android:layout_height="@dimen/dimen_130"
             android:layout_gravity="bottom"
             android:background="@color/black_overlay_light"
             android:clipToPadding="false"
-            android:padding="@dimen/dimen_8"
+            android:padding="@dimen/dimen_10"
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

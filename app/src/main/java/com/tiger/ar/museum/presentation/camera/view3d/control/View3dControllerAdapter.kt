@@ -63,7 +63,7 @@ class View3dControllerAdapter: MuseumAdapter() {
             binding.mcvView3dControllerThumbnail.apply {
                 if (data.isSelected) {
                     strokeColor = getAppColor(R.color.green)
-                    strokeWidth = getAppDimensionPixel(R.dimen.dimen_2)
+                    strokeWidth = getAppDimensionPixel(R.dimen.dimen_4)
                 } else {
                     strokeColor = getAppColor(R.color.white)
                     strokeWidth = getAppDimensionPixel(R.dimen.dimen_1)
