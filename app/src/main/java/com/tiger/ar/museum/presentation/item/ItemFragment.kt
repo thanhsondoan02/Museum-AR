@@ -93,6 +93,19 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
             }
 
             override fun onDetailTitleClick(isOpen: Boolean) {
+                if (isOpen) {
+                    viewModel.updateDetailOpen()
+                    binding.cvItemBackDrop.submitList(viewModel.itemData)
+                } else {
+                    if (viewModel.itemDataDetail.isEmpty()) {
+                        viewModel.mapDataDetailForAdapter {
+                            binding.cvItemBackDrop.submitList(viewModel.itemDataDetail)
+                        }
+                    } else {
+                        viewModel.updateDetailOpen()
+                        binding.cvItemBackDrop.submitList(viewModel.itemDataDetail)
+                    }
+                }
             }
 
             override fun onLikeClick() {

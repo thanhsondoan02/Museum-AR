@@ -2,6 +2,7 @@ package com.tiger.ar.museum.presentation.item
 
 import android.annotation.SuppressLint
 import android.util.TypedValue
+import android.view.ViewGroup.MarginLayoutParams
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import com.google.firebase.firestore.FieldPath
@@ -104,6 +105,7 @@ class ItemAdapter : MuseumAdapter() {
 
     class DetailInfoDisplay {
         var itemDetail: ItemDetail? = null
+        var isLast = false
     }
 
     class RecommendDisplay {
@@ -219,9 +221,9 @@ class ItemAdapter : MuseumAdapter() {
             binding.flItemDetailTitleContainer.setOnSafeClick {
                 getItem {
                     if (it.isOpen) {
-                        binding.ivItemDetailTitleArrow.animate().rotationBy(-180f).start()
-                    } else {
                         binding.ivItemDetailTitleArrow.animate().rotationBy(180f).start()
+                    } else {
+                        binding.ivItemDetailTitleArrow.animate().rotationBy(-180f).start()
                     }
                     listener?.onDetailTitleClick(it.isOpen)
                 }
@@ -234,9 +236,15 @@ class ItemAdapter : MuseumAdapter() {
         override fun onBind(data: DetailInfoDisplay) {
             binding.tvItemDetailInfo.text = SpannableBuilder().appendText(data.itemDetail?.title)
                 .withSpan(FontSpan(getAppFont(R.font.roboto_bold)))
-                .appendText(data.itemDetail?.description)
+                .appendText(" " + data.itemDetail?.description)
                 .withSpan(FontSpan(getAppFont(R.font.roboto_regular)))
                 .spannedText
+
+            if (data.isLast) {
+                (binding.tvItemDetailInfo.layoutParams as MarginLayoutParams).bottomMargin = getAppDimensionPixel(R.dimen.dimen_28)
+            } else {
+                (binding.tvItemDetailInfo.layoutParams as MarginLayoutParams).bottomMargin = getAppDimensionPixel(R.dimen.dimen_2)
+            }
         }
     }
 

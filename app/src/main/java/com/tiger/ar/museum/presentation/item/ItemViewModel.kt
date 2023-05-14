@@ -13,6 +13,7 @@ class ItemViewModel : BaseViewModel() {
     var item: Item? = null
     var itemId: String? = null
     var itemData: MutableList<Any> = mutableListOf()
+    var itemDataDetail: MutableList<Any> = mutableListOf()
 
     fun getItemData(onSuccessAction: () -> Unit, onFailureAction: (message: String) -> Unit) {
         viewModelScope.launch {
@@ -34,6 +35,58 @@ class ItemViewModel : BaseViewModel() {
             }.addOnFailureListener {
                 onFailureAction.invoke(it.message ?: "Get item fail")
             }
+        }
+    }
+
+    fun updateDetailOpen() {
+        val index = itemData.indexOfFirst { it is ItemAdapter.DetailTitleDisplay }
+        if (index != -1) {
+            val oldItem = itemData[index] as ItemAdapter.DetailTitleDisplay
+            itemData[index] = ItemAdapter.DetailTitleDisplay().apply { this.isOpen = oldItem.isOpen }
+        }
+    }
+
+    fun mapDataDetailForAdapter(onSuccessAction: () -> Unit) {
+        viewModelScope.launch {
+            itemDataDetail.clear()
+
+            itemDataDetail.add(ItemAdapter.TransparentDisplay())
+
+            itemDataDetail.add(ItemAdapter.ChooseActionDisplay().apply {
+                val actionList = mutableListOf(ItemActionAdapter.ActionDisplay(ACTION_TYPE.ZOOM_IN))
+                actionList.add(ItemActionAdapter.ActionDisplay(ACTION_TYPE.AR))
+                actionList.add(ItemActionAdapter.ActionDisplay(ACTION_TYPE.STREET))
+                actions = actionList
+            })
+
+            itemDataDetail.add(ItemAdapter.TitleDisplay().apply {
+                title = item?.name
+                creator = item?.creatorName
+                time = item?.time
+                collectionName = item?.collection?.name
+                collectionThumb = item?.collection?.icon
+                isLike = item?.safeIsLiked() ?: false
+            })
+
+            itemDataDetail.add(ItemAdapter.DescriptionDisplay().apply {
+                description = item?.description
+            })
+
+            itemDataDetail.add(ItemAdapter.DetailTitleDisplay().apply {
+                isOpen = true
+            })
+
+            if (item?.details != null) {
+                for (i in item?.details!!) {
+                    itemDataDetail.add(ItemAdapter.DetailInfoDisplay().apply { itemDetail = i })
+                }
+            }
+
+            (itemDataDetail.lastOrNull() as? ItemAdapter.DetailInfoDisplay)?.isLast = true
+
+            itemDataDetail.add(ItemAdapter.RecommendDisplay().apply { currentItemId = this@ItemViewModel.itemId })
+
+            onSuccessAction.invoke()
         }
     }
 
