@@ -7,13 +7,13 @@ import com.google.ar.core.HitResult
 import com.google.ar.core.Plane
 import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.ux.ArFragment
+import com.google.ar.sceneform.ux.TransformableNode
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumActivity
 import com.tiger.ar.museum.common.extension.gone
 import com.tiger.ar.museum.common.extension.setOnSafeClick
 import com.tiger.ar.museum.common.extension.show
 import com.tiger.ar.museum.common.extension.toast
-import com.tiger.ar.museum.common.extension.toastUndeveloped
 import com.tiger.ar.museum.databinding.View3dActivityBinding
 import com.tiger.ar.museum.presentation.camera.view3d.control.View3dControllerFragment
 import com.tiger.ar.museum.presentation.download.DownloadActivity
@@ -47,8 +47,11 @@ class View3dActivity : MuseumActivity<View3dActivityBinding>(R.layout.view_3d_ac
             binding.tvView3dControllerTutorial.gone()
             if (viewModel.modelRenderable != null) {
                 val anchorNode = AnchorNode(hitResult.createAnchor())
-                anchorNode.renderable = viewModel.modelRenderable
-                arFragment!!.arSceneView.scene.addChild(anchorNode)
+                anchorNode.setParent(arFragment!!.arSceneView.scene)
+                val transformableNode = TransformableNode(arFragment!!.transformationSystem)
+                transformableNode.setParent(anchorNode)
+                transformableNode.renderable = viewModel.modelRenderable
+                transformableNode.select()
             } else {
                 toast("Vui lòng chọn 1 mô hình")
             }
