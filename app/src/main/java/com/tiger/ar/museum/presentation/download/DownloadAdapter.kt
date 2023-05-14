@@ -31,7 +31,7 @@ class DownloadAdapter : MuseumAdapter() {
     inner class DownloadVH(val binding: DownloadItemBinding) : BaseVH<DownloadItem>(binding) {
         init {
             binding.ivDownloadDelete.setOnSafeClick { getItem { listener?.onDelete(it) } }
-            binding.root.setOnSafeClick { getItem { listener?.onViewItem(it.id) } }
+            binding.flDownloadRoot.setOnSafeClick { getItem { listener?.onViewItem(it.id) } }
         }
 
         override fun onBind(data: DownloadItem) {

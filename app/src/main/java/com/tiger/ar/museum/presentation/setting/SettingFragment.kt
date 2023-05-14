@@ -24,7 +24,7 @@ class SettingFragment : MuseumFragment<SettingFragmentBinding>(R.layout.setting_
 
     private fun initOnClick() {
         binding.constSettingOffline.setOnSafeClick {
-            museumActivity.navigateTo(DownloadActivity::class.java)
+            navigateTo(DownloadActivity::class.java)
         }
         binding.tvSettingLogOut.setOnSafeClick { logOut() }
     }

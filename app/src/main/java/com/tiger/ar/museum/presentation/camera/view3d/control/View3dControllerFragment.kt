@@ -33,6 +33,18 @@ class View3dControllerFragment : MuseumFragment<View3dControllerFragmentBinding>
     override fun onInitView() {
         super.onInitView()
         initRecyclerView()
+        getListItem()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        requireContext().unregisterReceiver(downloadReceiver)
+        viewModel.downloadMap.keys.forEach {
+            viewModel.downloadManager.remove(it)
+        }
+    }
+
+    fun getListItem() {
         viewModel.getListItem(
             onSuccessAction = {
                 binding.cvView3d.submitList(viewModel.listItemDisplay)
@@ -44,14 +56,6 @@ class View3dControllerFragment : MuseumFragment<View3dControllerFragmentBinding>
                 toast("Fail: $it")
             }
         )
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        requireContext().unregisterReceiver(downloadReceiver)
-        viewModel.downloadMap.keys.forEach {
-            viewModel.downloadManager.remove(it)
-        }
     }
 
     private fun initRecyclerView() {

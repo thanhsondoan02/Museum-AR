@@ -2,6 +2,7 @@ package com.tiger.ar.museum.presentation.camera.view3d
 
 import android.view.MotionEvent
 import androidx.activity.viewModels
+import androidx.core.os.bundleOf
 import com.google.ar.core.HitResult
 import com.google.ar.core.Plane
 import com.google.ar.sceneform.AnchorNode
@@ -10,10 +11,12 @@ import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumActivity
 import com.tiger.ar.museum.common.extension.gone
 import com.tiger.ar.museum.common.extension.setOnSafeClick
+import com.tiger.ar.museum.common.extension.show
 import com.tiger.ar.museum.common.extension.toast
 import com.tiger.ar.museum.common.extension.toastUndeveloped
 import com.tiger.ar.museum.databinding.View3dActivityBinding
 import com.tiger.ar.museum.presentation.camera.view3d.control.View3dControllerFragment
+import com.tiger.ar.museum.presentation.download.DownloadActivity
 
 class View3dActivity : MuseumActivity<View3dActivityBinding>(R.layout.view_3d_activity) {
     companion object {
@@ -22,6 +25,7 @@ class View3dActivity : MuseumActivity<View3dActivityBinding>(R.layout.view_3d_ac
 
     private val viewModel by viewModels<View3dViewModel>()
     private var arFragment: ArFragment? = null
+    private val view3dControllerFragment by lazy { View3dControllerFragment() }
 
     override fun getContainerId() = R.id.flView3DFragmentContainer
 
@@ -34,7 +38,7 @@ class View3dActivity : MuseumActivity<View3dActivityBinding>(R.layout.view_3d_ac
         super.onInitView()
         initArFragment()
         initOnClick()
-        addFragment(View3dControllerFragment())
+        addFragment(view3dControllerFragment)
     }
 
     private fun initArFragment() {
@@ -51,10 +55,33 @@ class View3dActivity : MuseumActivity<View3dActivityBinding>(R.layout.view_3d_ac
         }
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        view3dControllerFragment.getListItem()
+    }
+
     private fun initOnClick() {
         binding.ivView3dControllerBack.setOnSafeClick {
             finish()
         }
-        binding.ivView3dControllerMore.setOnSafeClick { toastUndeveloped() }
+        binding.ivView3dControllerMore.setOnSafeClick {
+            val newBinding = binding.layoutView3dOption
+            newBinding.apply {
+                root.show()
+                root.setOnSafeClick {
+                    root.gone()
+                }
+                tvView3dOptionDownload.setOnSafeClick {
+                    navigateTo(DownloadActivity::class.java)
+                }
+                tvView3dOptionModelInfo.setOnSafeClick {
+                    if (viewModel.selectItemId != null) {
+                        navigateTo(RealMainActivity2::class.java, bundleOf(RealMainActivity2.ITEM_ID_KEY to viewModel.selectItemId))
+                    } else {
+                        toast("Vui lòng chọn 1 mô hình")
+                    }
+                }
+            }
+        }
     }
 }
