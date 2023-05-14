@@ -41,7 +41,7 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
         viewModel.getItemData(
             onSuccessAction = {
                 binding.ivItem.loadImage(viewModel.item?.thumbnail)
-                binding.cvItemBackDrop.submitList(viewModel.itemData)
+                binding.cvItemBackDrop.submitList(viewModel.getDataList())
             },
             onFailureAction = {
                 toast("Get item data fail: $it")
@@ -93,26 +93,14 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
             }
 
             override fun onDetailTitleClick(isOpen: Boolean) {
-                if (isOpen) {
-                    viewModel.updateDetailOpen()
-                    binding.cvItemBackDrop.submitList(viewModel.itemData)
-                } else {
-                    if (viewModel.itemDataDetail.isEmpty()) {
-                        viewModel.mapDataDetailForAdapter {
-                            binding.cvItemBackDrop.submitList(viewModel.itemDataDetail)
-                        }
-                    } else {
-                        viewModel.updateDetailOpen()
-                        binding.cvItemBackDrop.submitList(viewModel.itemDataDetail)
-                    }
-                }
+                binding.cvItemBackDrop.submitList(viewModel.getDataList(isOpen))
             }
 
             override fun onLikeClick() {
                 viewModel.likeUpdate(
                     true,
                     onSuccessAction = {
-                        binding.cvItemBackDrop.submitList(viewModel.itemData)
+                        binding.cvItemBackDrop.submitList(viewModel.getDataList())
                         realMainActivity.reloadFavorite()
                     },
                     onFailureAction = {
@@ -125,7 +113,7 @@ class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment)
                 viewModel.likeUpdate(
                     false,
                     onSuccessAction = {
-                        binding.cvItemBackDrop.submitList(viewModel.itemData)
+                        binding.cvItemBackDrop.submitList(viewModel.getDataList())
                         (museumActivity as RealMainActivity).reloadFavorite()
                     },
                     onFailureAction = {
