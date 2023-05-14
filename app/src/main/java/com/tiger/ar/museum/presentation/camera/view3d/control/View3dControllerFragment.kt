@@ -68,15 +68,17 @@ class View3dControllerFragment : MuseumFragment<View3dControllerFragmentBinding>
                 if (downloadId != -1L) {
                     val itemKey = viewModel.downloadMap[downloadId]
                     Log.d(TAG, "suck: Tải mô hình $itemKey thành công")
-                    if (itemKey == viewModel.selectItemId) {
-                        viewModel.buildModel(itemKey,
-                            onStartAction = { showLoading() },
-                            onSuccessAction = { hideLoading() },
-                            onFailAction = { toast("Fail: $it") }
-                        )
-                    }
-                    viewModel.updateItemDownloadState(itemKey, DOWNLOAD_STATUS.DOWNLOADED, onSuccessAction = {
-                        binding.cvView3d.submitList(viewModel.listItemDisplay)
+                    viewModel.copyFileFromDownloadToInternalStorage(itemKey!!, onSuccessAction = {
+                        if (itemKey == viewModel.selectItemId) {
+                            viewModel.buildModel(itemKey,
+                                onStartAction = { showLoading() },
+                                onSuccessAction = { hideLoading() },
+                                onFailAction = { toast("Fail: $it") }
+                            )
+                        }
+                        viewModel.updateItemDownloadState(itemKey, DOWNLOAD_STATUS.DOWNLOADED, onSuccessAction = {
+                            binding.cvView3d.submitList(viewModel.listItemDisplay)
+                        })
                     })
                 }
             }

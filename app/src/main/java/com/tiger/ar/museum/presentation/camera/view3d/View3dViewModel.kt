@@ -184,12 +184,21 @@ class View3dViewModel : BaseViewModel() {
 
     private fun getFileFromDevice(itemId: String): File {
         val fileName = "$itemId.glb"
-        val downloadDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val downloadDirectory = getApplication().filesDir
         return File(downloadDirectory, fileName)
     }
 
     private fun isFileExist(itemId: String): Boolean {
         val file = getFileFromDevice(itemId)
         return file.exists()
+    }
+
+    fun copyFileFromDownloadToInternalStorage(itemId: String, onSuccessAction: () -> Unit) {
+        val fileName = "$itemId.glb"
+        val file = File(getApplication().filesDir, fileName)
+        val downloadFile = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName)
+        downloadFile.copyTo(file, true)
+        downloadFile.delete()
+        onSuccessAction.invoke()
     }
 }
