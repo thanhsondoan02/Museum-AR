@@ -47,6 +47,9 @@ class View3dControllerFragment : MuseumFragment<View3dControllerFragmentBinding>
     override fun onDestroy() {
         super.onDestroy()
         requireContext().unregisterReceiver(downloadReceiver)
+        viewModel.downloadMap.keys.forEach {
+            viewModel.downloadManager.remove(it)
+        }
     }
 
     private fun initRecyclerView() {

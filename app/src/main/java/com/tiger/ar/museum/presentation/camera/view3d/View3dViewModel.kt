@@ -23,6 +23,7 @@ class View3dViewModel : BaseViewModel() {
     var listItemDisplay: MutableList<View3dControllerAdapter.ItemDisplay> = mutableListOf()
     var downloadMap: MutableMap<Long, String> = mutableMapOf()
     var selectItemId: String? = null
+    val downloadManager = getApplication().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
     fun updateItemDownloadState(itemKey: String?, downloadStatus: DOWNLOAD_STATUS, onSuccessAction: () -> Unit) {
         viewModelScope.launch {
@@ -74,9 +75,6 @@ class View3dViewModel : BaseViewModel() {
                     }
                     itemDisplay
                 }.toMutableList()
-//                if (selectItemId == null) {
-//                    selectItemId = listItemDisplay.firstOrNull()?.item?.key
-//                }
                 listItemDisplay.firstOrNull { it.item.key == selectItemId }?.isSelected = true
                 onSuccessAction.invoke()
             }.addOnFailureListener {
@@ -172,11 +170,8 @@ class View3dViewModel : BaseViewModel() {
             .setDescription("Downloading $fileName")
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
 
-//        tempFile = File(getApplication().filesDir, fileName)
-//        request.setDestinationUri(Uri.fromFile(tempFile))
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
 
-        val downloadManager = getApplication().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         onStartAction.invoke()
         val downloadId = downloadManager.enqueue(request)
         downloadMap[downloadId] = item.key!!
