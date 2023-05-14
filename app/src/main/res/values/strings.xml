@@ -108,4 +108,9 @@
     <string name="ar_tutorial">Hướng máy ảnh của bạn xuống sàn và di chuyển vòng quanh để xác định mặt phẳng.</string>
     <string name="please_wait_for_render_model">Vui lòng chờ render mô hình…</string>
     <string name="close">Đóng</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
+    <string name="sure_delete_title">Xóa mô hình này?</string>
+    <string name="confirm_delete_desc1">Bạn có chắc chắn muốn xóa mô hình</string>
+    <string name="confirm_delete_desc2"> khỏi bộ nhớ thiết bị?</string>
 </resources>
