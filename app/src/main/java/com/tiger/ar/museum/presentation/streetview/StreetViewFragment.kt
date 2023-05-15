@@ -16,12 +16,9 @@ import com.tiger.ar.museum.presentation.RealMainActivity
 class StreetViewFragment : MuseumFragment<StreetViewFragmentBinding>(R.layout.street_view_fragment),
     StreetViewPanorama.OnStreetViewPanoramaChangeListener, StreetViewPanorama.OnStreetViewPanoramaCameraChangeListener,
     StreetViewPanorama.OnStreetViewPanoramaClickListener, StreetViewPanorama.OnStreetViewPanoramaLongClickListener {
-    companion object {
-        const val GEO_POINT_KEY = "GEO_POINT_KEY"
-    }
 
     var location: GeoPoint? = null
-    private val SYDNEY = LatLng(-33.87365, 151.20689)
+    private val SYDNEY = LatLng(6.453811374553505, 3.3891655436795896)
 
     private lateinit var streetViewPanorama: StreetViewPanorama
     private var streetViewPanoramaFragment: SupportStreetViewPanoramaFragment? = null
@@ -80,9 +77,11 @@ class StreetViewFragment : MuseumFragment<StreetViewFragmentBinding>(R.layout.st
     }
 
     private fun getLatLng(geoPoint: GeoPoint?): LatLng {
-        return geoPoint?.let {
-            LatLng(it.latitude, it.longitude)
-        } ?: SYDNEY
+        return if (geoPoint == null || geoPoint.latitude == 0.0 || geoPoint.longitude == 0.0) {
+            SYDNEY
+        } else {
+            LatLng(geoPoint.latitude, geoPoint.longitude)
+        }
     }
 
     private fun initActionBar() {
