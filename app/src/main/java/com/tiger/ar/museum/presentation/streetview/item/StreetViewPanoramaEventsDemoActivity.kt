@@ -11,13 +11,16 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package com.tiger.ar.museum.presentation.streetview
+package com.tiger.ar.museum.presentation.streetview.item
 
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.StreetViewPanorama
-import com.google.android.gms.maps.StreetViewPanorama.*
+import com.google.android.gms.maps.StreetViewPanorama.OnStreetViewPanoramaCameraChangeListener
+import com.google.android.gms.maps.StreetViewPanorama.OnStreetViewPanoramaChangeListener
+import com.google.android.gms.maps.StreetViewPanorama.OnStreetViewPanoramaClickListener
+import com.google.android.gms.maps.StreetViewPanorama.OnStreetViewPanoramaLongClickListener
 import com.google.android.gms.maps.SupportStreetViewPanoramaFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.StreetViewPanoramaCamera

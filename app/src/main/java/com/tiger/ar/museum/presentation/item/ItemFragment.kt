@@ -13,7 +13,7 @@ import com.tiger.ar.museum.presentation.ZoomFragment
 import com.tiger.ar.museum.presentation.camera.view3d.View3dActivity
 import com.tiger.ar.museum.presentation.collection.CollectionFragment
 import com.tiger.ar.museum.presentation.favorite.item.ItemListFragment
-import com.tiger.ar.museum.presentation.streetview.StreetViewFragment
+import com.tiger.ar.museum.presentation.streetview.item.StreetViewFragment
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
 open class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_fragment) {

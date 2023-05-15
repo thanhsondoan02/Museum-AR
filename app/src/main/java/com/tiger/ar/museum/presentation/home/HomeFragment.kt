@@ -5,12 +5,12 @@ import androidx.fragment.app.viewModels
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumFragment
 import com.tiger.ar.museum.common.extension.toast
-import com.tiger.ar.museum.common.extension.toastUndeveloped
 import com.tiger.ar.museum.databinding.HomeFragmentBinding
 import com.tiger.ar.museum.domain.model.StreetView
 import com.tiger.ar.museum.presentation.collection.CollectionFragment
 import com.tiger.ar.museum.presentation.collection.all.CollectionsFragment
-import com.tiger.ar.museum.presentation.streetview.StreetViewFragment
+import com.tiger.ar.museum.presentation.streetview.item.StreetViewFragment
+import com.tiger.ar.museum.presentation.streetview.list.AllStreetViewFragment
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
 class HomeFragment : MuseumFragment<HomeFragmentBinding>(R.layout.home_fragment) {
@@ -40,7 +40,11 @@ class HomeFragment : MuseumFragment<HomeFragmentBinding>(R.layout.home_fragment)
             }
 
             override fun onViewAllStreetViewClick() {
-                toastUndeveloped()
+                realMainActivity.addFragmentNew(
+                    AllStreetViewFragment(),
+                    containerId = R.id.flRealMainContainer,
+                    isEnableFragmentContainerScrollingBehavior = true
+                )
             }
 
             override fun onViewAllCollections() {

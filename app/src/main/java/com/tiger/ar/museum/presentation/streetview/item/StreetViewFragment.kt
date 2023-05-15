@@ -1,4 +1,4 @@
-package com.tiger.ar.museum.presentation.streetview
+package com.tiger.ar.museum.presentation.streetview.item
 
 import androidx.fragment.app.FragmentManager
 import com.google.android.gms.maps.StreetViewPanorama

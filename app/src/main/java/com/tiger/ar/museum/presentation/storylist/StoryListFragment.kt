@@ -19,7 +19,7 @@ class StoryListFragment : MuseumFragment<ItemListFragmentBinding>(R.layout.item_
 
     override fun onPrepareInitView() {
         super.onPrepareInitView()
-        viewModel.stories = arguments?.getParcelableArrayList(STORIES_KEY) ?: emptyList()
+        viewModel.streetViews = arguments?.getParcelableArrayList(STORIES_KEY) ?: emptyList()
     }
 
     override fun onInitView() {
@@ -43,8 +43,8 @@ class StoryListFragment : MuseumFragment<ItemListFragmentBinding>(R.layout.item_
             setMaxItemHorizontal(2)
 
             val list = mutableListOf<Any>()
-            list.add(viewModel.stories.size)
-            list.addAll(viewModel.stories)
+            list.add(viewModel.streetViews.size)
+            list.addAll(viewModel.streetViews)
             submitList(list)
         }
     }

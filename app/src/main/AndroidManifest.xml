@@ -70,7 +70,7 @@
             android:theme="@style/Theme.MuseumAR.Fullscreen" />
 
         <activity
-            android:name=".presentation.streetview.StreetViewPanoramaEventsDemoActivity"
+            android:name=".presentation.streetview.item.StreetViewPanoramaEventsDemoActivity"
             android:exported="false" />
 
         <activity
