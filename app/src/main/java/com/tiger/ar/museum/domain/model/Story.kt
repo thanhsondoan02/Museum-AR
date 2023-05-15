@@ -11,6 +11,17 @@ data class Story(
 
     var thumbnail: String? = null,
 
-    var collectionId: String? = null
+    var collectionId: String? = null,
+
+    var pages: List<Page>? = null
+
+) : MuseumModel()
+
+@Parcelize
+data class Page(
+
+    var description: String? = null,
+
+    var thumbnail: String? = null
 
 ) : MuseumModel()
