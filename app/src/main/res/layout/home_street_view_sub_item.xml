@@ -21,6 +21,7 @@
                 android:id="@+id/ivHomeStreetViewThumbnail"
                 android:layout_width="@dimen/dimen_200"
                 android:layout_height="@dimen/dimen_200"
+                android:scaleType="centerCrop"
                 app:shapeAppearanceOverlay="@style/CircleImageView"
                 tools:src="@color/black" />
 

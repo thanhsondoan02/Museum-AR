@@ -1,6 +1,7 @@
 package com.tiger.ar.museum.presentation.streetview.list
 
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.DiffUtil
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.extension.getAppString
 import com.tiger.ar.museum.common.extension.gone
@@ -8,7 +9,7 @@ import com.tiger.ar.museum.common.extension.loadImage
 import com.tiger.ar.museum.common.extension.setOnSafeClick
 import com.tiger.ar.museum.common.recycleview.BaseVH
 import com.tiger.ar.museum.common.recycleview.MuseumAdapter
-import com.tiger.ar.museum.databinding.HomeStreetViewSubItemBinding
+import com.tiger.ar.museum.databinding.HomeStreetViewSubItem2Binding
 import com.tiger.ar.museum.databinding.ItemListTitleItemBinding
 import com.tiger.ar.museum.domain.model.StreetView
 
@@ -19,6 +20,10 @@ class AllStreetViewAdapter : MuseumAdapter() {
     }
 
     var listener: IListener? = null
+
+    override fun getDiffUtil(oldList: List<Any>, newList: List<Any>): DiffUtil.Callback {
+        return AllStreetViewDiffUtil(oldList, newList)
+    }
 
     override fun getItemViewTypeCustom(position: Int): Int {
         return if (position == 0) {
@@ -31,7 +36,7 @@ class AllStreetViewAdapter : MuseumAdapter() {
     override fun getLayoutResource(viewType: Int): Int {
         return when (viewType) {
             TITLE_TYPE -> R.layout.item_list_title_item
-            SV_TYPE -> R.layout.home_street_view_sub_item
+            SV_TYPE -> R.layout.home_street_view_sub_item2
             else -> throw IllegalArgumentException("getLayoutResource: viewType is invalid")
         }
     }
@@ -41,7 +46,7 @@ class AllStreetViewAdapter : MuseumAdapter() {
     override fun onCreateViewHolder(viewType: Int, binding: ViewDataBinding): BaseVH<*>? {
         return when (viewType) {
             TITLE_TYPE -> TitleVH(binding as ItemListTitleItemBinding)
-            SV_TYPE -> StreetViewVH(binding as HomeStreetViewSubItemBinding)
+            SV_TYPE -> StreetViewVH(binding as HomeStreetViewSubItem2Binding)
             else -> throw IllegalArgumentException("onCreateViewHolder: viewType is invalid")
         }
     }
@@ -56,7 +61,7 @@ class AllStreetViewAdapter : MuseumAdapter() {
         }
     }
 
-    inner class StreetViewVH(private val binding: HomeStreetViewSubItemBinding) : BaseVH<StreetView>(binding) {
+    inner class StreetViewVH(private val binding: HomeStreetViewSubItem2Binding) : BaseVH<StreetView>(binding) {
         init {
             binding.root.setOnSafeClick {
                 getItem {
