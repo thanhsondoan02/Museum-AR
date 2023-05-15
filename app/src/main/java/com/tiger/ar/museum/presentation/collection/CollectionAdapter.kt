@@ -171,22 +171,27 @@ class CollectionAdapter : MuseumAdapter() {
 
         @SuppressLint("SetTextI18n")
         private fun updateTitle(data: StoriesDisplay) {
-            binding.tvCollectionStoriesTitle.text = data.stories?.size.toString() + " " + getAppString(R.string.stories_lower_case)
+            if (data.stories.isNullOrEmpty()) {
+                binding.llCollectionStoriesRoot.gone()
+            } else {
+                binding.llCollectionStoriesRoot.show()
+                binding.tvCollectionStoriesTitle.text = data.stories?.size.toString() + " " + getAppString(R.string.stories_lower_case)
+            }
+
         }
 
         private fun getDataFromDb(data: StoriesDisplay) {
             val db = Firebase.firestore
             val storiesRef = db.collection("stories").whereEqualTo("collectionId", data.collectionId)
             storiesRef.get().addOnSuccessListener { storiesSnapshot ->
-                if (storiesSnapshot.documents.isEmpty()) {
-                    data.stories = emptyList()
-                } else {
-                    data.stories = storiesSnapshot.documents.mapNotNull {
-                        it.toObject(Story::class.java)?.apply { key = it.id }
-                    }
-                    updateTitle(data)
-                    binding.cvCollectionStories.submitList(data.stories)
+                data.stories = storiesSnapshot.documents.mapNotNull {
+                    it.toObject(Story::class.java)?.apply { key = it.id }
                 }
+                if (data.stories.isNullOrEmpty()) {
+                    data.stories = emptyList()
+                }
+                updateTitle(data)
+                binding.cvCollectionStories.submitList(data.stories)
             }
         }
     }

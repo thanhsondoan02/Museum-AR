@@ -107,30 +107,34 @@ class CollectionViewModel : BaseViewModel() {
 
             count = items.size
 
-            items.forEach {
-                Glide.with(getApplication()).load(it.thumbnail).listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                        updateCount()
-                        return false
-                    }
-
-                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                        if (resource != null) {
-                            it.ratio = resource.intrinsicWidth / resource.intrinsicHeight.toFloat()
+            if (count == 0) {
+                onSuccessAction.invoke()
+            } else {
+                items.forEach {
+                    Glide.with(getApplication()).load(it.thumbnail).listener(object : RequestListener<Drawable> {
+                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                            updateCount()
+                            return false
                         }
-                        updateCount()
-                        return false
-                    }
 
-                    private fun updateCount() {
-                        count--
-                        if (count == 0) {
-                            count = items.size
-                            list.add(CollectionAdapter.ItemsDisplay(collectionId, items))
-                            onSuccessAction.invoke()
+                        override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                            if (resource != null) {
+                                it.ratio = resource.intrinsicWidth / resource.intrinsicHeight.toFloat()
+                            }
+                            updateCount()
+                            return false
                         }
-                    }
-                }).submit()
+
+                        private fun updateCount() {
+                            count--
+                            if (count == 0) {
+                                count = items.size
+                                list.add(CollectionAdapter.ItemsDisplay(collectionId, items))
+                                onSuccessAction.invoke()
+                            }
+                        }
+                    }).submit()
+                }
             }
         }
     }
