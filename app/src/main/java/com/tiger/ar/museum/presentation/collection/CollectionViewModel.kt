@@ -22,44 +22,6 @@ class CollectionViewModel : BaseViewModel() {
 
     var count = 0
 
-    fun getItemsData(onSuccessAction: () -> Unit) {
-        val db = Firebase.firestore
-        val storiesRef = db.collection("items").whereEqualTo("collectionId", collectionId)
-        storiesRef.get().addOnSuccessListener { storiesSnapshot ->
-            val items = storiesSnapshot.documents.mapNotNull {
-                it.toObject(CollectionItemAdapter.ItemsDisplay::class.java)?.apply { id = it.id }
-            }
-
-            count = items.size
-
-            items.forEach {
-                Glide.with(getApplication()).load(it.thumbnail).listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                        updateCount()
-                        return false
-                    }
-
-                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                        if (resource != null) {
-                            it.ratio = resource.intrinsicWidth / resource.intrinsicHeight.toFloat()
-                        }
-                        updateCount()
-                        return false
-                    }
-
-                    private fun updateCount() {
-                        count--
-                        if (count == 0) {
-                            count = items.size
-                            list.add(CollectionAdapter.ItemsDisplay(collectionId, items))
-                            onSuccessAction.invoke()
-                        }
-                    }
-                }).submit()
-            }
-        }
-    }
-
     fun getCollectionData(onSuccessAction: () -> Unit, onFailureAction: (message: String) -> Unit) {
         if (collectionId == null) {
             onFailureAction.invoke("Collection id is null")
@@ -80,7 +42,7 @@ class CollectionViewModel : BaseViewModel() {
                     })
                     list.add(CollectionAdapter.DescriptionDisplay(collection.description))
                     list.add(CollectionAdapter.StoriesDisplay(collectionId))
-                    onSuccessAction.invoke()
+                    getItemsData(onSuccessAction)
                 } else {
                     onFailureAction.invoke("Collection is null")
                 }
@@ -132,6 +94,44 @@ class CollectionViewModel : BaseViewModel() {
                 }
         }.addOnFailureListener {
             onFailureAction.invoke(it.message ?: "Follow/Unfollow failed")
+        }
+    }
+
+    private fun getItemsData(onSuccessAction: () -> Unit) {
+        val db = Firebase.firestore
+        val storiesRef = db.collection("items").whereEqualTo("collectionId", collectionId)
+        storiesRef.get().addOnSuccessListener { storiesSnapshot ->
+            val items = storiesSnapshot.documents.mapNotNull {
+                it.toObject(CollectionItemAdapter.ItemsDisplay::class.java)?.apply { id = it.id }
+            }
+
+            count = items.size
+
+            items.forEach {
+                Glide.with(getApplication()).load(it.thumbnail).listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        updateCount()
+                        return false
+                    }
+
+                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                        if (resource != null) {
+                            it.ratio = resource.intrinsicWidth / resource.intrinsicHeight.toFloat()
+                        }
+                        updateCount()
+                        return false
+                    }
+
+                    private fun updateCount() {
+                        count--
+                        if (count == 0) {
+                            count = items.size
+                            list.add(CollectionAdapter.ItemsDisplay(collectionId, items))
+                            onSuccessAction.invoke()
+                        }
+                    }
+                }).submit()
+            }
         }
     }
 }

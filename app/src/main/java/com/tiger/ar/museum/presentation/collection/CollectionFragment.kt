@@ -114,8 +114,5 @@ class CollectionFragment : MuseumFragment<CollectionFragmentBinding>(R.layout.co
                 toast("Fail: $it")
             }
         )
-        viewModel.getItemsData {
-            binding.cvCollection.submitList(viewModel.list)
-        }
     }
 }
