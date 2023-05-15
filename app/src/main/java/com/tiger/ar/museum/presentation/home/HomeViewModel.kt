@@ -27,7 +27,7 @@ class HomeViewModel : BaseViewModel() {
 
             val streetViewRef = Firebase.firestore
                 .collection("home/${homeSnapShot.documents.first().id}/streetViews")
-                .orderBy(FieldPath.documentId())
+                .whereNotEqualTo("place", null)
                 .limit(4).get()
 
             val collectionRef = Firebase.firestore

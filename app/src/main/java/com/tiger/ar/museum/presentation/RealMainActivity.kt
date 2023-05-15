@@ -71,9 +71,11 @@ open class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.r
             setImageResource(R.drawable.ic_back_main_black)
             setOnSafeClick {
                 navigateBack()
-                if (supportFragmentManager.fragments.size == 4 ||
-                    supportFragmentManager.fragments.lastOrNull() is SupportStreetViewPanoramaFragment
-                ) {
+
+                val fragments = supportFragmentManager.fragments
+                val size = fragments.size
+
+                if (size == 4 || (size == 5 && fragments.lastOrNull() is SupportStreetViewPanoramaFragment)) {
                     setSearchIcon()
                 }
             }
@@ -93,7 +95,7 @@ open class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.r
 
     fun checkSearchIcon() {
         val fragments = supportFragmentManager.fragments
-        if (fragments.size == 4 || fragments.lastOrNull() is SupportStreetViewPanoramaFragment) {
+        if (fragments.size == 4 || (fragments.size == 5 && fragments.lastOrNull() is SupportStreetViewPanoramaFragment)) {
             setSearchIcon()
         } else {
             setBackIcon()

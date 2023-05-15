@@ -1,6 +1,5 @@
 package com.tiger.ar.museum.presentation.streetview.item
 
-import androidx.fragment.app.FragmentManager
 import com.google.android.gms.maps.StreetViewPanorama
 import com.google.android.gms.maps.SupportStreetViewPanoramaFragment
 import com.google.android.gms.maps.model.LatLng
@@ -37,11 +36,13 @@ class StreetViewFragment : MuseumFragment<StreetViewFragmentBinding>(R.layout.st
     override fun onDestroy() {
         super.onDestroy()
         (museumActivity as RealMainActivity).supportFragmentManager.apply {
-            if (fragments.lastOrNull() is SupportStreetViewPanoramaFragment) {
-                if (streetViewPanoramaFragment != null) {
-                    beginTransaction().remove(streetViewPanoramaFragment!!).commit();
-                }
-                popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            if (fragments.contains(streetViewPanoramaFragment)) {
+                beginTransaction().remove(streetViewPanoramaFragment!!).commit();
+            }
+            (museumActivity as? RealMainActivity)?.apply {
+                enableFragmentContainerScrollingBehavior()
+                setWhiteActionBar()
+                enableScrollHideActionBar(true)
             }
         }
     }
