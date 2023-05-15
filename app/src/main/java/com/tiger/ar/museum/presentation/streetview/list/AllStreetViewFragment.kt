@@ -35,9 +35,6 @@ class AllStreetViewFragment : MuseumFragment<StreetViewListFragmentBinding>(R.la
         binding.cvAllStreetView.apply {
             setAdapter(this@AllStreetViewFragment.adapter)
             setLayoutManager(COLLECTION_MODE.VERTICAL)
-            setLoadMoreListener {
-                getData()
-            }
         }
 
         getData()
