@@ -3,6 +3,7 @@ package com.tiger.ar.museum.presentation.collection
 import android.annotation.SuppressLint
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.tiger.ar.museum.R
@@ -17,7 +18,6 @@ import com.tiger.ar.museum.databinding.CollectionDescriptionItemBinding
 import com.tiger.ar.museum.databinding.CollectionHeaderItemBinding
 import com.tiger.ar.museum.databinding.CollectionItemsItemBinding
 import com.tiger.ar.museum.databinding.CollectionStoriesItemBinding
-import com.tiger.ar.museum.domain.model.Item
 import com.tiger.ar.museum.domain.model.MCollection
 import com.tiger.ar.museum.domain.model.Story
 import com.tiger.ar.museum.presentation.favorite.FavoriteStoryAdapter
@@ -192,11 +192,27 @@ class CollectionAdapter : MuseumAdapter() {
     }
 
     inner class ItemsVH(private val binding: CollectionItemsItemBinding) : BaseVH<ItemsDisplay>(binding) {
-        init {
+        private val adapter by lazy { CollectionItemAdapter() }
 
+        init {
+            adapter.listener = object : CollectionItemAdapter.IListener {
+                override fun onItemClick(itemId: String?) {
+                    listener?.onItemClick(itemId)
+                }
+            }
+
+            binding.rvCollectionsStories.apply {
+                adapter = this@ItemsVH.adapter
+                layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL)
+            }
         }
 
+        @SuppressLint("SetTextI18n")
         override fun onBind(data: ItemsDisplay) {
+            if (data.items != null) {
+                adapter.submitList(data.items)
+            }
+            binding.tvCollectionStoriesTitle.text = data.items?.size.toString() + " " + getAppString(R.string.items)
         }
     }
 
@@ -224,7 +240,7 @@ class CollectionAdapter : MuseumAdapter() {
 
     data class ItemsDisplay(
         var collectionId: String? = null,
-        val items: List<Item>? = null
+        var items: List<CollectionItemAdapter.ItemsDisplay>? = null
     )
 
     interface IListener {

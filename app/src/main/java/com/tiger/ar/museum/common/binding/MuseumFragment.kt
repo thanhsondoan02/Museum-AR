@@ -6,6 +6,7 @@ import com.tiger.ar.museum.common.navigation.FadeAnim
 import com.tiger.ar.museum.common.navigation.IScreenAnim
 import com.tiger.ar.museum.common.view.BaseFragment
 import com.tiger.ar.museum.presentation.RealMainActivity
+import com.tiger.ar.museum.presentation.collection.CollectionFragment
 
 abstract class MuseumFragment<DB : ViewDataBinding>(layoutId: Int) : BaseBindingFragment<DB>(layoutId) {
     protected val museumActivity by lazy {
@@ -18,9 +19,12 @@ abstract class MuseumFragment<DB : ViewDataBinding>(layoutId: Int) : BaseBinding
 
     override fun onDestroy() {
         super.onDestroy()
-        if (museumActivity is RealMainActivity) {
-            realMainActivity.checkSearchIcon()
-        }
+        setActionBarSearchIcon()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setActionBarColor()
     }
 
     protected fun replaceFragmentNew(
@@ -41,6 +45,18 @@ abstract class MuseumFragment<DB : ViewDataBinding>(layoutId: Int) : BaseBinding
         containerId: Int
     ) {
         realMainActivity.addFragmentNew(fragment, bundle, keepToBackStack, screenAnim, containerId)
+    }
+
+    private fun setActionBarColor() {
+        if (this is CollectionFragment) {
+            realMainActivity.setTransparentActionBar()
+        } else {
+            realMainActivity.setWhiteActionBar()
+        }
+    }
+
+    private fun setActionBarSearchIcon() {
+        realMainActivity.checkSearchIcon()
     }
 }
 

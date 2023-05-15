@@ -10,6 +10,7 @@ import com.tiger.ar.museum.databinding.CollectionFragmentBinding
 import com.tiger.ar.museum.domain.model.Story
 import com.tiger.ar.museum.presentation.RealMainActivity
 import com.tiger.ar.museum.presentation.favorite.collection.FavoriteCollectionsFragment
+import com.tiger.ar.museum.presentation.item.ItemFragment
 import com.tiger.ar.museum.presentation.storylist.StoryListFragment
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
@@ -30,11 +31,10 @@ class CollectionFragment : MuseumFragment<CollectionFragmentBinding>(R.layout.co
         super.onInitView()
         (museumActivity as RealMainActivity).apply {
             setBackIcon()
-            setTransparentActionBar()
         }
         initOnClick()
         initRecyclerView()
-        getCollectionData()
+        getData()
     }
 
     override fun onDestroy() {
@@ -56,7 +56,11 @@ class CollectionFragment : MuseumFragment<CollectionFragmentBinding>(R.layout.co
     private fun initRecyclerView() {
         adapter.listener = object : CollectionAdapter.IListener {
             override fun onItemClick(itemId: String?) {
-
+                addFragmentNew(
+                    ItemFragment(),
+                    bundleOf(ItemFragment.ITEM_ID_KEY to itemId),
+                    containerId = R.id.flRealMainContainer
+                )
             }
 
             override fun onStoryClick(storyId: String?) {
@@ -101,7 +105,7 @@ class CollectionFragment : MuseumFragment<CollectionFragmentBinding>(R.layout.co
         }
     }
 
-    private fun getCollectionData() {
+    private fun getData() {
         viewModel.getCollectionData(
             onSuccessAction = {
                 binding.cvCollection.submitList(viewModel.list)
@@ -110,5 +114,8 @@ class CollectionFragment : MuseumFragment<CollectionFragmentBinding>(R.layout.co
                 toast("Fail: $it")
             }
         )
+        viewModel.getItemsData {
+            binding.cvCollection.submitList(viewModel.list)
+        }
     }
 }

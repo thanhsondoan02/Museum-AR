@@ -102,6 +102,12 @@ dependencies {
 
     // zoom
     implementation 'com.otaliastudios:zoomlayout:1.9.0'
+
+    // flex box layout
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
+
+    // two way view
+    implementation 'org.lucasr.twowayview:twowayview:0.1.4'
 }
 
 kapt {

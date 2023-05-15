@@ -1,17 +1,64 @@
 package com.tiger.ar.museum.presentation.collection
 
+import android.graphics.drawable.Drawable
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.tiger.ar.museum.AppPreferences
 import com.tiger.ar.museum.common.BaseViewModel
+import com.tiger.ar.museum.common.extension.getApplication
 import com.tiger.ar.museum.domain.model.MCollection
 import com.tiger.ar.museum.domain.model.User
 
 class CollectionViewModel : BaseViewModel() {
     var collectionId: String? = null
     var list = mutableListOf<Any>()
+
+    var count = 0
+
+    fun getItemsData(onSuccessAction: () -> Unit) {
+        val db = Firebase.firestore
+        val storiesRef = db.collection("items").whereEqualTo("collectionId", collectionId)
+        storiesRef.get().addOnSuccessListener { storiesSnapshot ->
+            val items = storiesSnapshot.documents.mapNotNull {
+                it.toObject(CollectionItemAdapter.ItemsDisplay::class.java)?.apply { id = it.id }
+            }
+
+            count = items.size
+
+            items.forEach {
+                Glide.with(getApplication()).load(it.thumbnail).listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        updateCount()
+                        return false
+                    }
+
+                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                        if (resource != null) {
+                            it.ratio = resource.intrinsicWidth / resource.intrinsicHeight.toFloat()
+                        }
+                        updateCount()
+                        return false
+                    }
+
+                    private fun updateCount() {
+                        count--
+                        if (count == 0) {
+                            count = items.size
+                            list.add(CollectionAdapter.ItemsDisplay(collectionId, items))
+                            onSuccessAction.invoke()
+                        }
+                    }
+                }).submit()
+            }
+        }
+    }
 
     fun getCollectionData(onSuccessAction: () -> Unit, onFailureAction: (message: String) -> Unit) {
         if (collectionId == null) {
@@ -33,7 +80,6 @@ class CollectionViewModel : BaseViewModel() {
                     })
                     list.add(CollectionAdapter.DescriptionDisplay(collection.description))
                     list.add(CollectionAdapter.StoriesDisplay(collectionId))
-                    list.add(CollectionAdapter.ItemsDisplay(collectionId))
                     onSuccessAction.invoke()
                 } else {
                     onFailureAction.invoke("Collection is null")
