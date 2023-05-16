@@ -129,6 +129,25 @@ class AddDataViewModel : BaseViewModel() {
         }
     }
 
+    fun removeSameNameSV() {
+        // remove streetview that have same name firestore
+        val map = mutableMapOf<String, String>()
+        val db = Firebase.firestore
+        db.collection("home/md5P7vYwbF1E7BJzHnaM/streetViews")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    if (map.containsKey(document.data["name"].toString())) {
+                        db.collection("home/md5P7vYwbF1E7BJzHnaM/streetViews")
+                            .document(document.id)
+                            .delete()
+                    } else {
+                        map[document.data["name"].toString()] = document.id
+                    }
+                }
+            }
+    }
+
     private fun performAddToDatabase() {
         val db = Firebase.firestore
         val batch = db.batch()

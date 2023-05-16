@@ -9,4 +9,12 @@ data class ItemDetail(
 
     var description: String? = null
 
-) : MuseumModel()
+) : MuseumModel() {
+
+    // from Title: Jason to title = "Title:" and description = "Jason"
+    fun mapFrom(string: String) {
+        val split = string.split(":")
+        title = split[0] + ":"
+        description = split[1].trim()
+    }
+}

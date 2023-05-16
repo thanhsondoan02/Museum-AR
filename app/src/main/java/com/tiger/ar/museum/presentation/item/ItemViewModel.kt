@@ -25,6 +25,10 @@ class ItemViewModel : BaseViewModel() {
             itemRef.get().addOnSuccessListener { itemSnapshot ->
                 item = itemSnapshot.toObject(Item::class.java)?.apply { key = itemSnapshot.id }
 
+                if (item?.collectionId == null) {
+                    mapDataForAdapter(onSuccessAction)
+                }
+
                 val collectionRef = db.collection("collections").document(item?.collectionId!!)
                 collectionRef.get().addOnSuccessListener { collectionSnapshot ->
                     item?.collection = collectionSnapshot.toObject(MCollection::class.java)
