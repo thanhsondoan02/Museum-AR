@@ -31,7 +31,10 @@ class StoryFragment : MuseumFragment<StoryFragmentBinding>(R.layout.story_fragme
 
     override fun onResume() {
         super.onResume()
-        realMainActivity.expandAppBar()
+        realMainActivity.apply {
+            setSearchIcon()
+            expandAppBar()
+        }
     }
 
     override fun onInitView() {
