@@ -12,6 +12,7 @@ import com.tiger.ar.museum.presentation.collection.CollectionFragment
 import com.tiger.ar.museum.presentation.favorite.collection.FavoriteCollectionsFragment
 import com.tiger.ar.museum.presentation.favorite.item.ItemListFragment
 import com.tiger.ar.museum.presentation.item.ItemFragment
+import com.tiger.ar.museum.presentation.story.StoryFragment
 import com.tiger.ar.museum.presentation.storylist.StoryListFragment
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
@@ -97,7 +98,11 @@ class FavoriteMainFragment : MuseumFragment<FavoriteMainFragmentBinding>(R.layou
             }
 
             override fun onStoryClick(storyId: String?) {
-
+                addFragmentNew(
+                    StoryFragment(),
+                    bundleOf(StoryFragment.STORY_ID_KEY to storyId),
+                    containerId = R.id.flRealMainContainer
+                )
             }
 
             override fun onCollectionClick(collectionId: String?) {

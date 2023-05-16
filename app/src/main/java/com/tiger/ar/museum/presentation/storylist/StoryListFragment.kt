@@ -1,12 +1,13 @@
 package com.tiger.ar.museum.presentation.storylist
 
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumFragment
-import com.tiger.ar.museum.common.extension.toastUndeveloped
 import com.tiger.ar.museum.databinding.ItemListFragmentBinding
 import com.tiger.ar.museum.presentation.RealMainActivity
 import com.tiger.ar.museum.presentation.collection.CollectionFragment
+import com.tiger.ar.museum.presentation.story.StoryFragment
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
 class StoryListFragment : MuseumFragment<ItemListFragmentBinding>(R.layout.item_list_fragment) {
@@ -33,7 +34,11 @@ class StoryListFragment : MuseumFragment<ItemListFragmentBinding>(R.layout.item_
 
         adapter.listener = object : StoryListAdapter.IListener {
             override fun onStoryClick(storyId: String?) {
-                toastUndeveloped()
+                addFragmentNew(
+                    StoryFragment(),
+                    bundleOf(StoryFragment.STORY_ID_KEY to storyId),
+                    containerId = R.id.flRealMainContainer
+                )
             }
         }
 
