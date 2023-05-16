@@ -13,16 +13,9 @@ class AddDataActivity: MuseumActivity<AddDataActivityBinding>(R.layout.add_data_
         super.onInitView()
 
         binding.btnAddData.setOnSafeClick {
-//            viewModel.addData(
-//                onSuccessAction = {
-//                    toast("Success")
-//                },
-//                onFailureAction = {
-//                    toast(it)
-//                }
-//            )
+            viewModel.addData()
 
-//            viewModel.addStreetViewList()
+            viewModel.addStreetViewList()
 
             viewModel.addStoryList()
         }

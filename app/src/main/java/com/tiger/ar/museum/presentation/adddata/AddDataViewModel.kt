@@ -18,14 +18,14 @@ import java.io.InputStreamReader
 
 class AddDataViewModel : BaseViewModel() {
 
-    var itemList: List<Item> = listOf()
+    var itemList: MutableList<Item> = mutableListOf()
     var streetViewList: List<StreetView> = listOf()
     var storyList: List<Story> = listOf()
 
-    fun addData(onSuccessAction: () -> Unit, onFailureAction: (message: String) -> Unit) {
+    fun addData() {
         viewModelScope.launch {
             mapItemList()
-            performAddToDatabase(onSuccessAction, onFailureAction)
+            performAddToDatabase()
         }
     }
 
@@ -129,7 +129,7 @@ class AddDataViewModel : BaseViewModel() {
         }
     }
 
-    private fun performAddToDatabase(onSuccessAction: () -> Unit, onFailureAction: (message: String) -> Unit) {
+    private fun performAddToDatabase() {
         val db = Firebase.firestore
         val batch = db.batch()
 
@@ -139,14 +139,20 @@ class AddDataViewModel : BaseViewModel() {
         }
 
         batch.commit()
-            .addOnSuccessListener { onSuccessAction.invoke() }
-            .addOnFailureListener { onFailureAction.invoke(it.message ?: "Failure") }
+            .addOnSuccessListener { toast("Success") }
+            .addOnFailureListener { toast("Failure") }
     }
 
     private fun mapItemList() {
-        val inputStream = getApplication().resources.openRawResource(R.raw.data1)
+        val inputStream = getApplication().resources.openRawResource(R.raw.item_2)
         val reader = BufferedReader(InputStreamReader(inputStream))
         val json = reader.readText()
-        this.itemList = Gson().fromJson(json, Array<Item>::class.java).toList()
+        this.itemList = Gson().fromJson(json, Array<Item>::class.java).toMutableList()
+        itemList.removeIf {
+            it.thumbnail.isNullOrEmpty() || it.description.isNullOrEmpty() || it.name.isNullOrEmpty()
+        }
+        itemList.forEach {
+            it.collectionId = "aCziNZYzC09cCeqizUAv"
+        }
     }
 }
