@@ -22,7 +22,9 @@ class AddDataActivity: MuseumActivity<AddDataActivityBinding>(R.layout.add_data_
 //                }
 //            )
 
-            viewModel.addStreetViewList()
+//            viewModel.addStreetViewList()
+
+            viewModel.addStoryList()
         }
     }
 }
