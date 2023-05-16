@@ -9,6 +9,7 @@ import com.tiger.ar.museum.databinding.HomeFragmentBinding
 import com.tiger.ar.museum.domain.model.StreetView
 import com.tiger.ar.museum.presentation.collection.CollectionFragment
 import com.tiger.ar.museum.presentation.collection.all.CollectionsFragment
+import com.tiger.ar.museum.presentation.item.ItemFragment
 import com.tiger.ar.museum.presentation.streetview.item.StreetViewFragment
 import com.tiger.ar.museum.presentation.streetview.list.AllStreetViewFragment
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
@@ -58,6 +59,14 @@ class HomeFragment : MuseumFragment<HomeFragmentBinding>(R.layout.home_fragment)
                 museumActivity.addFragmentNew(
                     CollectionFragment(),
                     bundleOf(CollectionFragment.COLLECTION_ID_KEY to collectionId),
+                    containerId = R.id.flRealMainContainer
+                )
+            }
+
+            override fun onItemClick(itemId: String?) {
+                museumActivity.addFragmentNew(
+                    ItemFragment(),
+                    bundleOf(ItemFragment.ITEM_ID_KEY to itemId),
                     containerId = R.id.flRealMainContainer
                 )
             }

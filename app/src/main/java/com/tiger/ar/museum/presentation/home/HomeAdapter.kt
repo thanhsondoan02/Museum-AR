@@ -1,21 +1,25 @@
 package com.tiger.ar.museum.presentation.home
 
+import android.annotation.SuppressLint
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.extension.loadImage
 import com.tiger.ar.museum.common.extension.setOnSafeClick
 import com.tiger.ar.museum.common.recycleview.BaseVH
 import com.tiger.ar.museum.common.recycleview.MuseumAdapter
 import com.tiger.ar.museum.databinding.HomeCollectionItemBinding
+import com.tiger.ar.museum.databinding.HomeItemYouMayLikeItemBinding
 import com.tiger.ar.museum.databinding.HomeStreetViewItemBinding
 import com.tiger.ar.museum.domain.model.MCollection
 import com.tiger.ar.museum.domain.model.StreetView
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
-class HomeAdapter: MuseumAdapter() {
+class HomeAdapter : MuseumAdapter() {
     companion object {
         const val STREET_VIEW_TYPE = 1410
         const val COLLECTION_TYPE = 1411
+        const val ITEM_YOU_MAY_LIKE_TYPE = 1412
     }
 
     var listener: IListener? = null
@@ -24,6 +28,7 @@ class HomeAdapter: MuseumAdapter() {
         return when (getDataAtPosition(position)) {
             is StreetViewDisplay -> STREET_VIEW_TYPE
             is CollectionDisplay -> COLLECTION_TYPE
+            is ItemYouMayLikeDisplay -> ITEM_YOU_MAY_LIKE_TYPE
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
@@ -32,6 +37,7 @@ class HomeAdapter: MuseumAdapter() {
         return when (viewType) {
             STREET_VIEW_TYPE -> R.layout.home_street_view_item
             COLLECTION_TYPE -> R.layout.home_collection_item
+            ITEM_YOU_MAY_LIKE_TYPE -> R.layout.home_item_you_may_like_item
             else -> throw IllegalArgumentException("getLayoutResource: viewType is invalid")
         }
     }
@@ -40,6 +46,7 @@ class HomeAdapter: MuseumAdapter() {
         return when (viewType) {
             STREET_VIEW_TYPE -> StreetViewListVH(binding as HomeStreetViewItemBinding)
             COLLECTION_TYPE -> CollectionListVH(binding as HomeCollectionItemBinding)
+            ITEM_YOU_MAY_LIKE_TYPE -> ItemYouMayLikeVH(binding as HomeItemYouMayLikeItemBinding)
             else -> throw IllegalArgumentException("onCreateViewHolder: viewType is invalid")
         }
     }
@@ -108,6 +115,28 @@ class HomeAdapter: MuseumAdapter() {
         }
     }
 
+    inner class ItemYouMayLikeVH(private val binding: HomeItemYouMayLikeItemBinding) : BaseVH<ItemYouMayLikeDisplay>(binding) {
+        private val adapter by lazy { ItemYouMayLikeAdapter() }
+
+        init {
+            adapter.listener = object : ItemYouMayLikeAdapter.IListener {
+                override fun onItemClick(itemId: String?) {
+                    listener?.onItemClick(itemId)
+                }
+            }
+
+            binding.rvCollectionsStories.apply {
+                adapter = this@ItemYouMayLikeVH.adapter
+                layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL)
+            }
+        }
+
+        @SuppressLint("SetTextI18n")
+        override fun onBind(data: ItemYouMayLikeDisplay) {
+            adapter.submitList(data.items)
+        }
+    }
+
     class StreetViewDisplay {
         var streetViews: List<StreetView>? = null
     }
@@ -116,10 +145,15 @@ class HomeAdapter: MuseumAdapter() {
         var collections: List<MCollection>? = null
     }
 
+    class ItemYouMayLikeDisplay {
+        var items: List<ItemYouMayLikeAdapter.ItemsDisplay>? = null
+    }
+
     interface IListener {
         fun onStreetViewClick(streetView: StreetView)
         fun onViewAllStreetViewClick()
         fun onViewAllCollections()
         fun onCollectionClick(collectionId: String?)
+        fun onItemClick(itemId: String?)
     }
 }

@@ -98,7 +98,7 @@ open class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_frag
 
             override fun onLikeClick() {
                 viewModel.likeUpdate(
-                    true,
+                    false,
                     onSuccessAction = {
                         binding.cvItemBackDrop.submitList(viewModel.getDataList())
                         realMainActivity.reloadFavorite()
@@ -111,7 +111,7 @@ open class ItemFragment : MuseumFragment<ItemFragmentBinding>(R.layout.item_frag
 
             override fun onDislikeClick() {
                 viewModel.likeUpdate(
-                    false,
+                    true,
                     onSuccessAction = {
                         binding.cvItemBackDrop.submitList(viewModel.getDataList())
                         (museumActivity as RealMainActivity).reloadFavorite()

@@ -6,7 +6,7 @@ import com.google.firebase.ktx.Firebase
 import com.tiger.ar.museum.AppPreferences
 import com.tiger.ar.museum.domain.model.User
 
-fun updateLikeItem(isLike: Boolean, itemId: String?, onSuccessAction: () -> Unit, onFailureAction: (message: String) -> Unit) {
+fun updateLikeItem(currentIsLike: Boolean, itemId: String?, onSuccessAction: () -> Unit, onFailureAction: (message: String) -> Unit) {
     if (itemId == null) {
         onFailureAction.invoke("Item key is null")
         return
@@ -14,10 +14,10 @@ fun updateLikeItem(isLike: Boolean, itemId: String?, onSuccessAction: () -> Unit
 
     val userRef = Firebase.firestore.collection("users").document(AppPreferences.getUserId())
 
-    val updateLikeTask = if (isLike) {
-        userRef.update("fitems", FieldValue.arrayUnion(itemId))
-    } else {
+    val updateLikeTask = if (currentIsLike) {
         userRef.update("fitems", FieldValue.arrayRemove(itemId))
+    } else {
+        userRef.update("fitems", FieldValue.arrayUnion(itemId))
     }
 
     updateLikeTask.addOnSuccessListener {
