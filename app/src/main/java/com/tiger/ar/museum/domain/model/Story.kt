@@ -1,5 +1,6 @@
 package com.tiger.ar.museum.domain.model
 
+import com.tiger.ar.museum.AppPreferences
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -13,9 +14,23 @@ data class Story(
 
     var collectionId: String? = null,
 
-    var pages: List<Page>? = null
+    var pages: List<Page>? = null,
 
-) : MuseumModel()
+    @Deprecated("Use fun safeIsLiked() key instead")
+    var isLiked: Boolean? = null
+
+) : MuseumModel() {
+    fun safeIsLiked(): Boolean {
+        if (isLiked == null) {
+            mapIsLiked()
+        }
+        return isLiked ?: false
+    }
+
+    fun mapIsLiked() {
+        isLiked = AppPreferences.getUserInfo().fstories?.contains(key) ?: false
+    }
+}
 
 @Parcelize
 data class Page(
