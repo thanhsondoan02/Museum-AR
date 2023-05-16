@@ -49,7 +49,11 @@ class ExploreFragment : MuseumFragment<ExploreFragmentBinding>(R.layout.explore_
             }
 
             override fun onBuyTicket(exhibition: Exhibition) {
-
+                if (exhibition.ticketLink.isNullOrBlank()) {
+                    toast(getAppString(R.string.no_ticket_link))
+                } else {
+                    realMainActivity.goToLink(exhibition.ticketLink!!)
+                }
             }
 
             override fun onZoomItem(item: Item) {

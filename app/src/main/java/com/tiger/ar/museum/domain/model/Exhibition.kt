@@ -5,7 +5,7 @@ import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.extension.getAppString
 import kotlinx.parcelize.Parcelize
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 @Parcelize
 data class Exhibition(
@@ -22,7 +22,9 @@ data class Exhibition(
 
     var startTime: Timestamp? = null,
 
-    var endTime: Timestamp? = null
+    var endTime: Timestamp? = null,
+
+    var ticketLink: String? = null
 
 ) : MuseumModel() {
     fun getMuseumInfo(): String {

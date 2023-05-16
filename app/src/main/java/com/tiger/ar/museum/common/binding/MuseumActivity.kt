@@ -1,6 +1,7 @@
 package com.tiger.ar.museum.common.binding
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.ViewCompat
@@ -75,5 +76,11 @@ abstract class MuseumActivity<DB : ViewDataBinding>(layoutId: Int) : BaseBinding
 
     fun hasFragment(clazz: Class<out BaseFragment>): Boolean {
         return supportFragmentManager.fragments.any { it::class.java == clazz }
+    }
+
+    fun goToLink(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(url)
+        startActivity(intent)
     }
 }

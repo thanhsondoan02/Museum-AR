@@ -117,4 +117,5 @@
     <string name="no_download_available">Bạn chưa tải xuống mô hình nào.</string>
     <string name="read_less">Rút gọn</string>
     <string name="recommended_for_you">Các mục gợi ý dành cho bạn</string>
+    <string name="no_ticket_link">Không tìm thấy đường dẫn</string>
 </resources>
