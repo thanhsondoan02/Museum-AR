@@ -204,8 +204,10 @@ class ItemAdapter : MuseumAdapter() {
                 binding.tvItemDescription.apply {
                     if (maxLines == 3) {
                         maxLines = Integer.MAX_VALUE
+                        binding.tvItemDescriptionReadMore.text = getApplication().getString(R.string.read_less)
                     } else {
                         maxLines = 3
+                        binding.tvItemDescriptionReadMore.text = getApplication().getString(R.string.read_more)
                     }
                 }
             }
