@@ -6,6 +6,7 @@ import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumFragment
 import com.tiger.ar.museum.common.extension.getAppString
 import com.tiger.ar.museum.common.extension.toast
+import com.tiger.ar.museum.common.extension.toastUndeveloped
 import com.tiger.ar.museum.databinding.FavoriteMainFragmentBinding
 import com.tiger.ar.museum.domain.model.Gallery
 import com.tiger.ar.museum.presentation.collection.CollectionFragment
@@ -48,13 +49,14 @@ class FavoriteMainFragment : MuseumFragment<FavoriteMainFragmentBinding>(R.layou
     private fun initRecyclerView() {
         adapter.listener = object : FavoriteAdapter.IListener {
             override fun onFavoriteTab() {
-                viewModel.isFavorite = true
-                binding.cvFavoriteMain.submitList(viewModel.getShortListFavorite())
+//                viewModel.isFavorite = true
+//                binding.cvFavoriteMain.submitList(viewModel.getShortListFavorite())
             }
 
             override fun onGalleriesTab() {
-                viewModel.isFavorite = false
-                binding.cvFavoriteMain.submitList(viewModel.getShortListGallery())
+//                viewModel.isFavorite = false
+//                binding.cvFavoriteMain.submitList(viewModel.getShortListGallery())
+                toastUndeveloped()
             }
 
             override fun onViewAllItem() {

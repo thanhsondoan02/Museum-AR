@@ -40,7 +40,7 @@
             android:layout_gravity="center"
             android:layout_marginHorizontal="@dimen/dimen_46"
             android:layout_marginBottom="28dp"
-            android:background="@drawable/shape_rectangle_gray_bg_corner_30"
+            android:background="@drawable/shape_rectangle_white_bg_corner_30"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/dimen_46">
@@ -50,37 +50,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
-                android:fontFamily="@font/roboto_medium"
-                android:textColor="@color/gray"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/main_black"
                 android:textSize="@dimen/dimen_text_size_16"
                 tools:text="@string/current_exhibition" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/dimen_16"
+                app:cardCornerRadius="@dimen/dimen_corner_10"
                 android:layout_marginTop="@dimen/dimen_20">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/ivExploreExhibitionThumb"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_width="@dimen/dimen_200"
+                    android:layout_height="@dimen/dimen_200"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    app:layout_constraintDimensionRatio="H, 1:1"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:shapeAppearanceOverlay="@style/CircleImageViewCorner16"
                     tools:src="@drawable/bg_login" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
+            </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:id="@+id/tvExploreExhibitionName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
-                android:fontFamily="@font/roboto_medium"
+                android:fontFamily="@font/roboto_bold"
                 android:gravity="center"
                 android:textColor="@color/main_black"
                 android:textSize="@dimen/dimen_text_size_20"
@@ -91,8 +87,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
-                android:fontFamily="@font/roboto_medium"
-                android:textColor="@color/gray"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/main_black"
                 android:textSize="@dimen/dimen_text_size_16"
                 tools:text="From May 4, 2023 to Aug 13, 2023" />
 
@@ -104,29 +100,31 @@
                 android:fontFamily="@font/roboto_medium"
                 android:gravity="center"
                 android:textColor="@color/main_black"
-                android:textSize="@dimen/dimen_text_size_14"
+                android:textSize="@dimen/dimen_text_size_16"
                 tools:text="The British Museum\nUnited Kingdom" />
 
-            <FrameLayout
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/flExploreExhibitionBuyTicket"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_30"
                 android:layout_marginBottom="@dimen/dimen_30"
-                android:background="?android:selectableItemBackground">
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/dimen_corner_30"
+                app:strokeColor="@color/blue"
+                app:strokeWidth="@dimen/dimen_1">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/shape_rectangle_white_bg_blue_stroke2_corner_8"
                     android:fontFamily="@font/roboto_medium"
                     android:gravity="center"
                     android:paddingVertical="@dimen/dimen_10"
                     android:text="@string/buy_tickets"
                     android:textColor="@color/blue"
-                    android:textSize="@dimen/dimen_text_size_12" />
+                    android:textSize="@dimen/dimen_text_size_16" />
 
-            </FrameLayout>
+            </com.google.android.material.card.MaterialCardView>
 
 
         </LinearLayout>
