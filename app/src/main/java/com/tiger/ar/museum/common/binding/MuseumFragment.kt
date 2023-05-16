@@ -19,12 +19,16 @@ abstract class MuseumFragment<DB : ViewDataBinding>(layoutId: Int) : BaseBinding
 
     override fun onDestroy() {
         super.onDestroy()
-        setActionBarSearchIcon()
+        if (museumActivity is RealMainActivity) {
+            setActionBarSearchIcon()
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        setActionBarColor()
+        if (museumActivity is RealMainActivity) {
+            setActionBarColor()
+        }
     }
 
     protected fun replaceFragmentNew(

@@ -20,7 +20,7 @@ import com.tiger.ar.museum.common.extension.toast
 import com.tiger.ar.museum.databinding.LoginFragment2Binding
 import com.tiger.ar.museum.domain.model.User
 import com.tiger.ar.museum.presentation.RealMainActivity
-import com.tiger.ar.museum.presentation.dialog.LoadingDialog
+import com.tiger.ar.museum.presentation.dialog.LoadingDialog2
 
 class LoginActivity : MuseumActivity<LoginFragment2Binding>(R.layout.login_fragment_2) {
 
@@ -49,7 +49,7 @@ class LoginActivity : MuseumActivity<LoginFragment2Binding>(R.layout.login_fragm
     }
 
     private fun newLogin() {
-        val dialog = LoadingDialog()
+        val dialog = LoadingDialog2()
         dialog.show(supportFragmentManager, dialog::class.java.simpleName)
 
         val email = binding.etvLoginEmail.text.toString()
@@ -83,7 +83,7 @@ class LoginActivity : MuseumActivity<LoginFragment2Binding>(R.layout.login_fragm
     }
 
     private fun login() {
-        val dialog = LoadingDialog()
+        val dialog = LoadingDialog2()
         dialog.show(supportFragmentManager, dialog::class.java.simpleName)
 
         val email = binding.etvLoginEmail.text.toString()

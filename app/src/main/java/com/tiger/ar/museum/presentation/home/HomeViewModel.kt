@@ -45,10 +45,17 @@ class HomeViewModel : BaseViewModel() {
                 .orderBy(FieldPath.documentId())
                 .limit(5).get()
 
-            val itemRef = Firebase.firestore
-                .collection("items")
-                .whereNotIn(FieldPath.documentId(), AppPreferences.getUserInfo().fitems ?: emptyList())
-                .limit(10).get()
+            val fitems = AppPreferences.getUserInfo().fitems ?: emptyList()
+            val itemRef = if (fitems.isNotEmpty()) {
+                Firebase.firestore
+                    .collection("items")
+                    .whereNotIn(FieldPath.documentId(), AppPreferences.getUserInfo().fitems ?: emptyList())
+                    .limit(10).get()
+            } else {
+                Firebase.firestore
+                    .collection("items")
+                    .limit(10).get()
+            }
 
             listTask.add(streetViewRef)
             listTask.add(collectionRef)

@@ -16,7 +16,7 @@ import com.tiger.ar.museum.common.extension.toast
 import com.tiger.ar.museum.databinding.SignUpActivityBinding
 import com.tiger.ar.museum.domain.model.User
 import com.tiger.ar.museum.presentation.RealMainActivity
-import com.tiger.ar.museum.presentation.dialog.LoadingDialog
+import com.tiger.ar.museum.presentation.dialog.LoadingDialog2
 
 
 class SignUpActivity : MuseumActivity<SignUpActivityBinding>(R.layout.sign_up_activity) {
@@ -92,31 +92,31 @@ class SignUpActivity : MuseumActivity<SignUpActivityBinding>(R.layout.sign_up_ac
         }
 
         // show loading dialog
-        val loadingDialog = LoadingDialog()
-        loadingDialog.show(supportFragmentManager, loadingDialog::class.java.simpleName)
+        val LoadingDialog2 = LoadingDialog2()
+        LoadingDialog2.show(supportFragmentManager, LoadingDialog2::class.java.simpleName)
 
         // check if email is already registered
         val userRef = Firebase.firestore.collection("users")
         userRef.whereEqualTo("email", email).get()
             .addOnSuccessListener { snapshot ->
                 if (snapshot.documents.isNotEmpty()) {
-                    loadingDialog.dismiss()
+                    LoadingDialog2.dismiss()
                     toast(getAppString(R.string.account_exist))
                 } else {
-                    addUserToDatabase(User(email = email, password = password), loadingDialog)
+                    addUserToDatabase(User(email = email, password = password), LoadingDialog2)
                 }
             }
             .addOnFailureListener {
-                loadingDialog.dismiss()
+                LoadingDialog2.dismiss()
                 toast(getAppString(R.string.sign_up_fail) + ": ${it.message}")
             }
     }
 
-    private fun addUserToDatabase(user: User, dialog: LoadingDialog) {
+    private fun addUserToDatabase(user: User, dialog: LoadingDialog2) {
         val ref = Firebase.firestore.collection("users")
         ref.add(user)
             .addOnSuccessListener {
-                actionOnSuccess(user, dialog)
+                actionOnSuccess(user.apply { key = it.id }, dialog)
             }
             .addOnFailureListener {
                 actionOnFailure(dialog, it.message ?: "")
@@ -128,7 +128,7 @@ class SignUpActivity : MuseumActivity<SignUpActivityBinding>(R.layout.sign_up_ac
         AppPreferences.saveLoginInfo()
     }
 
-    private fun actionOnSuccess(user: User, dialog: LoadingDialog) {
+    private fun actionOnSuccess(user: User, dialog: LoadingDialog2) {
         dialog.dismiss()
         toast(getAppString(R.string.sign_up_success))
         setAppPreference(user)
@@ -136,7 +136,7 @@ class SignUpActivity : MuseumActivity<SignUpActivityBinding>(R.layout.sign_up_ac
     }
 
 
-    private fun actionOnFailure(dialog: LoadingDialog, message: String = "") {
+    private fun actionOnFailure(dialog: LoadingDialog2, message: String = "") {
         dialog.dismiss()
         toast(getAppString(R.string.sign_up_fail) + ": $message")
     }
