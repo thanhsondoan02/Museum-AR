@@ -116,5 +116,5 @@
     <string name="confirm_delete_desc2"> khỏi bộ nhớ thiết bị?</string>
     <string name="no_download_available">Bạn chưa tải xuống mô hình nào.</string>
     <string name="read_less">Rút gọn</string>
-    <string name="recommended_for_you">Các mục gợi ý cho bạn</string>
+    <string name="recommended_for_you">Các mục gợi ý dành cho bạn</string>
 </resources>

@@ -156,10 +156,11 @@ open class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.r
 
     private fun initOnClick() {
         binding.ivRealMainCast.setOnSafeClick {
-
+            toastUndeveloped()
         }
 
         binding.ivRealMainSearch.setOnSafeClick {
+            toastUndeveloped()
         }
 
         binding.ivRealMainProfile.setOnSafeClick {
