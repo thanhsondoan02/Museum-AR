@@ -19,10 +19,19 @@ const AddItem = () => {
     const payload = new FormData();
 
     payload.append('file', file);
+    payload.append('requests', JSON.stringify({
+      name: name,
+      creatorName: creatorName,
+      description: description,
+      time: time,
+      collectionId: collectionId,
+      collection: collection,
+      thumbnail: thumbnail
+    }));
 
     // Send the payload to the backend API
     // Replace the URL with your actual API endpoint
-    console.log('file', file)
+    console.log(payload)
     Axios.post(`http://localhost:3001/items/add/`, payload, { withCredentials: true, headers: { "Content-Type": "multipart/form-data" } })
       .then((response) => response.json())
       .then((data) => {

@@ -22,7 +22,12 @@ module.exports = function (app, db, storage) {
         }
         var model = req.file;
         var model_id = model.filename + ".glb";
-        var item = JSON.parse(req.body.requests);
+        try {
+            var item = JSON.parse(req.body.requests);
+        } catch (e) {
+            res.send({ status: "error", message: "No payload" });
+            return;
+        }
         try {
             const bucket = storage.bucket(STORAGE_LINK);
             const data = await bucket.upload(model.path, {
