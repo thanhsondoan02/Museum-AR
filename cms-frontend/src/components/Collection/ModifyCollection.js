@@ -10,8 +10,11 @@ function ModifyCollection () {
   const [icon, setIcon] = useState('');
   const [thumbnail, setThumbnail] = useState('');
   const navigate = useNavigate();
-  const [selectedNameId, setSelectedNameId] = useState('');
+
   const [list_data, setJsonData] = useState([]);
+  const [selectedNameId, setSelectedNameId] = useState('');
+  const extractedNames = list_data.map((item) => item.name);
+  
 
   useEffect(() => {
     // Make API call to fetch data
@@ -26,7 +29,6 @@ function ModifyCollection () {
       .catch(error => console.log(error));
   }, []);
 
-  const extractedNames = list_data.map((item) => item.name);
 
   const handleModifySubmit = (e) => {
     e.preventDefault();
@@ -69,7 +71,9 @@ function ModifyCollection () {
     const selectedName = e.target.value;
     setCollectionName(selectedName);
     const selectedOption = list_data.find((item) => item.name === selectedName);
+    console.log(selectedOption.id);
     setSelectedNameId(selectedOption.id);
+
   }
 
 

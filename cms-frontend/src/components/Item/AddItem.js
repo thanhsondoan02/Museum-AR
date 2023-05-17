@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { NavigationBar } from '../../components';
 import Axios from "axios"
@@ -12,7 +12,26 @@ const AddItem = () => {
   const [collection, setCollectionName] = useState('');
   const [thumbnail, setThumbnail] = useState('');
   const [file, setSelectedFile] = useState(null);
+
   const navigate = useNavigate();
+  const [selectedNameId, setSelectedNameId] = useState('');
+  const [list_data, setJsonData] = useState([]);
+
+  useEffect(() => {
+    // Make API call to fetch data
+    // Replace the API_URL with your actual API endpoint
+  fetch('http://localhost:3001/collections/list')
+  .then(response => response.json())
+  .then(list_data => { 
+          setJsonData(list_data.message);
+      
+          console.log(list_data.message); 
+      })
+  .catch(error => console.log(error));
+  }, []);
+
+  const extractedNames = list_data.map((item) => item.name);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     
@@ -53,67 +72,68 @@ const AddItem = () => {
     
   };
 
+  const handleNameChange = (e) => {
+      const selectedName = e.target.value;
+      setCollectionName(selectedName);
+      const selectedOption = list_data.find((item) => item.name === selectedName);
+      setCollectionId(selectedOption.id);
+      console.log(collectionId)
+  }
+
+
   return (
     <div>
         <NavigationBar />
-    <Container className="d-flex justify-content-center">
-      <div className="w-50">
-        <h1></h1>
-        <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="name">
+        <Container className="d-flex justify-content-center">
+          <div className="w-50">
+            
+            <Form onSubmit={handleSubmit} className="mt-3">
+              <Form.Group controlId="name">
                 <Form.Label>Item Name:</Form.Label>
                 <Form.Control 
                     type="text"
                     value={name}
                     onChange={(e) => setItemName(e.target.value)}
                 />
-            </Form.Group>
+              </Form.Group>
 
-            <Form.Group controlId="creatorName">
-                <Form.Label>Creator Name:</Form.Label>
-                <Form.Control
-                    type="text"
-                    value={creatorName}
-                    onChange={(e) => setCreatorName(e.target.value)}
-                />
-            </Form.Group>
+              <Form.Group controlId="creatorName">
+                  <Form.Label>Creator Name:</Form.Label>
+                  <Form.Control
+                      type="text"
+                      value={creatorName}
+                      onChange={(e) => setCreatorName(e.target.value)}
+                  />
+              </Form.Group>
 
-            <Form.Group controlId="description">
-                <Form.Label>Description:</Form.Label>
-                <Form.Control
-                    type="text"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                />
+              <Form.Group controlId="description">
+                  <Form.Label>Description:</Form.Label>
+                  <Form.Control
+                      type="text"
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                  />
+              </Form.Group>
+              
+            <Form.Group>
+              <Form.Label>Collection Name:</Form.Label>
+              <Form.Control as="select" onChange={handleNameChange}>
+                {extractedNames.map((name) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </Form.Control>
             </Form.Group>
-
-            <Form.Group controlId="collectionId">
-                <Form.Label>Collection ID:</Form.Label>
-                <Form.Control
-                    type="text"
-                    value={collectionId}
-                    onChange={(e) => setCollectionId(e.target.value)}
-                />
-            </Form.Group>
-
-            <Form.Group controlId="collection">
-                <Form.Label>Collection Name:</Form.Label>
-                <Form.Control
-                    type="text"
-                    value={collection}
-                    onChange={(e) => setCollectionName(e.target.value)}
-                />
-            </Form.Group>
-
+            
             <Form.Group controlId="time">
-                <Form.Label>Date Created:</Form.Label>
-                <Form.Control
-                    type="text"
-                    value={time}
-                    onChange={(e) => setDateCreated(e.target.value)}
-                />
+            <Form.Label>Date Created:</Form.Label>
+            <Form.Control
+              type="text"
+              value={time}
+              onChange={(e) => setDateCreated(e.target.value)}
+            />
             </Form.Group>
-
 
             <Form.Group controlId="thumbnail">
             <Form.Label>Thumbnail:</Form.Label>
@@ -123,19 +143,21 @@ const AddItem = () => {
               onChange={(e) => setThumbnail(e.target.value)}
             />
             </Form.Group>
+            
             <Form.Group controlId="file">
-                <Form.Label>File:</Form.Label>
-                <Form.Control type="file" onChange={handleFileChange} />
+            <Form.Label>File:</Form.Label>
+            <Form.Control
+              type="file"
+              onChange={handleFileChange}
+            />
             </Form.Group>
-            <Button variant="primary" type="submit" className='mt-3'>
+
+            <Button variant="dark" type="submit" className='mt-3' onClick={handleSubmit}>
                 Add Item
             </Button>
-            <Button variant="primary" type="submit" className='mt-3 ms-3'>
-                Modify Item
-            </Button>
-        </Form>
-      </div>
-    </Container>
+          </Form>
+          </div>
+        </Container>
     </div>
     
   );

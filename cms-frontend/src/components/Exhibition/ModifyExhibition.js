@@ -117,7 +117,7 @@ function ModifyExhibition () {
             </Form.Group>
 
             <Button variant="dark" type="submit" className='mt-3' onClick={handleModifySubmit}>
-                Modify Collection
+                Modify Exhibition
             </Button>
             </Form>
           </div>

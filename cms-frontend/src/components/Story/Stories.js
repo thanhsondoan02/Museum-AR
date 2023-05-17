@@ -16,7 +16,7 @@ function Stories () {
     return (
         <div >
             <NavigationBar />
-            <ButtonEvent />
+            <ButtonEvent param={'story'}/>
             <StoryTable />
         </div>
     );
