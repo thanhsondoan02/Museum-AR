@@ -2,7 +2,13 @@ module.exports = function (app, db, storage) {
     app.get('/collections/list', async (req, res) => {
         try {
             var list = await db.collection('collections').get();
-            res.send({ status: "success", message: list.docs.map(doc => doc.data()) });
+            res.send({
+                status: "success", message: list.docs.map(doc => {
+                    var item = doc.data();
+                    item.id = doc.id;
+                    return item;
+                })
+            });
         } catch (e) {
             res.send({ status: "error", message: e });
         }
