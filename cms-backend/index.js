@@ -7,8 +7,8 @@ const bodyParser = require("body-parser")
 const app = express();
 const port = process.env.PORT || 3001;
 
-app.use(bodyParser.json({ limit: '2048mb' }))
-app.use(bodyParser.urlencoded({ limit: '2048mb', extended: true, parameterLimit: 2048000 }))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: false}))
 
 require('./api/items.js')(app, db, storage);
 require('./api/collections.js')(app, db, storage);
