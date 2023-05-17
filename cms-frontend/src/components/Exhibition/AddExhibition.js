@@ -8,9 +8,10 @@ const AddExhibition = () => {
   const [place, setPlace] = useState('');
   const [thumbnail, setThumbnail] = useState('');
   const navigate = useNavigate();
+  const [data, setJsonData] = useState([]);
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    
     // Create the payload to send to the backend API
     const payload = {
       name,
@@ -18,7 +19,18 @@ const AddExhibition = () => {
       place,
       thumbnail,
     };
-
+    const fetchData = () => {
+      // Fetch data from the backend API to populate the table
+      // Replace the URL with your actual API endpoint
+      fetch('http://localhost:3001/exhibitions/list')
+        .then(response => response.json())
+        .then(data => { 
+              setJsonData(data.message);
+          
+              console.log(data.message); 
+          })
+        .catch(error => console.log(error));
+    };
     // Send the payload to the backend API
     // Replace the URL with your actual API endpoint
     fetch('http://localhost:3001/exhibitions/add', {
@@ -32,6 +44,7 @@ const AddExhibition = () => {
       .then((data) => {
         // Handle the response from the API
         console.log('API response:', data);
+        fetchData();
       })
       .catch((error) => {
         // Handle any errors that occurred during the API call
@@ -83,12 +96,10 @@ const AddExhibition = () => {
             />
             </Form.Group>
             
-            <Button variant="primary" type="submit" className='mt-3' onClick={handleSubmit}>
+            <Button variant="dark" type="submit" className='mt-3' onClick={handleSubmit}>
                 Add Exhibition
             </Button>
-            <Button variant="primary" type="submit" className='mt-3 ms-3'>
-                Modify Exhibition
-            </Button>
+
         </Form>
       </div>
     </Container>

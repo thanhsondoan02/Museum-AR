@@ -12,9 +12,11 @@ import { StoryTable } from './Story/StoryTable.js';
 import { AddItem } from './Item/AddItem.js';
 import { AddCollection } from './Collection/AddCollection.js';
 import { AddExhibition } from './Exhibition/AddExhibition.js';
-import { DelCollection } from './Collection/DelCollection.js';
+import { ModifyCollection } from './Collection/ModifyCollection.js';
 import { DelItem } from './Item/DelItem.js';
 import { DelExhibition } from './Exhibition/DelExhibition.js';
+import { ModifyExhibition} from './Exhibition/ModifyExhibition.js';
 export { NavigationBar, ButtonEvent, ItemTable, Auth, Items, Exhibitions, 
 Collections, ExhibitionTable, CollectionTable, Stories, StoryTable, AddItem,
-AddCollection, AddExhibition, DelCollection, DelItem, DelExhibition};
+AddCollection, AddExhibition, ModifyCollection, DelItem, DelExhibition,
+ModifyExhibition};

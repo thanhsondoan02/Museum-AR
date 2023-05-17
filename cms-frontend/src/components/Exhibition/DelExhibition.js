@@ -31,6 +31,8 @@ const DelExhibition = () => {
         // Handle any errors that occurred during the API call
         console.error('API error:', error);
       });
+
+      
   };
 
   return (

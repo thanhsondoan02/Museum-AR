@@ -1,7 +1,8 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./App.css"
 
-import { Auth, Items, Exhibitions, Collections, Stories, AddItem, AddCollection, AddExhibition, DelCollection, DelExhibition, DelItem } from "./components"
+import { Auth, Items, Exhibitions, Collections, Stories, AddItem, AddCollection,
+AddExhibition, ModifyCollection, DelExhibition, DelItem, ModifyExhibition} from "./components"
 
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
@@ -9,7 +10,6 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<App />} />
         <Route path="/login" element={<Auth />} />
         <Route path="/items" element={<Items />} />
         <Route path="/exhibitions" element={<Exhibitions />} />
@@ -21,7 +21,8 @@ function App() {
         <Route path="/items/delete" element={<DelItem />} />
         
         <Route path="/exhibitions/delete" element={<DelExhibition />} />
-        <Route path="/collections/delete" element={<DelCollection />} />
+        <Route path="/collections/modify" element={<ModifyCollection />} />
+        <Route path="/exhibitions/modify" element={<ModifyExhibition />} />
       </Routes>
     </BrowserRouter>
   )

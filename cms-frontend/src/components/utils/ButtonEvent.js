@@ -36,26 +36,27 @@ const ButtonEvent = ({ param }) => {
     };
 
 
-    // const handleModifyClick = () => {
-    //     if (param === 'item') {
-    //         console.log("hehe");
-    //         navigate('/items/modify');
-    //     }
-    //     else if (param === 'collection') {
-    //         navigate('/collections/modify');
-    //     }
-    //     else if (param === 'exhibition') {
-    //         navigate('/exhibitions/modify');
-    //     }
-    //     else if (param === 'story') {
-    //         navigate('/stories/modify');
-    //     }
-    // };
+    const handleModifyClick = () => {
+        if (param === 'item') {
+            console.log("hehe");
+            navigate('/items/modify');
+        }
+        else if (param === 'collection') {
+            navigate('/collections/modify');
+        }
+        else if (param === 'exhibition') {
+            navigate('/exhibitions/modify');
+        }
+        else if (param === 'story') {
+            navigate('/stories/modify');
+        }
+    };
 
     return (
         <Container style={containerStyles}>
-        {/* <Button onClick={handleModifyClick} variant="dark" style={buttonStyles}>Modify</Button> */}
-        <Button onClick={handleAddClick} variant="dark" style={buttonStyles}>Add & Modify</Button>
+        <Button onClick={handleAddClick} variant="dark" style={buttonStyles}>Add</Button>
+        <Button onClick={handleModifyClick} variant="dark" style={buttonStyles}>Modify</Button>
+        
         
         </Container>
     );

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 
 function StoryTable () {
     const [data, setJsonData] = useState([]);
@@ -51,7 +51,9 @@ function StoryTable () {
                       <img style={{ width: 300, height: 250 }} src={item.thumbnail} alt="Non Thumbnail" />
                       </td>
                       <td>
-                          <button onClick={() => handleDelete(index, item)}>Delete</button>
+                        <Button variant="dark" onClick={() => handleDelete(item.id)}>
+                          Delete
+                        </Button>
                       </td>
                       
                   </tr>))

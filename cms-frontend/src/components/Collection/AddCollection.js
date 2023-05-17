@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { NavigationBar } from '..';
 import { useNavigate } from 'react-router-dom';
+
 const AddCollection = () => {
+
   const [name, setCollectionName] = useState('');
   const [description, setDescription] = useState('');
   const [place, setPlace] = useState('');
@@ -44,40 +46,7 @@ const AddCollection = () => {
       navigate('/collections');
   };
 
-  const handleModifySubmit = (e) => {
-    e.preventDefault();
-    
-    // Create the payload to send to the backend API
-    const payload = {
-      name,
-      description,
-      place,
-      icon,
-      thumbnail,
-    };
-
-    // Send the payload to the backend API
-    // Replace the URL with your actual API endpoint
-    fetch('http://localhost:3001/collections/update', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle the response from the API
-        console.log('API response:', data);
-      })
-      .catch((error) => {
-        // Handle any errors that occurred during the API call
-        console.error('API error:', error);
-      });
-
-      console.log('Modify button clicked');
-      navigate('/collections');
-  };
+  
 
   return (
     <div>
@@ -86,7 +55,6 @@ const AddCollection = () => {
           <div className="w-50">
             <h1></h1>
             <Form>
-
                 <Form.Group controlId="name">
                     <Form.Label>Collection Name:</Form.Label>
                     <Form.Control 
@@ -131,13 +99,11 @@ const AddCollection = () => {
                   onChange={(e) => setThumbnail(e.target.value)}
                 />
                 </Form.Group>
-                <Button variant="primary" type="submit" className='mt-3' onClick={handleAddSubmit}>
+                <Button variant="dark" type="submit" className='mt-3' onClick={handleAddSubmit}>
                     Add Collection
                 </Button>
 
-                <Button variant="primary" type="submit" className='mt-3 ms-3' onClick={handleModifySubmit}>
-                    Modify Collection
-                </Button>
+
             </Form>
           </div>
         </Container>

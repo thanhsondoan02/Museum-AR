@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { NavigationBar } from '../../components';
 import Axios from "axios"
+import { useNavigate } from 'react-router-dom';
 const AddItem = () => {
   const [name, setItemName] = useState('');
   const [creatorName, setCreatorName] = useState('');
@@ -11,10 +12,10 @@ const AddItem = () => {
   const [collection, setCollectionName] = useState('');
   const [thumbnail, setThumbnail] = useState('');
   const [file, setSelectedFile] = useState(null);
-
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    
     // Create the payload to send to the backend API
     const payload = new FormData();
 
@@ -37,11 +38,14 @@ const AddItem = () => {
       .then((data) => {
         // Handle the response from the API
         console.log('API response:', data);
+        
       })
       .catch((error) => {
         // Handle any errors that occurred during the API call
         console.error('API error:', error);
       });
+
+      navigate('/items');
   };
 
   const handleFileChange = (e) => {

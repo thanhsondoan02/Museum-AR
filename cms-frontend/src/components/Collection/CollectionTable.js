@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 
 function CollectionTable () {
     const [data, setJsonData] = useState([]);
@@ -45,7 +45,7 @@ function CollectionTable () {
           {
               data.map((item, index) => (
                   <tr key={index}>
-                      <td>{data.id}</td>
+                      <td>{item.name}</td>
                       <td style={{ textAlign: 'left' }}>{item.description}</td>
                       <td>{item.place}</td>
                       <td>
