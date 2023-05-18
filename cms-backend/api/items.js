@@ -23,12 +23,14 @@ module.exports = function (app, db, storage) {
 
 
     app.post('/items/add', upload.single('file'), async (req, res) => {
+        
         if (req.file == undefined) {
             res.send({ status: "error", message: "No file uploaded" });
             return;
         }
         var model = req.file;
-        var model_id = model.filename + ".glb";
+        var model_id = model.filename + '.glb';
+
         try {
             var item = JSON.parse(req.body.requests);
         } catch (e) {
@@ -37,12 +39,15 @@ module.exports = function (app, db, storage) {
         }
         try {
             const bucket = storage.bucket(STORAGE_LINK);
+            console.log("this is model id: ", model_id);
+            console.log("this is model path: ", model.path);
             const data = await bucket.upload(model.path, {
                 destination: model_id,
                 metadata: {
                     contentType: model.mimetype
                 }
             });
+
             item.model3d = `https://firebasestorage.googleapis.com/v0/b/museum-ar-32277.appspot.com/o/${model_id}?alt=media`
             item.model3d_id = model_id;
             var result = await db.collection('items').add(item);
@@ -82,7 +87,7 @@ module.exports = function (app, db, storage) {
             res.send({ status: "success", message: result.id });
         }
         catch (e) {
-            console.log(e)
+            console.log(e);
             res.send({ status: "error", message: e });
         }
     });

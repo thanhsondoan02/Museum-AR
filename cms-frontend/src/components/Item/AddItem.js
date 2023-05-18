@@ -58,9 +58,9 @@ const AddItem = () => {
         if (data.status === "success") {
           navigate('/items');
         } else {
-          alert("Please upload file.")
+          alert("Please upload file.");
+          
         }
-
       })
       .catch((error) => {
         // Handle any errors that occurred during the API call
