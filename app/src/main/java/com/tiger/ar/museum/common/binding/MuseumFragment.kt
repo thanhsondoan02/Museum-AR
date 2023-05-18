@@ -28,6 +28,7 @@ abstract class MuseumFragment<DB : ViewDataBinding>(layoutId: Int) : BaseBinding
         super.onResume()
         if (museumActivity is RealMainActivity) {
             setActionBarColor()
+            realMainActivity.checkSearchEditText()
         }
     }
 

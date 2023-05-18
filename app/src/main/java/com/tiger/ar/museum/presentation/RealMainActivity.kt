@@ -1,6 +1,7 @@
 package com.tiger.ar.museum.presentation
 
 import android.view.ViewOutlineProvider
+import android.widget.EditText
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.updateLayoutParams
 import androidx.viewpager.widget.ViewPager
@@ -16,8 +17,10 @@ import com.tiger.ar.museum.common.extension.getAppColor
 import com.tiger.ar.museum.common.extension.getAppDrawable
 import com.tiger.ar.museum.common.extension.getAppFont
 import com.tiger.ar.museum.common.extension.getAppString
+import com.tiger.ar.museum.common.extension.gone
 import com.tiger.ar.museum.common.extension.loadImage
 import com.tiger.ar.museum.common.extension.setOnSafeClick
+import com.tiger.ar.museum.common.extension.show
 import com.tiger.ar.museum.common.extension.toastUndeveloped
 import com.tiger.ar.museum.common.view.StatusBar
 import com.tiger.ar.museum.databinding.RealMainActivityBinding
@@ -27,6 +30,7 @@ import com.tiger.ar.museum.presentation.favorite.FavoriteMainFragment
 import com.tiger.ar.museum.presentation.game.GameFragment
 import com.tiger.ar.museum.presentation.home.HomeFragment
 import com.tiger.ar.museum.presentation.profile.ProfileDialog
+import com.tiger.ar.museum.presentation.search.SearchFragment
 import com.tiger.ar.museum.presentation.setting.SettingFragment
 
 open class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.real_main_activity) {
@@ -51,6 +55,10 @@ open class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.r
         initViewPager()
         loadAvatar()
         initTopAppBarCallback()
+    }
+
+    fun getEditText(): EditText {
+        return binding.edtRealMainTitle
     }
 
     fun enableFragmentContainerScrollingBehavior() {
@@ -80,7 +88,7 @@ open class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.r
         binding.ivRealMainSearch.apply {
             setImageResource(R.drawable.ic_search_main_black)
             setOnSafeClick {
-                toastUndeveloped()
+                addFragmentNew(SearchFragment(), containerId = R.id.flRealMainContainer)
             }
         }
     }
@@ -91,6 +99,15 @@ open class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.r
             setSearchIcon()
         } else {
             setBackIcon()
+        }
+    }
+
+    fun checkSearchEditText() {
+        val fragments = supportFragmentManager.fragments
+        if (fragments.lastOrNull() is SearchFragment) {
+            binding.edtRealMainTitle.show()
+        } else {
+            binding.edtRealMainTitle.gone()
         }
     }
 

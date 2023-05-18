@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.tiger.ar.museum.presentation.widget.CollectionView
+            android:id="@+id/cvSearchKey"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingVertical="?android:attr/actionBarSize" />
+
+        <com.tiger.ar.museum.presentation.widget.CollectionView
+            android:id="@+id/cvSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingVertical="?android:attr/actionBarSize" />
+
+
+    </FrameLayout>
+
+</layout>
