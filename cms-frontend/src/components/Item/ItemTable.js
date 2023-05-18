@@ -8,7 +8,7 @@ const ItemTable = () => {
   const fetchData = () => {
     // Fetch data from the backend API to populate the table
     // Replace the URL with your actual API endpoint
-    fetch('http://localhost:3001/item/list')
+    fetch('http://localhost:3001/items/list')
       .then(response => response.json())
       .then(data => { 
             setJsonData(data.message);

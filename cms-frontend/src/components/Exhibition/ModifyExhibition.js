@@ -19,7 +19,11 @@ function ModifyExhibition () {
     .then(response => response.json())
     .then(list_data => { 
             setJsonData(list_data.message);
-        
+            setExihibitionName(list_data.message[0].name);
+            setSelectedNameId(list_data.message[0].id);
+            setMuseumName(list_data.message[0].museumName);
+            setPlace(list_data.message[0].place);
+            setThumbnail(list_data.message[0].thumbnail);
             console.log(list_data.message); 
         })
     .catch(error => console.log(error));
@@ -68,6 +72,9 @@ function ModifyExhibition () {
         setExihibitionName(selectedName);
         const selectedOption = list_data.find((item) => item.name === selectedName);
         setSelectedNameId(selectedOption.id);
+        setMuseumName(selectedOption.museumName);
+        setPlace(selectedOption.place);
+        setThumbnail(selectedOption.thumbnail);
     }
 
 

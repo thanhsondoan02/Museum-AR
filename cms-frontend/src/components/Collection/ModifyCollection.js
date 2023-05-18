@@ -23,7 +23,12 @@ function ModifyCollection () {
       .then(response => response.json())
       .then(list_data => { 
             setJsonData(list_data.message);
-        
+            setCollectionName(list_data.message[0].name);
+            setSelectedNameId(list_data.message[0].id);
+            setDescription(list_data.message[0].description);
+            setPlace(list_data.message[0].place);
+            setIcon(list_data.message[0].icon);
+            setThumbnail(list_data.message[0].thumbnail);
             console.log(list_data.message); 
         })
       .catch(error => console.log(error));
@@ -73,7 +78,11 @@ function ModifyCollection () {
     const selectedOption = list_data.find((item) => item.name === selectedName);
     console.log(selectedOption.id);
     setSelectedNameId(selectedOption.id);
-
+    setCollectionId(selectedOption.id);
+    setDescription(selectedOption.description);
+    setPlace(selectedOption.place);
+    setIcon(selectedOption.icon);
+    setThumbnail(selectedOption.thumbnail);
   }
 
 

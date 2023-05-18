@@ -21,7 +21,11 @@ const ModifyStory = () => {
     .then(response => response.json())
     .then(storyId => { 
             setJsonIdData(storyId.message);
-        
+            setTitle(storyId.message[0].title);
+            setId(storyId.message[0].id);
+            setCollectionId(storyId.message[0].collectionId);
+            setDescription(storyId.message[0].description);
+            setThumbnail(storyId.message[0].thumbnail);
             console.log(storyId.message); 
         })
     .catch(error => console.log(error));
@@ -33,6 +37,9 @@ const ModifyStory = () => {
       setTitle(selectedIdName);
       const selectedOptionId = storyId.find((item) => item.title === selectedIdName);
       setId(selectedOptionId.id)
+      setCollectionId(selectedOptionId.collectionId);
+      setDescription(selectedOptionId.description);
+      setThumbnail(selectedOptionId.thumbnail);
       console.log('id day:', id);
   }
 

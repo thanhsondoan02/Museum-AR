@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Container } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 
@@ -24,13 +24,13 @@ const ButtonEvent = ({ param }) => {
             console.log("hehe");
             navigate('/items/add');
         }
-        else if (param == 'collection') {
+        else if (param === 'collection') {
             navigate('/collections/add');
         }
-        else if (param == 'exhibition') {
+        else if (param === 'exhibition') {
             navigate('/exhibitions/add');
         }
-        else if (param == 'story') {
+        else if (param === 'story') {
             navigate('/stories/add');
         }
     };
