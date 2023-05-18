@@ -4,9 +4,9 @@ import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumDialog
 import com.tiger.ar.museum.common.extension.setOnSafeClick
 import com.tiger.ar.museum.common.view.DialogScreen
-import com.tiger.ar.museum.databinding.ConfirmDeleteDialogBinding
+import com.tiger.ar.museum.databinding.ConfirmDeleteDialog2Binding
 
-class ConfirmDeleteDialog2 : MuseumDialog<ConfirmDeleteDialogBinding>(R.layout.confirm_delete_dialog_2) {
+class ConfirmDeleteDialog2 : MuseumDialog<ConfirmDeleteDialog2Binding>(R.layout.confirm_delete_dialog_2) {
     var onConfirmAction: (() -> Unit)? = null
 
     override fun getBackgroundId() = R.id.flConfirmDeleteRoot
