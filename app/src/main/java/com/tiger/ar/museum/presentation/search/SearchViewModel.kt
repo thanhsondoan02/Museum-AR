@@ -30,15 +30,22 @@ class SearchViewModel : BaseViewModel() {
 
             val itemTask = db.collection("items")
                 .orderBy("name")
+                .startAt(keyword)
+                .endAt(keyword + "\uf8ff")
                 .limit(10)
                 .get()
 
             val storyTask = db.collection("stories")
+                .orderBy("name")
+                .startAt(keyword)
+                .endAt(keyword + "\uf8ff")
                 .limit(10)
                 .get()
 
             val collectionTask = db.collection("collections")
                 .orderBy("name")
+                .startAt(keyword)
+                .endAt(keyword + "\uf8ff")
                 .limit(10)
                 .get()
 

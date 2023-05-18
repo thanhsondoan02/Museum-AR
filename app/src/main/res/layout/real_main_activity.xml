@@ -125,6 +125,8 @@
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center_vertical"
                     android:hint="@string/search"
+                    android:inputType="text"
+                    android:maxLines="1"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/dimen_text_size_20"
                     android:visibility="gone" />
