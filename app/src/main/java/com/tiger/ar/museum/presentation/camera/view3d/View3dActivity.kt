@@ -18,6 +18,7 @@ import com.tiger.ar.museum.databinding.View3dActivityBinding
 import com.tiger.ar.museum.presentation.camera.view3d.control.View3dControllerFragment
 import com.tiger.ar.museum.presentation.download.DownloadActivity
 
+
 class View3dActivity : MuseumActivity<View3dActivityBinding>(R.layout.view_3d_activity) {
     companion object {
         const val ITEM_ID_KEY = "ITEM_ID_KEY"
@@ -83,6 +84,18 @@ class View3dActivity : MuseumActivity<View3dActivityBinding>(R.layout.view_3d_ac
                     } else {
                         toast("Vui lòng chọn 1 mô hình")
                     }
+                }
+            }
+        }
+        binding.ivView3dControllerReload.setOnSafeClick { reload() }
+    }
+
+    private fun reload() {
+        val children = arFragment!!.arSceneView.scene.children
+        for (node in children) {
+            if (node is AnchorNode) {
+                if (node.anchor != null) {
+                    node.anchor!!.detach()
                 }
             }
         }

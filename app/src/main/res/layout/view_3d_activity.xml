@@ -58,6 +58,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageView
+                android:id="@+id/ivView3dControllerReload"
+                android:layout_width="?android:attr/actionBarSize"
+                android:layout_height="?android:attr/actionBarSize"
+                android:background="?android:attr/actionBarItemBackground"
+                android:padding="@dimen/dimen_18"
+                android:src="@drawable/ic_reload"
+                app:layout_constraintEnd_toStartOf="@id/ivView3dControllerMore"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <FrameLayout
