@@ -11,12 +11,15 @@
             android:id="@+id/cvSearch"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
             android:paddingVertical="?android:attr/actionBarSize" />
 
         <com.tiger.ar.museum.presentation.widget.CollectionView
             android:id="@+id/cvSearchKey"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/gray"
+            android:elevation="8dp"
             android:paddingVertical="?android:attr/actionBarSize" />
 
     </FrameLayout>

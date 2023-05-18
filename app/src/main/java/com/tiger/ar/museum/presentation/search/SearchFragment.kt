@@ -1,14 +1,17 @@
 package com.tiger.ar.museum.presentation.search
 
+import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.binding.MuseumFragment
 import com.tiger.ar.museum.common.extension.gone
 import com.tiger.ar.museum.common.extension.show
-import com.tiger.ar.museum.common.extension.toast
 import com.tiger.ar.museum.databinding.SearchActivityBinding
 import com.tiger.ar.museum.presentation.RealMainActivity
+import com.tiger.ar.museum.presentation.collection.CollectionFragment
+import com.tiger.ar.museum.presentation.item.ItemFragment
+import com.tiger.ar.museum.presentation.story.StoryFragment
 import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
 class SearchFragment : MuseumFragment<SearchActivityBinding>(R.layout.search_activity) {
@@ -41,15 +44,44 @@ class SearchFragment : MuseumFragment<SearchActivityBinding>(R.layout.search_act
     private fun initOnClick() {
         if (museumActivity is RealMainActivity) {
             realMainActivity.getEditText().doAfterTextChanged {
-                viewModel.getSuggestText(it.toString()) {
-                    binding.cvSearchKey.show()
-                    searchKeyAdapter.submitList(viewModel.suggestTexts)
+                if (it.toString().isNotEmpty()) {
+                    viewModel.getSuggestText(it.toString()) {
+                        binding.cvSearchKey.show()
+                        searchKeyAdapter.submitList(viewModel.suggestTexts)
+                    }
+                } else {
+                    binding.cvSearchKey.gone()
                 }
             }
         }
     }
 
     private fun initRecyclerView() {
+        searchAdapter.listener = object : SearchAdapter.IListener {
+            override fun onItemClick(itemId: String?) {
+                addFragmentNew(ItemFragment(),
+                    bundleOf(ItemFragment.ITEM_ID_KEY to itemId),
+                    containerId = R.id.flRealMainContainer
+                )
+            }
+
+            override fun onCollectionClick(collectionId: String?) {
+                addFragmentNew(
+                    CollectionFragment(),
+                    bundleOf(CollectionFragment.COLLECTION_ID_KEY to collectionId),
+                    containerId = R.id.flRealMainContainer
+                )
+            }
+
+            override fun onStoryClick(storyId: String?) {
+                addFragmentNew(
+                    StoryFragment(),
+                    bundleOf(StoryFragment.STORY_ID_KEY to storyId),
+                    containerId = R.id.flRealMainContainer
+                )
+            }
+        }
+
         binding.cvSearch.apply {
             setAdapter(this@SearchFragment.searchAdapter)
             setLayoutManager(COLLECTION_MODE.VERTICAL)
@@ -57,9 +89,10 @@ class SearchFragment : MuseumFragment<SearchActivityBinding>(R.layout.search_act
 
         searchKeyAdapter.listener = object : SearchKeyAdapter.IListener {
             override fun onSearchKeyClick(text: String) {
+                museumActivity.hideKeyboard()
                 binding.cvSearchKey.gone()
-                viewModel.getSearchData {
-                    toast("Search $text")
+                viewModel.getSearchData(text) {
+                    binding.cvSearch.submitList(viewModel.searchData)
                 }
             }
         }

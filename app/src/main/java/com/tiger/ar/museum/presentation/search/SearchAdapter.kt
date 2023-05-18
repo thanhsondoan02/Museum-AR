@@ -1,27 +1,141 @@
 package com.tiger.ar.museum.presentation.search
 
+import android.annotation.SuppressLint
 import androidx.databinding.ViewDataBinding
 import com.tiger.ar.museum.R
 import com.tiger.ar.museum.common.recycleview.BaseVH
 import com.tiger.ar.museum.common.recycleview.MuseumAdapter
+import com.tiger.ar.museum.databinding.SearchCollectionItemBinding
+import com.tiger.ar.museum.databinding.SearchItemItemBinding
+import com.tiger.ar.museum.databinding.SearchStoryItemBinding
+import com.tiger.ar.museum.domain.model.Item
+import com.tiger.ar.museum.domain.model.MCollection
+import com.tiger.ar.museum.domain.model.Story
+import com.tiger.ar.museum.presentation.collection.all.CollectionsAdapter
+import com.tiger.ar.museum.presentation.favorite.FavoriteStoryAdapter
+import com.tiger.ar.museum.presentation.widget.COLLECTION_MODE
 
-class SearchAdapter: MuseumAdapter() {
+class SearchAdapter : MuseumAdapter() {
     companion object {
         const val ITEM_VIEW_TYPE = 1410
         const val STORY_VIEW_TYPE = 1411
-        const val EXHIBIT_VIEW_TYPE = 1412
+        const val COLLECTION_VIEW_TYPE = 1412
+    }
+
+    var listener: IListener? = null
+
+    override fun setupEmptyState(): Empty {
+        return Empty(overrideLayoutRes = R.layout.collections_empty_item)
+    }
+
+    override fun getItemViewTypeCustom(position: Int): Int {
+        return when (getDataAtPosition(position)) {
+            is SearchItemDisplay -> ITEM_VIEW_TYPE
+            is SearchStoryDisplay -> STORY_VIEW_TYPE
+            is SearchCollectionDisplay -> COLLECTION_VIEW_TYPE
+            else -> throw IllegalArgumentException("Invalid view type")
+        }
     }
 
     override fun getLayoutResource(viewType: Int): Int {
         return when (viewType) {
-            ITEM_VIEW_TYPE -> R.layout.search_key_item
+            ITEM_VIEW_TYPE -> R.layout.search_item_item
             STORY_VIEW_TYPE -> R.layout.search_story_item
-            EXHIBIT_VIEW_TYPE -> R.layout.search_exhibit_item
+            COLLECTION_VIEW_TYPE -> R.layout.search_collection_item
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
 
     override fun onCreateViewHolder(viewType: Int, binding: ViewDataBinding): BaseVH<*>? {
-        TODO("Not yet implemented")
+        return when (viewType) {
+            ITEM_VIEW_TYPE -> SearchItemVH(binding as SearchItemItemBinding)
+            STORY_VIEW_TYPE -> SearchStoryVH(binding as SearchStoryItemBinding)
+            COLLECTION_VIEW_TYPE -> SearchCollectionVH(binding as SearchCollectionItemBinding)
+            else -> throw IllegalArgumentException("onCreateViewHolder: viewType is invalid")
+        }
+    }
+
+    inner class SearchItemVH(private val binding: SearchItemItemBinding) : BaseVH<SearchItemDisplay>(binding) {
+        private val adapter by lazy { SearchItemSubAdapter() }
+
+        init {
+            adapter.listener = object : SearchItemSubAdapter.IListener {
+                override fun onItemClick(itemId: String?) {
+                    listener?.onItemClick(itemId)
+                }
+            }
+
+            binding.cvSearchItem.apply {
+                setAdapter(this@SearchItemVH.adapter)
+                setLayoutManager(COLLECTION_MODE.HORIZONTAL)
+            }
+        }
+
+        @SuppressLint("SetTextI18n")
+        override fun onBind(data: SearchItemDisplay) {
+            binding.cvSearchItem.submitList(data.items)
+        }
+    }
+
+    inner class SearchStoryVH(private val binding: SearchStoryItemBinding) : BaseVH<SearchStoryDisplay>(binding) {
+        private val adapter by lazy { FavoriteStoryAdapter() }
+
+        init {
+            adapter.listener = object : FavoriteStoryAdapter.IListener {
+                override fun onStoryClick(storyId: String?) {
+                    listener?.onStoryClick(storyId)
+                }
+            }
+
+            binding.cvSearchStoryItem.apply {
+                setAdapter(this@SearchStoryVH.adapter)
+                setLayoutManager(COLLECTION_MODE.HORIZONTAL)
+            }
+        }
+
+        @SuppressLint("SetTextI18n")
+        override fun onBind(data: SearchStoryDisplay) {
+            binding.cvSearchStoryItem.submitList(data.stories)
+        }
+    }
+
+    inner class SearchCollectionVH(private val binding: SearchCollectionItemBinding) : BaseVH<SearchCollectionDisplay>(binding) {
+        private val adapter by lazy { CollectionsAdapter2() }
+
+        init {
+            adapter.listener = object : CollectionsAdapter.IListener {
+                override fun onCollectionClick(collection: MCollection) {
+                    listener?.onCollectionClick(collection.key)
+                }
+            }
+
+            binding.cvSearchCollectionItem.apply {
+                setAdapter(this@SearchCollectionVH.adapter)
+                setLayoutManager(COLLECTION_MODE.HORIZONTAL)
+            }
+        }
+
+        @SuppressLint("SetTextI18n")
+        override fun onBind(data: SearchCollectionDisplay) {
+            binding.cvSearchCollectionItem.submitList(data.collections)
+        }
+    }
+
+    data class SearchItemDisplay(
+        var items: List<Item>? = null
+    )
+
+    data class SearchCollectionDisplay(
+        var collections: List<MCollection>? = null
+    )
+
+    data class SearchStoryDisplay(
+        var stories: List<Story>? = null
+    )
+
+    interface IListener {
+        fun onItemClick(itemId: String?)
+        fun onCollectionClick(collectionId: String?)
+        fun onStoryClick(storyId: String?)
     }
 }
