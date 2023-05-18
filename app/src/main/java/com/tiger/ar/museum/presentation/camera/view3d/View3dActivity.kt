@@ -88,17 +88,25 @@ class View3dActivity : MuseumActivity<View3dActivityBinding>(R.layout.view_3d_ac
             }
         }
         binding.ivView3dControllerReload.setOnSafeClick {
-            val dialog = ConfirmDeleteDialog2().apply {
-                onConfirmAction = {
-                    reload()
-                    dismiss()
+            if (dontHaveChild()) {
+                toast("Không có mô hình nào để xóa")
+            } else {
+                val dialog = ConfirmDeleteDialog2().apply {
+                    onConfirmAction = {
+                        reload()
+                        dismiss()
+                    }
                 }
+                dialog.show(supportFragmentManager, dialog::class.java.simpleName)
             }
-            dialog.show(supportFragmentManager, dialog::class.java.simpleName)
         }
     }
 
     private fun reload() {
+        if (arFragment == null) {
+            toast("Error: arFragment is null")
+            return
+        }
         val children = arFragment!!.arSceneView.scene.children
         for (node in children) {
             if (node is AnchorNode) {
@@ -107,5 +115,23 @@ class View3dActivity : MuseumActivity<View3dActivityBinding>(R.layout.view_3d_ac
                 }
             }
         }
+    }
+
+    private fun dontHaveChild(): Boolean {
+        if (arFragment == null) {
+            toast("Error: arFragment is null")
+            return false
+        }
+
+        var count = 0
+        val children = arFragment!!.arSceneView.scene.children
+        for (node in children) {
+            if (node is AnchorNode) {
+                if (node.anchor != null) {
+                    count++
+                }
+            }
+        }
+        return count == 0
     }
 }
