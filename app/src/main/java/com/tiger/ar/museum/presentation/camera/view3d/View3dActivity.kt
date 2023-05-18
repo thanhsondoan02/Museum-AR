@@ -87,7 +87,15 @@ class View3dActivity : MuseumActivity<View3dActivityBinding>(R.layout.view_3d_ac
                 }
             }
         }
-        binding.ivView3dControllerReload.setOnSafeClick { reload() }
+        binding.ivView3dControllerReload.setOnSafeClick {
+            val dialog = ConfirmDeleteDialog2().apply {
+                onConfirmAction = {
+                    reload()
+                    dismiss()
+                }
+            }
+            dialog.show(supportFragmentManager, dialog::class.java.simpleName)
+        }
     }
 
     private fun reload() {
