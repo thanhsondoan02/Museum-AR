@@ -36,7 +36,7 @@ class SearchViewModel : BaseViewModel() {
                 .get()
 
             val storyTask = db.collection("stories")
-                .orderBy("name")
+                .orderBy("title")
                 .startAt(keyword)
                 .endAt(keyword + "\uf8ff")
                 .limit(10)
