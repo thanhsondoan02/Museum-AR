@@ -3,33 +3,29 @@ import { Table, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 const ItemTable = () => {
   const [data, setJsonData] = useState([]);
-  console.log(data);
+  const [collectionData, setCollectionData] = useState({});
   const navigate = useNavigate();
   const fetchData = () => {
     // Fetch data from the backend API to populate the table
     // Replace the URL with your actual API endpoint
     fetch('http://localhost:3001/items/list')
       .then(response => response.json())
-      .then(data => { 
-            setJsonData(data.message);
-        
-            console.log(data.message); 
-        })
+      .then(data => {
+        setJsonData(data.message);
+      })
       .catch(error => console.log(error));
   };
 
-  
+
 
   useEffect(() => {
     // Make API call to fetch data
     // Replace the API_URL with your actual API endpoint
     fetch('http://localhost:3001/items/list')
       .then(response => response.json())
-      .then(data => { 
-            setJsonData(data.message);
-        
-            console.log(data.message); 
-        })
+      .then(data => {
+        setJsonData(data.message);
+      })
       .catch(error => console.log(error));
   }, []);
 
@@ -43,17 +39,15 @@ const ItemTable = () => {
     marginTop: '30px'
   }
   const handleDelete = (e) => {
-      
+
     // Create the payload to send to the backend API
     const payload = {
-      id : e.id,
+      id: e.id,
       model3d_id: e.model3d_id,
     };
-
-    console.log("send payload:", payload);
     // Send the payload to the backend API
     // Replace the URL with your actual API endpoint
-    
+
     fetch('http://localhost:3001/items/delete', {
       method: 'POST',
       headers: {
@@ -64,7 +58,6 @@ const ItemTable = () => {
       .then((response) => response.json())
       .then((data) => {
         // Handle the response from the API
-        console.log('API response:', data);
         fetchData();
 
         // clearTimeout (timeoutId);
@@ -73,7 +66,7 @@ const ItemTable = () => {
         // Handle any errors that occurred during the API call
         console.error('API error:', error);
       });
-      navigate('/items');
+    navigate('/items');
 
   };
   useEffect(() => {
@@ -81,11 +74,24 @@ const ItemTable = () => {
     // Replace the API_URL with your actual API endpoint
     fetch('http://localhost:3001/items/list')
       .then(response => response.json())
-      .then(data => { 
-            setJsonData(data.message);
-        
-            console.log(data.message); 
-        })
+      .then(data => {
+        setJsonData(data.message);
+      })
+      .catch(error => console.log(error));
+  }, []);
+
+  useEffect(() => {
+    // Make API call to fetch data
+    // Replace the API_URL with your actual API endpoint
+    fetch('http://localhost:3001/collections/list')
+      .then(response => response.json())
+      .then(data => {
+        var collection = {};
+        data.message.forEach(element => {
+          collection[element.id] = element.name;
+        });
+        setCollectionData(collection);
+      })
       .catch(error => console.log(error));
   }, []);
   return (
@@ -104,26 +110,26 @@ const ItemTable = () => {
       </thead>
       <tbody>
         {
-            data.map((item, index) => (
-                <tr key={index}>
-                    <td>{item.name}</td>
-                    <td>{item.creatorName}</td>
-                    <td style={{ textAlign: 'left' }}>{item.description}</td>
-                    <td>{item.time}</td>
-                    <td>{item.collectionId}</td>
-                    <td>
-                    <img style={{ width: 100, height: 150 }} src={item.thumbnail} alt="Non Image" />
-                    </td>
-                    <td>
-                      <Button variant="dark" onClick={() => handleDelete(item)}>
-                        Delete
-                      </Button>
-                    </td>
-                </tr>))
+          data.map((item, index) => (
+            <tr key={index}>
+              <td>{item.name}</td>
+              <td>{item.creatorName}</td>
+              <td style={{ textAlign: 'left' }}>{item.description}</td>
+              <td>{item.time}</td>
+              <td>{collectionData[item.collectionId] ? collectionData[item.collectionId] : ''}</td>
+              <td>
+                <img style={{ width: 100, height: 150 }} src={item.thumbnail} alt="Non Image" />
+              </td>
+              <td>
+                <Button variant="dark" onClick={() => handleDelete(item)}>
+                  Delete
+                </Button>
+              </td>
+            </tr>))
         }
       </tbody>
     </Table>
-    
+
   );
 };
 

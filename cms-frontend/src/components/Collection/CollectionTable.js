@@ -3,8 +3,6 @@ import { Table, Button } from 'react-bootstrap';
 
 function CollectionTable () {
     const [data, setJsonData] = useState([]);
-
-    console.log(data);
     
     useEffect(() => {
       // Make API call to fetch data
@@ -13,8 +11,6 @@ function CollectionTable () {
         .then(response => response.json())
         .then(data => { 
               setJsonData(data.message);
-          
-              console.log(data.message); 
           })
         .catch(error => console.log(error));
     }, []);

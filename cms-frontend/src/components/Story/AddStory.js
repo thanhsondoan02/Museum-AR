@@ -15,20 +15,18 @@ const AddStory = () => {
 
   const handleAddSubmit = (e) => {
     e.preventDefault();
-    
+
     // Create the payload to send to the backend API
     const payload = {
-      title,
-      collectionId: collectionId,
-      description,
-      thumbnail,
+      title: title !== '' ? title : null,
+      collectionId: collectionId !== '' ? collectionId : null,
+      description: description !== '' ? description : null,
+      thumbnail: thumbnail !== '' ? thumbnail : null,
       pages: childForms.map((page) => ({
-        thumbnail: page.thumbnail,
-        description: page.description,
+        thumbnail: page.thumbnail !== '' ? page.thumbnail : null,
+        description: page.description !== '' ? page.description : null,
       }))
     };
-
-    console.log(payload);
     // Send the payload to the backend API
     // Replace the URL with your actual API endpoint
     fetch('http://localhost:3001/stories/add', {
@@ -40,19 +38,19 @@ const AddStory = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        // Handle the response from the API
-        console.log('API response:', data);
+        if (data.status === 'success') {
+          navigate('/stories');
+        } else {
+          alert('An error occurred. Unable to add story.');
+        }
       })
       .catch((error) => {
         // Handle any errors that occurred during the API call
         console.error('API error:', error);
       });
-
-      console.log('Add button clicked');
-      navigate('/stories');
   };
 
-  
+
   const [list_data, setJsonData] = useState([]);
   const extractedNames = list_data.map((item) => item.name);
   const [collectionName, setCollectionName] = useState('');
@@ -62,9 +60,9 @@ const AddStory = () => {
     // Replace the API_URL with your actual API endpoint
     fetch('http://localhost:3001/collections/list')
       .then(response => response.json())
-      .then(list_data => { 
-            setJsonData(list_data.message); 
-        })
+      .then(list_data => {
+        setJsonData(list_data.message);
+      })
       .catch(error => console.log(error));
   }, []);
 
@@ -73,7 +71,6 @@ const AddStory = () => {
     setCollectionName(selectedName);
     const selectedOption = list_data.find((item) => item.name === selectedName);
     setCollectionId(selectedOption.id);
-    console.log(collectionId);
   }
 
   const handleAddPageButtonClick = () => {
@@ -91,92 +88,92 @@ const AddStory = () => {
   };
   return (
     <div>
-        <NavigationBar />
-        <Container className="d-flex justify-content-center">
-          <div className="w-50">
-            <h1></h1>
-            <Form>
+      <NavigationBar />
+      <Container className="d-flex justify-content-center">
+        <div className="w-50">
+          <h1></h1>
+          <Form>
 
-                <Form.Group controlId="title">
-                    <Form.Label>Story Title:</Form.Label>
-                    <Form.Control 
-                        type="text"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                    />
-                </Form.Group>
+            <Form.Group controlId="title">
+              <Form.Label>Story Title:</Form.Label>
+              <Form.Control
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </Form.Group>
 
-                <Form.Group>
-                    <Form.Label>Collection Name:</Form.Label>
-                    <Form.Control as="select" onChange={handleNameChange}>
-                      {extractedNames.map((name) => (
-                        <option key={name} value={name}>
-                          {name}
-                        </option>
-                      ))}
-                    </Form.Control>
-                </Form.Group>
-
-                <Form.Group controlId="description">
-                    <Form.Label>Description:</Form.Label>
-                    <Form.Control
-                        type="text"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                    />
-                </Form.Group>
-
-                <Form.Group controlId="thumbnail">
-                <Form.Label>Thumbnail:</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={thumbnail}
-                  onChange={(e) => setThumbnail(e.target.value)}
-                />
-                </Form.Group>
-                
-                {childForms.map((page, index) => (
-                  <Form key={index}>
-                    <Form.Group controlId={`pageThumbnail-${index}`}>
-                      <Form.Label>Page Thumbnail</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter Thumbnail"
-                        value={page.thumbnail}
-                        onChange={(e) =>
-                          handlePageInputChange(index, 'thumbnail', e.target.value)
-                        }
-                      />
-                    </Form.Group>
-                    <Form.Group controlId={`pageDescription-${index}`}>
-                      <Form.Label>Page Description</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter Description"
-                        value={page.description}
-                        onChange={(e) =>
-                          handlePageInputChange(index, 'description', e.target.value)
-                        }
-                      />
-                    </Form.Group>
-                    <hr />
-                  </Form>
+            <Form.Group>
+              <Form.Label>Collection Name:</Form.Label>
+              <Form.Control as="select" onChange={handleNameChange}>
+                {extractedNames.map((name) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
                 ))}
+              </Form.Control>
+            </Form.Group>
 
-                <Button variant="dark" type="button" className='mt-3' onClick={handleAddPageButtonClick}>
-                    Add Page
-                </Button>
+            <Form.Group controlId="description">
+              <Form.Label>Description:</Form.Label>
+              <Form.Control
+                type="text"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </Form.Group>
 
-                <Button variant="dark" type="submit" className='mt-3 ms-3' onClick={handleAddSubmit}>
-                    Add Story
-                </Button>
+            <Form.Group controlId="thumbnail">
+              <Form.Label>Thumbnail:</Form.Label>
+              <Form.Control
+                type="text"
+                value={thumbnail}
+                onChange={(e) => setThumbnail(e.target.value)}
+              />
+            </Form.Group>
 
-            </Form>
-          </div>
-        </Container>
+            {childForms.map((page, index) => (
+              <Form key={index}>
+                <Form.Group controlId={`pageThumbnail-${index}`}>
+                  <Form.Label>Page Thumbnail</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter Thumbnail"
+                    value={page.thumbnail}
+                    onChange={(e) =>
+                      handlePageInputChange(index, 'thumbnail', e.target.value)
+                    }
+                  />
+                </Form.Group>
+                <Form.Group controlId={`pageDescription-${index}`}>
+                  <Form.Label>Page Description</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter Description"
+                    value={page.description}
+                    onChange={(e) =>
+                      handlePageInputChange(index, 'description', e.target.value)
+                    }
+                  />
+                </Form.Group>
+                <hr />
+              </Form>
+            ))}
+
+            <Button variant="dark" type="button" className='mt-3' onClick={handleAddPageButtonClick}>
+              Add Page
+            </Button>
+
+            <Button variant="dark" type="submit" className='mt-3 ms-3' onClick={handleAddSubmit}>
+              Add Story
+            </Button>
+
+          </Form>
+        </div>
+      </Container>
     </div>
-    
+
   );
 };
 
-export { AddStory } ;
+export { AddStory };

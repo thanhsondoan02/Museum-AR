@@ -24,8 +24,8 @@ const AddItem = () => {
       .then(response => response.json())
       .then(list_data => {
         setJsonData(list_data.message);
-
-        console.log(list_data.message);
+        setCollectionName(list_data.message[0].name);
+        setCollectionId(list_data.message[0].id);
       })
       .catch(error => console.log(error));
   }, []);
@@ -40,25 +40,22 @@ const AddItem = () => {
 
     payload.append('file', file);
     payload.append('requests', JSON.stringify({
-      name: name,
-      creatorName: creatorName,
-      description: description,
-      time: time,
-      collectionId: collectionId,
-      collection: collection,
-      thumbnail: thumbnail
+      name: name !== '' ? name : null,
+      creatorName: creatorName !== '' ? creatorName : null,
+      description: description !== '' ? description : null,
+      time: time !== '' ? time : null,
+      collectionId: collectionId !== '' ? collectionId : null,
+      collection: collection !== '' ? collection : null,
+      thumbnail: thumbnail !== '' ? thumbnail : null
     }));
 
     // Send the payload to the backend API
     // Replace the URL with your actual API endpoint
-    console.log(payload)
     Axios.post(`http://localhost:3001/items/add/`, payload, { withCredentials: true, headers: { "Content-Type": "multipart/form-data" } })
       .then((response) => response.data)
       .then((data) => {
         // Handle the response from the API
-        console.log('API response:', data);
         if (data.status === "success") {
-          console.log("success")
           navigate('/items');
         } else {
           alert("Please upload file.")
@@ -83,7 +80,6 @@ const AddItem = () => {
     setCollectionName(selectedName);
     const selectedOption = list_data.find((item) => item.name === selectedName);
     setCollectionId(selectedOption.id);
-    console.log(collectionId)
   }
 
 
@@ -124,8 +120,8 @@ const AddItem = () => {
             <Form.Group>
               <Form.Label>Collection Name:</Form.Label>
               <Form.Control as="select" onChange={handleNameChange}>
-                {extractedNames.map((name) => (
-                  <option key={name} value={name}>
+                {extractedNames.map((name, i) => (
+                  <option key={i} value={name}>
                     {name}
                   </option>
                 ))}

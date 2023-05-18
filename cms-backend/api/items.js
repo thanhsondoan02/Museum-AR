@@ -7,7 +7,7 @@ const fs = require('fs');
 module.exports = function (app, db, storage) {
     app.get('/items/list', async (req, res) => {
         try {
-            var list = await db.collection('items').get();
+            var list = await db.collection('items').orderBy('name', 'asc').get();
             res.send({
                 status: "success", message: list.docs.map(doc => {
                     var item = doc.data();
@@ -16,6 +16,7 @@ module.exports = function (app, db, storage) {
                 })
             });
         } catch (e) {
+            console.log(e)
             res.send({ status: "error", message: e });
         }
     });

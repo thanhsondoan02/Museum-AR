@@ -21,7 +21,6 @@ const ButtonEvent = ({ param }) => {
     const navigate = useNavigate();
     const handleAddClick = () => {
         if (param === 'item') {
-            console.log("hehe");
             navigate('/items/add');
         }
         else if (param === 'collection') {
@@ -38,7 +37,6 @@ const ButtonEvent = ({ param }) => {
 
     const handleModifyClick = () => {
         if (param === 'item') {
-            console.log("hehe");
             navigate('/items/modify');
         }
         else if (param === 'collection') {

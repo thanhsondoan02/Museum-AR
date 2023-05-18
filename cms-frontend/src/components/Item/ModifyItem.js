@@ -42,28 +42,25 @@ function ModifyItem() {
 
     payload.append('file', file);
     payload.append('requests', JSON.stringify({
-      id: id,
-      name: name,
-      creatorName: creatorName,
-      description: description,
-      time: time,
-      collectionId: collectionId,
-      collection: collection,
-      thumbnail: thumbnail
+      id: id !== '' ? id : null,
+      name: name !== '' ? name : null,
+      creatorName: creatorName !== '' ? creatorName : null,
+      description: description !== '' ? description : null,
+      time: time !== '' ? time : null,
+      collectionId: collectionId !== '' ? collectionId : null,
+      collection: collection !== '' ? collection : null,
+      thumbnail: thumbnail !== '' ? thumbnail : null
     }));
 
     // Send the payload to the backend API
     // Replace the URL with your actual API endpoint
     Axios.post(`http://localhost:3001/items/update/`, payload, { withCredentials: true, headers: { "Content-Type": "multipart/form-data" } })
       .then((response) => {
-        console.log(response)
         return response.data
       })
       .then((data) => {
         // Handle the response from the API
-        console.log('API response:', data);
         if (data.status === "success") {
-          console.log("success")
           navigate('/items');
         } else {
           alert("Please upload file.")
@@ -83,7 +80,6 @@ function ModifyItem() {
     setCollectionName(selectedName);
     const selectedOption = list_data.find((item) => item.name === selectedName);
     setCollectionId(selectedOption.id);
-    console.log(collectionId)
   }
 
 
@@ -102,7 +98,6 @@ function ModifyItem() {
         setCollectionId(idData.message[0].collectionId);
         setCollectionName(idData.message[0].collection);
         setThumbnail(idData.message[0].thumbnail);
-        console.log(idData.message);
       })
       .catch(error => console.log(error));
   }, []);
@@ -114,13 +109,12 @@ function ModifyItem() {
     const selectedOptionId = idData.find((item) => item.name === selectedIdName);
 
     setId(selectedOptionId.id)
-    console.log(id);
-    setCreatorName(selectedOptionId.creatorName);
-    setDescription(selectedOptionId.description);
-    setDateCreated(selectedOptionId.time);
-    setCollectionId(selectedOptionId.collectionId);
-    setCollectionName(selectedOptionId.collection);
-    setThumbnail(selectedOptionId.thumbnail);
+    setCreatorName(selectedOptionId.creatorName ? selectedOptionId.creatorName : '');
+    setDescription(selectedOptionId.description ? selectedOptionId.description : '');
+    setDateCreated(selectedOptionId.time ? selectedOptionId.time : '');
+    setCollectionId(selectedOptionId.collectionId ? selectedOptionId.collectionId : '');
+    setCollectionName(selectedOptionId.collection ? selectedOptionId.collection : '');
+    setThumbnail(selectedOptionId.thumbnail ? selectedOptionId.thumbnail : '');
   }
 
   const handleFileChange = (e) => {

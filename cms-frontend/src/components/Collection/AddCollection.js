@@ -16,11 +16,11 @@ const AddCollection = () => {
     
     // Create the payload to send to the backend API
     const payload = {
-      name,
-      description,
-      place,
-      icon,
-      thumbnail,
+      name: name !== '' ? name : null,
+      description: description !== '' ? description : null,
+      place: place !== '' ? place : null,
+      icon: icon !== '' ? icon : null,
+      thumbnail: thumbnail !== '' ? thumbnail : null,
     };
 
     // Send the payload to the backend API
@@ -41,8 +41,6 @@ const AddCollection = () => {
         // Handle any errors that occurred during the API call
         console.error('API error:', error);
       });
-
-      console.log('Add button clicked');
       navigate('/collections');
   };
 

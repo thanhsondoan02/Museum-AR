@@ -14,8 +14,7 @@ function ExhibitionTable () {
         .then(response => response.json())
         .then(data => { 
               setJsonData(data.message);
-          
-              console.log(data.message); 
+        
           })
         .catch(error => console.log(error));
     };
@@ -27,7 +26,6 @@ function ExhibitionTable () {
         .then(data => { 
               setJsonData(data.message);
           
-              console.log(data.message); 
           })
         .catch(error => console.log(error));
     }, []);
@@ -47,9 +45,6 @@ function ExhibitionTable () {
       const payload = {
         id : e,
       };
-      let timeoutId;
-
-      console.log(payload);
       // Send the payload to the backend API
       // Replace the URL with your actual API endpoint
       
@@ -63,7 +58,6 @@ function ExhibitionTable () {
         .then((response) => response.json())
         .then((data) => {
           // Handle the response from the API
-          console.log('API response:', data);
           fetchData();
 
           // clearTimeout (timeoutId);
@@ -82,8 +76,6 @@ function ExhibitionTable () {
         .then(response => response.json())
         .then(data => { 
               setJsonData(data.message);
-          
-              console.log(data.message); 
           })
         .catch(error => console.log(error));
     }, []);

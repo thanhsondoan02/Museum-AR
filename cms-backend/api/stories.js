@@ -1,7 +1,7 @@
 module.exports = function (app, db, storage) {
     app.get('/stories/list', async (req, res) => {
         try {
-            var list = await db.collection('stories').get();
+            var list = await db.collection('stories').orderBy('title', 'asc').get();
             res.send({
                 status: "success", message: list.docs.map(doc => {
                     var item = doc.data();

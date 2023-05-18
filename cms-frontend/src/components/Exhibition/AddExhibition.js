@@ -14,10 +14,10 @@ const AddExhibition = () => {
     
     // Create the payload to send to the backend API
     const payload = {
-      name,
-      museumName,
-      place,
-      thumbnail,
+      name: name !== '' ? name : null,
+      museumName: museumName !== '' ? museumName : null,
+      place: place !== '' ? place : null,
+      thumbnail: thumbnail !== '' ? thumbnail : null,
     };
     const fetchData = () => {
       // Fetch data from the backend API to populate the table
@@ -26,8 +26,6 @@ const AddExhibition = () => {
         .then(response => response.json())
         .then(data => { 
               setJsonData(data.message);
-          
-              console.log(data.message); 
           })
         .catch(error => console.log(error));
     };
@@ -42,8 +40,6 @@ const AddExhibition = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        // Handle the response from the API
-        console.log('API response:', data);
         fetchData();
       })
       .catch((error) => {
