@@ -21,6 +21,7 @@ abstract class MuseumFragment<DB : ViewDataBinding>(layoutId: Int) : BaseBinding
         super.onDestroy()
         if (museumActivity is RealMainActivity) {
             setActionBarSearchIcon()
+            realMainActivity.checkSearchEditText()
         }
     }
 

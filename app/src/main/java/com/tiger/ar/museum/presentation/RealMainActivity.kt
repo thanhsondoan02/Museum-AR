@@ -106,6 +106,7 @@ open class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.r
         val fragments = supportFragmentManager.fragments
         if (fragments.lastOrNull() is SearchFragment) {
             binding.edtRealMainTitle.show()
+            binding.edtRealMainTitle.setText("")
         } else {
             binding.edtRealMainTitle.gone()
         }
@@ -177,7 +178,7 @@ open class RealMainActivity : MuseumActivity<RealMainActivityBinding>(R.layout.r
         }
 
         binding.ivRealMainSearch.setOnSafeClick {
-            toastUndeveloped()
+            addFragmentNew(SearchFragment(), containerId = R.id.flRealMainContainer)
         }
 
         binding.ivRealMainProfile.setOnSafeClick {
