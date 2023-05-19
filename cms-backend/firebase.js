@@ -8,6 +8,7 @@ const serviceAccount = require('./creds.json');
 
 const app = initializeApp({
     credential: cert(serviceAccount),
+    storageBucket: 'gs://museum-ar-32277.appspot.com',
 });
 
 const db = getFirestore();

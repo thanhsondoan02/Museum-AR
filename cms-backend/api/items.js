@@ -7,30 +7,47 @@ const fs = require('fs');
 module.exports = function (app, db, storage) {
     app.get('/items/list', async (req, res) => {
         try {
-            var list = await db.collection('items').get();
-            res.send({ status: "success", message: list.docs.map(doc => doc.data()) });
+            var list = await db.collection('items').orderBy('name', 'asc').get();
+            res.send({
+                status: "success", message: list.docs.map(doc => {
+                    var item = doc.data();
+                    item.id = doc.id;
+                    return item;
+                })
+            });
         } catch (e) {
+            console.log(e)
             res.send({ status: "error", message: e });
         }
     });
 
 
     app.post('/items/add', upload.single('file'), async (req, res) => {
+        
         if (req.file == undefined) {
             res.send({ status: "error", message: "No file uploaded" });
             return;
         }
         var model = req.file;
-        var model_id = model.filename + ".glb";
-        var item = JSON.parse(req.body.requests);
+        var model_id = model.filename + '.glb';
+
+        try {
+            var item = JSON.parse(req.body.requests);
+        } catch (e) {
+            res.send({ status: "error", message: "No payload" });
+            return;
+        }
         try {
             const bucket = storage.bucket(STORAGE_LINK);
+            console.log("this is model id: ", model_id);
+            console.log("this is model path: ", model.path);
             const data = await bucket.upload(model.path, {
                 destination: model_id,
                 metadata: {
                     contentType: model.mimetype
                 }
             });
+
             item.model3d = `https://firebasestorage.googleapis.com/v0/b/museum-ar-32277.appspot.com/o/${model_id}?alt=media`
             item.model3d_id = model_id;
             var result = await db.collection('items').add(item);
@@ -70,7 +87,7 @@ module.exports = function (app, db, storage) {
             res.send({ status: "success", message: result.id });
         }
         catch (e) {
-            console.log(e)
+            console.log(e);
             res.send({ status: "error", message: e });
         }
     });

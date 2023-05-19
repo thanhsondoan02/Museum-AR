@@ -1,8 +1,17 @@
 module.exports = function (app, db, storage) {
     app.get('/exhibitions/list', async (req, res) => {
         try {
-            var list = await db.collection('exhibitions').get();
-            res.send({ status: "success", message: list.docs.map(doc => doc.data()) });
+            var list = await db.collection('exhibitions').orderBy('name', 'asc').get();
+            list.docs.sort((a, b) => {
+                return b.data().date - a.data().date;
+            });
+            res.send({
+                status: "success", message: list.docs.map(doc => {
+                    var item = doc.data();
+                    item.id = doc.id;
+                    return item;
+                })
+            });
         } catch (e) {
             res.send({ status: "error", message: e });
         }
