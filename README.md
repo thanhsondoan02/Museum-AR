@@ -9,7 +9,7 @@ Explore Art & AR at home
 - [Android Studio](https://developer.android.com/studio) - The official Integrated Development Environment (IDE) for Android app development.
 
 ### Demo
-[Short Demo Video](https://1drv.ms/v/s!Au2sF_i0UtKPgfsQLuY9F-C1w7ynnw?e=KRjpz9)
+- [Demo Video](https://1drv.ms/v/s!Au2sF_i0UtKPgfsQLuY9F-C1w7ynnw?e=KRjpz9) - Our application showcase at University of Engineering and Technology.
 
 <table>
   <tr>
@@ -24,7 +24,8 @@ Explore Art & AR at home
   </tr>
   <tr>
     <td><img src="demo/demo_7.jpg" alt="Street View" width="300"></td>
-    <td><img src="demo/demo_8.jpg" alt="Sign up" width="300"></td>
-    <td><img src="demo/demo_9.jpg" alt="Home" width="300"></td>
+    <td><img src="demo/demo_8.jpg" alt="Item" width="300"></td>
+    <td><img src="demo/demo_9.jpg" alt="Story" width="300"></td>
+    <td><img src="demo/demo_10.jpg" alt="Museum" width="300"></td>
   </tr>
 </table>
