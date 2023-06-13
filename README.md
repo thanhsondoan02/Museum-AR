@@ -23,15 +23,15 @@ Explore Art & AR at home
   <tr>
     <td><img src="demo/demo_6.jpg" alt="AR" width="150" height="auto"></td>
     <td><img src="demo/demo_7.jpg" alt="Street View" width="150" height="auto"></td>
-    <td><img src="demo/demo_8.png" alt="Item" width="150" height="auto"></td>
-    <td><img src="demo/demo_9.png" alt="Story" width="150" height="auto"></td>
-    <td><img src="demo/demo_10.png" alt="Museum" width="150" height="auto"></td>
+    <td><img src="demo/demo_82.png" alt="Item" width="150" height="auto"></td>
+    <td><img src="demo/demo_92.png" alt="Story" width="150" height="auto"></td>
+    <td><img src="demo/demo_102.png" alt="Museum" width="150" height="auto"></td>
   </tr>
   <tr>
-    <td><img src="demo/demo_11.png" width="150" height="auto"></td>
-    <td><img src="demo/demo_12.png" width="150" height="auto"></td>
-    <td><img src="demo/demo_13.png" width="150" height="auto"></td>
-    <td><img src="demo/demo_14.png" width="150" height="auto"></td>
-    <td><img src="demo/demo_15.png" width="150" height="auto"></td>
+    <td><img src="demo/demo_112.png" width="150" height="auto"></td>
+    <td><img src="demo/demo_122.png" width="150" height="auto"></td>
+    <td><img src="demo/demo_132.png" width="150" height="auto"></td>
+    <td><img src="demo/demo_142.png" width="150" height="auto"></td>
+    <td><img src="demo/demo_152.png" width="150" height="auto"></td>
   </tr>
 </table>
