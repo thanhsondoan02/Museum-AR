@@ -14,10 +14,10 @@ Explore Art & AR at home
 ### Demo
 [Short Demo Video](https://1drv.ms/v/s!Au2sF_i0UtKPgfsQLuY9F-C1w7ynnw?e=KRjpz9)
 
-![](demo/unnamed.jpg)
-![](demo/unnamed (1).jpg)
-![](demo/unnamed (2).jpg)
-![](demo/unnamed (3).jpg)
-![](demo/unnamed (4).jpg)
-![](demo/unnamed (5).jpg)
-![](demo/unnamed (6).jpg)
+![](demo/demo_1.jpg)
+![](demo/demo_2.jpg)
+![](demo/demo_3.jpg)
+![](demo/demo_4.jpg)
+![](demo/demo_5.jpg)
+![](demo/demo_6.jpg)
+![](demo/demo_7.jpg)
