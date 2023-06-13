@@ -14,17 +14,17 @@ Explore Art & AR at home
 
 <table>
   <tr>
-    <td><img src="demo/demo_1.jpg" alt="Introduction" width="200" height="auto"></td>
-    <td><img src="demo/demo_2.jpg" alt="Sign up" width="200" height="auto"></td>
-    <td><img src="demo/demo_3.jpg" alt="Home" width="200" height="auto"></td>
-    <td><img src="demo/demo_4.jpg" alt="Explore" width="200" height="auto"></td>
-    <td><img src="demo/demo_5.jpg" alt="Favorite" width="200" height="auto"></td>
+    <td><img src="demo/demo_1.jpg" alt="Introduction" width="150" height="auto"></td>
+    <td><img src="demo/demo_2.jpg" alt="Sign up" width="150" height="auto"></td>
+    <td><img src="demo/demo_3.jpg" alt="Home" width="150" height="auto"></td>
+    <td><img src="demo/demo_4.jpg" alt="Explore" width="150" height="auto"></td>
+    <td><img src="demo/demo_5.jpg" alt="Favorite" width="150" height="auto"></td>
   </tr>
   <tr>
-    <td><img src="demo/demo_6.jpg" alt="AR" width="200" height="auto"></td>
-    <td><img src="demo/demo_7.jpg" alt="Street View" width="200" height="auto"></td>
-    <td><img src="demo/demo_8.jpg" alt="Item" width="200" height="auto"></td>
-    <td><img src="demo/demo_9.jpg" alt="Story" width="200" height="auto"></td>
-    <td><img src="demo/demo_10.jpg" alt="Museum" width="200" height="auto"></td>
+    <td><img src="demo/demo_6.jpg" alt="AR" width="150" height="auto"></td>
+    <td><img src="demo/demo_7.jpg" alt="Street View" width="150" height="auto"></td>
+    <td><img src="demo/demo_8.jpg" alt="Item" width="150" height="auto"></td>
+    <td><img src="demo/demo_9.jpg" alt="Story" width="150" height="auto"></td>
+    <td><img src="demo/demo_10.jpg" alt="Museum" width="150" height="auto"></td>
   </tr>
 </table>
