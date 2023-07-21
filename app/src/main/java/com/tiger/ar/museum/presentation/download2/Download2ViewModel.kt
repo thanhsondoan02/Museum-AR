@@ -24,7 +24,7 @@ import java.util.UUID
 
 class Download2ViewModel : BaseViewModel() {
     var data: MutableList<DownloadFile> = mutableListOf()
-//    var downloadingId: Long? = null
+    var downloadingFile: DownloadFile? = null
 
     private var _updateListState = MutableStateFlow(FlowResult.newInstance<List<DownloadFile>>())
     val updateListState = _updateListState.asStateFlow()
@@ -131,6 +131,8 @@ class Download2ViewModel : BaseViewModel() {
                 downloadId = downloadManager.enqueue(request)
             }
             _updateListState.success(copyAndReverseOfData())
+
+            downloadingFile = downloadFile
             _startDownloadState.success(downloadFile)
         }
     }

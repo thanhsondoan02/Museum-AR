@@ -61,7 +61,7 @@ class Download2Activity : MuseumActivity<Download2ActivityBinding>(R.layout.down
         coroutinesLaunch(viewModel.startDownloadState) {
             handleUiState(it, object : IViewListener {
                 override fun onSuccess() {
-                    startRunner(it.data)
+                    startRunner()
                 }
 
                 override fun onFailure() {
@@ -110,8 +110,8 @@ class Download2Activity : MuseumActivity<Download2ActivityBinding>(R.layout.down
         registerReceiver(downloadReceiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
     }
 
-    private fun startRunner(downloadFile: DownloadFile?) {
-        if (downloadFile == null) return
+    private fun startRunner() {
+        val downloadFile = viewModel.downloadingFile ?: return
         runnable = object : Runnable {
             override fun run() {
                 viewModel.updateProgress(downloadFile)
@@ -126,6 +126,7 @@ class Download2Activity : MuseumActivity<Download2ActivityBinding>(R.layout.down
             binding.cvDownload2History.removeCallbacks(it)
         }
         runnable = null
+        viewModel.downloadingFile = null
     }
 
 }
