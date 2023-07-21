@@ -120,4 +120,11 @@
     <string name="recommended_for_you">Các mục gợi ý dành cho bạn</string>
     <string name="no_ticket_link">Không tìm thấy đường dẫn</string>
     <string name="search">Tìm kiếm</string>
+    <string name="download_failed">Failed</string>
+    <string name="download_unknown">Unknown</string>
+    <string name="download_pending">Pending</string>
+    <string name="status">Status</string>
+    <string name="name">Name</string>
+    <string name="url">Url</string>
+    <string name="download_success">Success</string>
 </resources>

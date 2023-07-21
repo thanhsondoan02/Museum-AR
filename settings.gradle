@@ -5,5 +5,5 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-rootProject.name = "Museum AR"
+rootProject.name = "Peswoc Download"
 include ':app'

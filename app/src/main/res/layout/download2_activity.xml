@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edtDownload2Link"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_16"
+            android:inputType="text"
+            app:layout_constraintEnd_toStartOf="@id/ivDownload2Start"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivDownload2Start"
+            android:layout_width="@dimen/dimen_48"
+            android:layout_height="@dimen/dimen_48"
+            android:layout_marginEnd="@dimen/dimen_16"
+            android:background="?android:attr/actionBarItemBackground"
+            android:padding="@dimen/dimen_10"
+            android:src="@drawable/ic_download_black"
+            app:layout_constraintBottom_toBottomOf="@id/edtDownload2Link"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/edtDownload2Link" />
+
+        <com.tiger.ar.museum.presentation.widget.CollectionView
+            android:id="@+id/cvDownload2History"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:padding="@dimen/dimen_8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edtDownload2Link" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

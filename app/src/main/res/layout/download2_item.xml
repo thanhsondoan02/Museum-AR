@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_8"
+        app:cardCornerRadius="@dimen/dimen_corner_16">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_16">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDownload2Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_text_size_18"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Name: This is link of the download This is link of the download This is link of the download" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDownload2Url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_12"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_text_size_18"
+                app:layout_constraintTop_toBottomOf="@id/tvDownload2Name"
+                tools:text="Url: This is link of the download This is link of the download This is link of the download" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDownload2Status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_12"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimen_text_size_18"
+                app:layout_constraintTop_toBottomOf="@id/tvDownload2Url"
+                tools:text="Status: Failed" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</layout>

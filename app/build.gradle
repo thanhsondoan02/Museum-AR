@@ -108,6 +108,10 @@ dependencies {
 
     // two way view
     implementation 'org.lucasr.twowayview:twowayview:0.1.4'
+
+    // Apache Commons IO
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+    implementation 'commons-io:commons-io:2.11.0'
 }
 
 kapt {
