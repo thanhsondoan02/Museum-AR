@@ -81,6 +81,8 @@
             android:name=".presentation.camera.view3d.RealMainActivity2"
             android:exported="false" />
 
+        <service android:name=".presentation.download2.DownloadService"/>
+
     </application>
 
 </manifest>
